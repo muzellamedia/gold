@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+
+<style>
+body{
+  font-family: Arial;
+  background: linear-gradient(135deg,#8b0000,#ffcccb);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  margin:0;
+}
+
+.register-box{
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  width:350px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+  text-align:center;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#8b0000;
+  color:white;
+}
+
+button:hover{
+  background:#600000;
+}
+
+.message{
+  margin-top:12px;
+  text-align:center;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="register-box">
+<h2>Register</h2>
+
+<input type="text" id="phone" placeholder="Your Phone Number" required>
+<input type="text" id="shop" placeholder="Shop Name" required>
+<input type="text" id="place" placeholder="Place" required>
+<input type="text" id="district" placeholder="District" required>
+<input type="email" id="email" placeholder="Email" required>
+<input type="text" id="contact" placeholder="Contact Number" required>
+
+<button onclick="register()">Register</button>
+
+<div class="message" id="message"></div>
+
+</div>
+
+<script>
+
+function register(){
+
+  const phone = document.getElementById("phone").value.trim();
+  const shop = document.getElementById("shop").value.trim();
+  const place = document.getElementById("place").value.trim();
+  const district = document.getElementById("district").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const contact = document.getElementById("contact").value.trim();
+
+  if(!phone || !shop || !place || !district || !email || !contact){
+    document.getElementById("message").innerText = "All fields are required!";
+    document.getElementById("message").style.color = "red";
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbyD5vB2cKvkvtIwLhUZihQVolpJva67-PIHcQF5VdCOsh7b_xYlT00U2PAr8aZxGFXhpg/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      phone, shop, place, district, email, contact
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.status === "success"){
+      document.getElementById("message").style.color = "green";
+      document.getElementById("message").innerText =
+      "Successfully Registered! Your Security Code is: " + data.code;
+    } else {
+      document.getElementById("message").innerText = "Registration failed!";
+    }
+  })
+  .catch(err => {
+    document.getElementById("message").innerText = "Server error!";
+  });
+}
+
+</script>
+
+</body>
+</html>
