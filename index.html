@@ -93,7 +93,7 @@ function login(){
     return;
   }
 
-  fetch("YOUR_WEBAPP_URL?phone="+phone+"&code="+code)
+  fetch("https://script.google.com/macros/s/AKfycbyaMLi1t2eU1nqy0HmvAuqmziV8eeVGZ4sc_kDvavoWWIwATms32tvu1R57MstV6-UVvg/exec?phone="+phone+"&code="+code)
   .then(res => res.text())
   .then(data => {
     if(data === "success"){
