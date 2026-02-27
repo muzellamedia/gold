@@ -90,8 +90,7 @@ function register(){
   const contact = document.getElementById("contact").value.trim();
 
   if(!phone || !shop || !place || !district || !email || !contact){
-    document.getElementById("message").innerText = "All fields are required!";
-    document.getElementById("message").style.color = "red";
+    showMessage("All fields are required!", "red");
     return;
   }
 
@@ -103,17 +102,42 @@ function register(){
   })
   .then(res => res.json())
   .then(data => {
+
     if(data.status === "success"){
-      document.getElementById("message").style.color = "green";
-      document.getElementById("message").innerText =
-      "Successfully Registered! Your Security Code is: " + data.code;
+
+      // Save phone for login session
+      localStorage.setItem("userPhone", phone);
+
+      document.getElementById("message").innerHTML =
+      `
+      <div style="color:green;">
+        <p><b>Successfully Registered!</b></p>
+        <p>Your Security Code is: <b>${data.code}</b></p>
+        <button onclick="goHome()" style="margin-top:10px;background:#006400;">
+          GO TO HOME
+        </button>
+      </div>
+      `;
+
     } else {
-      document.getElementById("message").innerText = "Registration failed!";
+      showMessage("Registration failed!", "red");
     }
+
   })
   .catch(err => {
-    document.getElementById("message").innerText = "Server error!";
+    showMessage("Server error!", "red");
   });
+}
+
+
+function goHome(){
+  window.location.href = "dashboard.html";
+}
+
+function showMessage(text, color){
+  const msg = document.getElementById("message");
+  msg.innerText = text;
+  msg.style.color = color;
 }
 
 </script>
