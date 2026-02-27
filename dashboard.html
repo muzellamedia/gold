@@ -106,7 +106,7 @@
   let silverRate = "";
   let rateDate = "";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzlYfDheRKdneGjCf4cCTbyiDyPKEp9N-leBpUqjB3MhApltvOvPJhcvtKsR3fb8crivQ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbx-9JDTeAWwnmq2HoVHUW3CCUFYJrdB6tF604NY-aadmfFlRcpCd3_xvY4PrBq7lR8JrQ/exec";
 
 
 
@@ -194,6 +194,26 @@ const API_URL = "https://script.google.com/macros/s/AKfycbzlYfDheRKdneGjCf4cCTby
   };
 
   reader.readAsDataURL(file);
+}
+
+    function saveLogo(event){
+  const reader = new FileReader();
+  reader.onload = function(){
+    logoUrl = reader.result;
+    document.getElementById("logoPreview").innerHTML =
+      "<img src='" + reader.result + "'>";
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+function saveContacts(){
+  contacts = [
+    document.getElementById("num1").value,
+    document.getElementById("num2").value,
+    document.getElementById("num3").value
+  ].filter(n => n);
+
+  alert("Saved Successfully");
 }
 
   // =====================
