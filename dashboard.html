@@ -106,7 +106,7 @@
   let silverRate = "";
   let rateDate = "";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbytGbcP1cEsuUiNGSTrkEQ_RuIGr2qZ9iyndg7o5RlAtzpLLAv31fjO4UHJEBVJ3x8BaA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyzXOaAZ5oYs0fEb7Fj9Bv6IpnIffHUfqF1EEnlf2AXd992C4-cg3Ee99TH97_yMENK5A/exec";
 
 
 
@@ -160,6 +160,41 @@ const API_URL = "https://script.google.com/macros/s/AKfycbytGbcP1cEsuUiNGSTrkEQ_
 
   };
 
+    function saveDetails(){
+
+  const phone = localStorage.getItem("userPhone");
+
+  const fileInput = document.querySelector("input[type='file']");
+  const file = fileInput.files[0];
+
+  if(!file){
+    alert("Upload logo first");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(){
+
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        phone: phone,
+        logoBase64: reader.result,
+        contact1: document.getElementById("num1").value,
+        contact2: document.getElementById("num2").value,
+        contact3: document.getElementById("num3").value
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert("Saved Successfully");
+    });
+
+  };
+
+  reader.readAsDataURL(file);
+}
 
   // =====================
   // RANDOM
