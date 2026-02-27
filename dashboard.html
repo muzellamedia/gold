@@ -255,29 +255,33 @@ function saveContacts(){
   // CREATE POSTER
   // =====================
   function createPoster(bgUrl){
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
 
-    canvas.width = 2480;
-    canvas.height = 3508;
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
 
-    const bg = new Image();
-    bg.crossOrigin="anonymous";
-    bg.src = bgUrl;
+  canvas.width = 2480;
+  canvas.height = 3508;
 
-    bg.onload = function(){
+  const bg = new Image();
+  bg.crossOrigin = "anonymous";   // MUST
+  bg.src = bgUrl;
 
-      ctx.drawImage(bg,0,0,2480,3508);
+  bg.onload = function(){
 
-      const templateList = [template1, template2, template3];
+    ctx.drawImage(bg,0,0,2480,3508);
 
-      const seed = getSeed();
-      const index = Math.floor(seededRandom(seed+10) * templateList.length);
+    const templateList = [template1, template2, template3];
+    const seed = getSeed();
+    const index = Math.floor(seededRandom(seed+10) * templateList.length);
 
-      templateList[index](ctx, canvas);
-    };
-  }
+    templateList[index](ctx, canvas);
 
+  };
+
+  bg.onerror = function(){
+    alert("Background failed to load");
+  };
+}
 
   // =====================
   // TEMPLATE 1
