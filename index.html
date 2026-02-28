@@ -97,8 +97,8 @@ function login(){
   .then(res => res.text())
   .then(data => {
     if(data === "success"){
-      localStorage.setItem("loggedIn", "true");
-      window.location.href = "dashboard.html";
+  window.location.href =
+  "https://script.google.com/macros/s/AKfycbxs_KsawhC4WbngXr-GROsLBByXcDYATmTx-5ih_jNNkVrY3KHC2_pKCS2uWrZGIcldTw/exec?phone=" + phone;
     } else {
       document.getElementById("error").innerText = "Invalid phone or security code";
     }
