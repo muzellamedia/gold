@@ -93,7 +93,7 @@ function login(){
     return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycbwTmg-lst0iZJrADQYHd6R7UulYWvmWqt8yf8snQa44vzGxqkIbK7DXned-4mGJn6eYpQ/exec?phone="+phone+"&code="+code)
+  fetch("https://script.google.com/macros/s/AKfycbzJfLcnuAcymRAPMDMvOsBYC6AqURbMz22jzF_klsl9GB72l_jio2og6kU3ZbLGVZ4NJQ/exec?phone="+phone+"&code="+code)
   .then(res => res.text())
   .then(data => {
     if(data === "success"){
