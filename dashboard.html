@@ -106,7 +106,7 @@
   let silverRate = "";
   let rateDate = "";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzohlk0x5dnmtj--76_5J5vKS3GgfLpbP7r8bhjzNOI_47eq4eBhFT2BEiIdzPe3m9d2Q/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycby6-_hJ1nnLwNXR5rW4XKsCxAxPQJntuHPCrdVIBUMqnHardzVoRjr52wkFKiHCgDyf-w/exec";
 
 
 
@@ -399,12 +399,16 @@ function saveContacts(){
   // SAVE
   // =====================
   function save(canvas){
+  try{
     const link = document.createElement("a");
     link.download = "A4_Gold_Rate_Poster.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
+  } catch(err){
+    alert("Image export blocked due to CORS");
+    console.error(err);
   }
-
+}
   </script>
 
 
