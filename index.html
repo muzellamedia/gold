@@ -98,7 +98,7 @@ function login(){
   .then(data => {
     if(data === "success"){
   window.location.href =
-"hhttps://script.google.com/macros/s/AKfycbyTAMB-3bEfmJbqk_oIbH6zrGZZKvqxwXwoy8oG8xNQiGrrPBB_q9SCenu1okkkvGMfeg/exec?phone=" + phone;
+"https://script.google.com/macros/s/AKfycbyTAMB-3bEfmJbqk_oIbH6zrGZZKvqxwXwoy8oG8xNQiGrrPBB_q9SCenu1okkkvGMfeg/exec?phone=" + phone;
     } else {
       document.getElementById("error").innerText = "Invalid phone or security code";
     }
