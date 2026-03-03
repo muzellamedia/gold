@@ -1,91 +1,111 @@
  
   <style>
-  body{
-    font-family: Arial;
-    background: linear-gradient(135deg,#b8860b,#ffd700);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    margin:0;
-  }
+body{
+  font-family: Arial;
+  background: linear-gradient(135deg,#b8860b,#ffd700);
+  margin:0;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+}
 
-  .box{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    text-align:center;
-    width:340px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-  }
+.card{
+  background:white;
+  width:400px;
+  border-radius:15px;
+  padding:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  text-align:center;
+}
 
-  .logo-preview{
-    width:120px;
-    height:120px;
-    border:1px solid #ccc;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:10px;
-  }
+.logo{
+  width:130px;
+  height:130px;
+  margin:auto;
+  border-radius:50%;
+  border:2px solid #ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
 
-  .logo-preview img{
-    max-width:100%;
-    max-height:100%;
-  }
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-  input{
-    width:100%;
-    padding:8px;
-    margin:5px 0;
-    border-radius:6px;
-    border:1px solid #ccc;
-  }
+h2{
+  margin:10px 0 5px;
+}
 
-  button{
-    width:100%;
-    padding:12px;
-    background:#b8860b;
-    color:white;
-    border:none;
-    border-radius:6px;
-    font-weight:bold;
-    cursor:pointer;
-    margin-top:8px;
-  }
+.info{
+  font-size:14px;
+  color:#444;
+  margin:3px 0;
+}
 
-  button:hover{
-    background:#a07600;
-  }
-  </style>
-  </head>
+.status{
+  margin-top:15px;
+  font-weight:bold;
+  font-size:16px;
+}
 
-  <body>
+.updated{
+  color:green;
+}
 
-  <div class="box">
+.not-updated{
+  color:red;
+}
 
-  <h3>Silver Rate Poster</h3>
+button{
+  width:100%;
+  padding:12px;
+  background:#b8860b;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:20px;
+}
 
-  <div class="logo-preview" id="logoPreview">
-  No Logo
-  </div>
+button:hover{
+  background:#a07600;
+}
+</style>
+</head>
 
-  <input type="file" accept="image/*" onchange="saveLogo(event)">
+<body>
 
-  <h4>Contact Numbers (Max 3)</h4>
+<div class="card">
 
-  <input type="text" id="num1" placeholder="Phone Number 1">
-  <input type="text" id="num2" placeholder="Phone Number 2">
-  <input type="text" id="num3" placeholder="Phone Number 3">
+<div class="logo" id="logoBox">
+No Logo
+</div>
 
-  <button onclick="saveContacts()">Save Details</button>
+<h2 id="shopName">Shop Name</h2>
+
+<div class="info" id="place"></div>
+<div class="info" id="district"></div>
+<div class="info" id="email"></div>
+<div class="info" id="contact"></div>
+
+<div class="status" id="rateStatus">
+Checking rate status...
+</div>
+
+  
 
   <button onclick="generatePoster()">Download Poster</button>
+  
+  <button onclick="location.href='edit.html'">Edit Details</button>
 
   </div>
 <script>
-  var userPhone = "<?= phone ?>";
+  
 </script>
   <script>
 
@@ -97,13 +117,12 @@
   let contacts = [];
   let backgrounds = [];
 
-  let gold22Rate = "";
-  let gold24Rate = "";
-  let silverRate = "";
+  let gold1Gram = "";
+let gold1Pavan = "";
   let rateDate = "";
 
 const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec";
-
+const phone = localStorage.getItem("userPhone");
 
 
   // =====================
@@ -115,36 +134,46 @@ const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuC
 
 if(!phone){
   alert("Login required");
-  return;
+  location.href="index.html";
 }
 
-    // USER DATA
-    fetch(API_URL + "?type=user&phone=" + phone)
-    .then(res => res.json())
-    .then(data => {
+    // Load user + rate data
+window.onload = function(){
 
-      shopName = data.shop || "";
-      logoUrl = data.logo || "";
+fetch(API_URL + "?type=user&phone=" + phone)
+.then(res=>res.json())
+.then(data=>{
 
-      contacts = [
-        data.contact1,
-        data.contact2,
-        data.contact3
-      ].filter(n => n);
+  document.getElementById("shopName").innerText = data.shop || "";
+  document.getElementById("place").innerText = data.place || "";
+  document.getElementById("district").innerText = data.district || "";
+  document.getElementById("email").innerText = data.email || "";
+  document.getElementById("contact").innerText = data.contact1 || "";
 
-    });
+  if(data.logo){
+    document.getElementById("logoBox").innerHTML =
+      "<img src='"+data.logo+"'>";
+  }
 
-    // RATES
-    fetch(API_URL + "?type=rates")
-    .then(res => res.json())
-    .then(data => {
+});
 
-      gold22Rate = data.gold22 || "";
-      gold24Rate = data.gold24 || "";
-      silverRate = data.silver || "";
-      rateDate = data.date || "";
+fetch(API_URL + "?type=rates")
+.then(res=>res.json())
+.then(data=>{
 
-    });
+  const today = new Date().toISOString().slice(0,10);
+
+  if(data.date === today){
+    document.getElementById("rateStatus").innerHTML =
+      "Today Gold Rate Updated";
+    document.getElementById("rateStatus").classList.add("updated");
+  }else{
+    document.getElementById("rateStatus").innerHTML =
+      "Today Gold Rate Not Updated";
+    document.getElementById("rateStatus").classList.add("not-updated");
+  }
+
+});
 
     // BACKGROUNDS
     fetch(API_URL + "?type=backgrounds")
@@ -155,61 +184,7 @@ if(!phone){
 
   };
 
-    function saveDetails(){
-
-  const phone = userPhone;
-
-  const fileInput = document.querySelector("input[type='file']");
-  const file = fileInput.files[0];
-
-  if(!file){
-    alert("Upload logo first");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(){
-
-    fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify({
-        phone: phone,
-        logoBase64: reader.result,
-        contact1: document.getElementById("num1").value,
-        contact2: document.getElementById("num2").value,
-        contact3: document.getElementById("num3").value
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      alert("Saved Successfully");
-    });
-
-  };
-
-  reader.readAsDataURL(file);
-}
-
-    function saveLogo(event){
-  const reader = new FileReader();
-  reader.onload = function(){
-    logoUrl = reader.result;
-    document.getElementById("logoPreview").innerHTML =
-      "<img src='" + reader.result + "'>";
-  };
-  reader.readAsDataURL(event.target.files[0]);
-}
-
-function saveContacts(){
-  contacts = [
-    document.getElementById("num1").value,
-    document.getElementById("num2").value,
-    document.getElementById("num3").value
-  ].filter(n => n);
-
-  alert("Saved Successfully");
-}
+    
 
   // =====================
   // RANDOM
@@ -341,35 +316,31 @@ function saveContacts(){
   // =====================
   function template3(ctx, canvas){
 
-    ctx.fillStyle="white";
-    ctx.textAlign="center";
+  ctx.fillStyle="white";
+  ctx.textAlign="center";
 
-    ctx.font="bold 250px Arial";
-    ctx.fillText("₹ " + gold22Rate,1240,1700);
+  ctx.font="bold 200px Arial";
+  ctx.fillText("1 GRAM ₹ " + gold1Gram,1240,1700);
 
-    ctx.font="bold 140px Arial";
-    ctx.fillText("GOLD 22K",1240,1900);
+  ctx.font="bold 200px Arial";
+  ctx.fillText("1 PAVAN ₹ " + gold1Pavan,1240,2000);
 
-    ctx.font="bold 160px Arial";
-    ctx.fillText("SILVER ₹ " + silverRate,1240,2200);
-
-    drawContacts(ctx);
-    save(canvas);
-  }
+  drawContacts(ctx);
+  save(canvas);
+}
 
 
   // RATES
-  // =====================
   function drawRates(ctx){
 
-    ctx.font="bold 200px Arial";
-    ctx.fillText("GOLD 22K",1240,1700);
-    ctx.fillText("₹ " + gold22Rate,1240,1950);
+  ctx.font="bold 180px Arial";
+  ctx.fillText("GOLD 1 GRAM",1240,1700);
+  ctx.fillText("₹ " + gold1Gram,1240,1950);
 
-    ctx.font="bold 160px Arial";
-    ctx.fillText("SILVER",1240,2300);
-    ctx.fillText("₹ " + silverRate,1240,2500);
-  }
+  ctx.font="bold 180px Arial";
+  ctx.fillText("GOLD 1 PAVAN",1240,2300);
+  ctx.fillText("₹ " + gold1Pavan,1240,2550);
+}
 
 
   // =====================
