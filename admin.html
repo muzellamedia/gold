@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+
+<style>
+body{
+  font-family: Arial;
+  background: linear-gradient(135deg,#000000,#b8860b);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+}
+
+.card{
+  background:white;
+  width:350px;
+  padding:25px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  background:#b8860b;
+  color:white;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.error{
+  color:red;
+  font-size:14px;
+}
+
+#adminPanel{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<!-- Password Only Section -->
+<div id="loginSection">
+  <h3>Admin Login</h3>
+  <input type="password" id="adminPass" placeholder="Enter Password">
+  <button onclick="checkPassword()">Login</button>
+  <div class="error" id="error"></div>
+</div>
+
+<!-- Admin Options -->
+<div id="adminPanel">
+
+  <h3>Update Gold Rate</h3>
+
+  <input type="number" id="gramRate" placeholder="Enter 1 Gram Rate">
+
+  <div id="preview" style="font-weight:bold;"></div>
+
+  <button onclick="updateRate()">Update Today Rate</button>
+
+</div>
+
+</div>
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec";
+const ADMIN_PASSWORD = "admin@1994";
+
+// Check Password
+function checkPassword(){
+
+  const entered = document.getElementById("adminPass").value;
+
+  if(entered === ADMIN_PASSWORD){
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+  }else{
+    document.getElementById("error").innerText = "Wrong Password";
+  }
+}
+
+// Auto Calculate Pavan
+document.getElementById("gramRate").addEventListener("input", function(){
+
+  const gram = parseFloat(this.value) || 0;
+  const pavan = gram * 8;
+
+  document.getElementById("preview").innerHTML =
+    "1 Pavan = ₹ " + pavan.toFixed(2);
+});
+
+// Update Rate
+function updateRate(){
+
+  const gram = parseFloat(document.getElementById("gramRate").value);
+
+  if(!gram){
+    alert("Enter valid rate");
+    return;
+  }
+
+  const pavan = gram * 8;
+  const today = new Date().toISOString().slice(0,10);
+
+  fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify({
+      type:"updateRate",
+      gold1gram: gram,
+      gold1pavan: pavan,
+      date: today
+    })
+  })
+  .then(res=>res.json())
+  .then(()=>{
+    alert("Today's Rate Updated Successfully");
+  });
+
+}
+</script>
+
+</body>
+</html>
