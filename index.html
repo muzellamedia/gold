@@ -100,8 +100,8 @@ function login(){
   .then(res => res.text())
   .then(data => {
 
-    if (data === "success") {
-  // Redirect to home.html
+   if(data.trim() === "success"){
+  localStorage.setItem("userPhone", phone);
   window.location.href = "home.html";
 } else {
   document.getElementById("error").innerText = "Invalid phone or security code";
