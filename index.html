@@ -100,7 +100,8 @@ function login(){
   .then(data => {
 
     if(data === "success"){
-      window.location.href = API_URL + "?phone=" + phone;
+      window.location.href =
+"https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec?phone=" + phone;
     } else {
       document.getElementById("error").innerText = "Invalid phone or security code";
     }
