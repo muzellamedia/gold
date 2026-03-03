@@ -100,14 +100,13 @@ function login(){
   .then(res => res.text())
   .then(data => {
 
-    if(data === "success"){
-      // Redirect to dashboard (same script)
-      window.location.href = API_URL + "?phone=" + phone;
-    } else {
-      document.getElementById("error").innerText = "Invalid phone or security code";
-    }
-
-  })
+    if (data === "success") {
+  // Redirect to home.html
+  window.location.href = "home.html";
+} else {
+  document.getElementById("error").innerText = "Invalid phone or security code";
+}
+    })
   .catch(() => {
     document.getElementById("error").innerText = "Server error";
   });
