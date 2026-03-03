@@ -75,6 +75,17 @@ button{
 button:hover{
   background:#a07600;
 }
+.plan-active{
+  color:green;
+}
+
+.plan-warning{
+  color:orange;
+}
+
+.plan-expired{
+  color:red;
+}
 </style>
 </head>
 
@@ -97,15 +108,20 @@ No Logo
 Checking rate status...
 </div>
 
-  
+  <div class="status" id="planStatus">
+Checking subscription...
+</div>
 
   <button onclick="generatePoster()">Download Poster</button>
   
   <button onclick="location.href='edit.html'">Edit Details</button>
+  <button id="rechargeBtn" onclick="location.href='recharge.html'" style="display:none;background:#444;">
+  Recharge Now
+</button>
 
   </div>
 <script>
-  
+  const userPhone = localStorage.getItem("userPhone");
 </script>
   <script>
 
@@ -160,9 +176,39 @@ window.addEventListener("DOMContentLoaded", function(){
       document.getElementById("logoBox").innerHTML =
         "<img src='"+data.logo+"'>";
     }
+const expiry = data.planExpiry ? new Date(data.planExpiry) : null;
+const today = new Date();
 
-  });
+const downloadBtn = document.getElementById("downloadBtn");
+const planStatus = document.getElementById("planStatus");
 
+if(!expiry || today > expiry){
+
+  downloadBtn.disabled = true;
+  downloadBtn.innerText = "Recharge Required";
+  downloadBtn.style.background = "red";
+
+  planStatus.innerText = "Plan Expired";
+  planStatus.className = "status plan-expired";
+
+}else{
+
+  // 🟢 Active
+  rechargeBtn.style.display = "none";
+
+  const diffTime = expiry - today;
+  const remainingDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  planStatus.innerText =
+    "Plan Active - " + remainingDays + " Days Remaining";
+
+  if(remainingDays <= 3){
+    planStatus.className = "status plan-warning";
+  }else{
+    planStatus.className = "status plan-active";
+  }
+
+}
   // RATE STATUS
   fetch(API_URL + "?type=rates")
   .then(res=>res.json())
