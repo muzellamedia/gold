@@ -84,24 +84,25 @@ button{
 
 <script>
 
+// 🔥 USE ONLY ONE WEB APP URL
+const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec";
+
 function login(){
-  const phone = document.getElementById("phone").value;
-  const code = document.getElementById("code").value;
+  const phone = document.getElementById("phone").value.trim();
+  const code = document.getElementById("code").value.trim();
 
   if(!phone || !code){
     document.getElementById("error").innerText = "Please fill all fields";
     return;
   }
 
-  const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec";
-
   fetch(API_URL + "?phone=" + phone + "&code=" + code)
   .then(res => res.text())
   .then(data => {
 
     if(data === "success"){
-      window.location.href =
-"https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec?phone=" + phone;
+      // Redirect to dashboard (same script)
+      window.location.href = API_URL + "?phone=" + phone;
     } else {
       document.getElementById("error").innerText = "Invalid phone or security code";
     }
@@ -113,8 +114,8 @@ function login(){
 }
 
 function goRegister(){
-  window.location.href =
-"https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec?phone=" + phone;
+  // Optional: create separate register.html in GitHub
+  window.location.href = "register.html";
 }
 
 </script>
