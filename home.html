@@ -122,56 +122,67 @@ let gold1Pavan = "";
   let rateDate = "";
 
 const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec";
-const phone = localStorage.getItem("userPhone");
+const userPhone = localStorage.getItem("userPhone");
 
-
-  // =====================
-  // PAGE LOAD
-  // =====================
-  window.onload = function(){
-
-    const phone = userPhone;
-
-if(!phone){
-  alert("Login required");
-  location.href="index.html";
+// 🔐 Login Protection (Run Immediately)
+if(!userPhone){
+  window.location.replace("index.html");
 }
 
-    // Load user + rate data
-window.onload = function(){
+// =====================
+// PAGE LOAD
+// =====================
+window.addEventListener("DOMContentLoaded", function(){
 
-fetch(API_URL + "?type=user&phone=" + phone)
-.then(res=>res.json())
-.then(data=>{
+  const phone = userPhone;
 
-  document.getElementById("shopName").innerText = data.shop || "";
-  document.getElementById("place").innerText = data.place || "";
-  document.getElementById("district").innerText = data.district || "";
-  document.getElementById("email").innerText = data.email || "";
-  document.getElementById("contact").innerText = data.contact1 || "";
+  // USER DATA
+  fetch(API_URL + "?type=user&phone=" + phone)
+  .then(res=>res.json())
+  .then(data=>{
 
-  if(data.logo){
-    document.getElementById("logoBox").innerHTML =
-      "<img src='"+data.logo+"'>";
-  }
+    shopName = data.shop || "";
+    logoUrl = data.logo || "";
 
-});
+    contacts = [
+      data.contact1,
+      data.contact2,
+      data.contact3
+    ].filter(n=>n);
 
-fetch(API_URL + "?type=rates")
-.then(res=>res.json())
-.then(data=>{
+    document.getElementById("shopName").innerText = data.shop || "";
+    document.getElementById("place").innerText = data.place || "";
+    document.getElementById("district").innerText = data.district || "";
+    document.getElementById("email").innerText = data.email || "";
+    document.getElementById("contact").innerText = data.contact1 || "";
 
-  const today = new Date().toISOString().slice(0,10);
+    if(data.logo){
+      document.getElementById("logoBox").innerHTML =
+        "<img src='"+data.logo+"'>";
+    }
 
-  if(data.date === today){
-    document.getElementById("rateStatus").innerHTML =
-      "Today Gold Rate Updated";
-    document.getElementById("rateStatus").classList.add("updated");
-  }else{
-    document.getElementById("rateStatus").innerHTML =
-      "Today Gold Rate Not Updated";
-    document.getElementById("rateStatus").classList.add("not-updated");
-  }
+  });
+
+  // RATE STATUS
+  fetch(API_URL + "?type=rates")
+  .then(res=>res.json())
+  .then(data=>{
+
+    gold1Gram = data.gold1gram || "";
+    gold1Pavan = gold1Gram * 8;
+    rateDate = data.date || "";
+
+    const today = new Date().toISOString().slice(0,10);
+
+    if(rateDate === today){
+      rateStatus.innerHTML = "Today Gold Rate Updated";
+      rateStatus.className = "status updated";
+    }else{
+      rateStatus.innerHTML = "Today Gold Rate Not Updated";
+      rateStatus.className = "status not-updated";
+    }
+
+  });
 
 });
 
