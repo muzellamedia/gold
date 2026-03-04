@@ -100,9 +100,6 @@ function login(){
 
   const phone = document.getElementById("phone").value.trim();
   const code = document.getElementById("code").value.trim();
-  .then(res=>res.json())
-.then(data=>{
-  console.log(data);   // 🔍 see response
 
   if(!phone || !code){
     document.getElementById("error").innerText = "Please fill all fields";
@@ -111,6 +108,9 @@ function login(){
 
   fetch(API_URL,{
     method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
     body: JSON.stringify({
       type:"login",
       phone: phone,
@@ -127,17 +127,18 @@ function login(){
     }
     else if(data.status === "blocked"){
       document.getElementById("error").innerText =
-        "Already logged in another device. Try after 12 hours.";
+      "Already logged in another device. Try after 12 hours.";
     }
     else{
       document.getElementById("error").innerText =
-        "Invalid phone or security code";
+      "Invalid phone or security code";
     }
 
   })
   .catch(()=>{
     document.getElementById("error").innerText="Server error";
   });
+
 }
 function goRegister(){
   // Optional: create separate register.html in GitHub
