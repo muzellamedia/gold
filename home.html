@@ -86,6 +86,30 @@ button:hover{
 .plan-expired{
   color:red;
 }
+   .loading-btn{
+position:relative;
+pointer-events:none;
+opacity:0.8;
+}
+
+.loading-btn::after{
+content:"";
+width:18px;
+height:18px;
+border:3px solid white;
+border-top:3px solid transparent;
+border-radius:50%;
+position:absolute;
+right:15px;
+top:50%;
+transform:translateY(-50%);
+animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:translateY(-50%) rotate(0deg);}
+100%{transform:translateY(-50%) rotate(360deg);}
+}
 </style>
 </head>
 
@@ -112,7 +136,9 @@ Checking rate status...
 Checking subscription...
 </div>
 
-  <button id="downloadBtn" onclick="generatePoster()">Download Poster</button>
+  <button id="downloadBtn" onclick="generatePoster()">
+Download Poster
+</button>
   
   <button onclick="location.href='edit.html'">Edit Details</button>
   <button id="rechargeBtn" onclick="location.href='recharge.html'" style="display:none;background:#444;">
@@ -291,16 +317,23 @@ console.log("User load error",e);
   // =====================
   function generatePoster(){
 
-    if(backgrounds.length === 0){
-      alert("Backgrounds not loaded yet");
-      return;
-    }
+const btn = document.getElementById("downloadBtn");
 
-    const seed = getSeed();
-    const bgIndex = Math.floor(seededRandom(seed) * backgrounds.length);
+btn.classList.add("loading-btn");
+btn.innerText = "Generating...";
 
-    createPoster(backgrounds[bgIndex]);
-  }
+
+btn.classList.remove("loading-btn");
+btn.innerText = "Download Poster";
+return;
+}
+
+const seed = getSeed();
+const bgIndex = Math.floor(seededRandom(seed) * backgrounds.length);
+
+createPoster(backgrounds[bgIndex]);
+
+}
 
 
   // =====================
@@ -458,14 +491,22 @@ function drawRatesLeft(ctx){
   // SAVE
   // =====================
   function save(canvas){
-  try{
-    const link = document.createElement("a");
-    link.download = "A4_Gold_Rate_Poster.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  } catch(err){
-    alert("Image export blocked due to CORS");
-    console.error(err);
+
+const btn = document.getElementById("downloadBtn");
+
+try{
+const link = document.createElement("a");
+link.download = "A4_Gold_Rate_Poster.png";
+link.href = canvas.toDataURL("image/png");
+link.click();
+
+} catch(err){
+alert("Image export blocked due to CORS");
+console.error(err);
+}
+
+btn.classList.remove("loading-btn");
+btn.innerText = "Download Poster";
   }
 }
   </script>
