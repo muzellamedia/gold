@@ -305,7 +305,10 @@ btn.innerText = "Generating...";
 // background load ആയിട്ടില്ലെങ്കിൽ wait ചെയ്യുക
 if(backgrounds.length === 0){
 
-setTimeout(generatePoster, 500); 
+setTimeout(function(){
+generatePoster();
+},500);
+
 return;
 
 }
