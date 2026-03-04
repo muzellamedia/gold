@@ -112,7 +112,7 @@ Checking rate status...
 Checking subscription...
 </div>
 
-  <button onclick="generatePoster()">Download Poster</button>
+  <button id="downloadBtn" onclick="generatePoster()">Download Poster</button>
   
   <button onclick="location.href='edit.html'">Edit Details</button>
   <button id="rechargeBtn" onclick="location.href='recharge.html'" style="display:none;background:#444;">
@@ -137,6 +137,7 @@ let gold1Pavan = "";
 
 const API_URL = "https://script.google.com/macros/s/AKfycbyRLyySTGRlK5dJUQysc3cUgsOrYxh9fYsUrn8FNwrhReqIUizi09w3VQfSHDHCvzX8Cg/exec";
 const userPhone = localStorage.getItem("userPhone");
+  
 
 // 🔐 Login Protection (Run Immediately)
 if(!userPhone){
@@ -179,6 +180,7 @@ const today = new Date();
 
 const downloadBtn = document.getElementById("downloadBtn");
 const planStatus = document.getElementById("planStatus");
+const rechargeBtn = document.getElementById("rechargeBtn");
 
 if(!expiry || today > expiry){
 
@@ -307,7 +309,18 @@ if(!expiry || today > expiry){
     alert("Background failed to load");
   };
 }
+function drawRatesLeft(ctx){
 
+  ctx.textAlign="left";
+
+  ctx.font="bold 180px Arial";
+  ctx.fillText("GOLD 1 GRAM",1100,1700);
+  ctx.fillText("₹ " + gold1Gram,1100,1950);
+
+  ctx.font="bold 180px Arial";
+  ctx.fillText("GOLD 1 PAVAN",1100,2300);
+  ctx.fillText("₹ " + gold1Pavan,1100,2550);
+}
   // =====================
   // TEMPLATE 1
   // =====================
