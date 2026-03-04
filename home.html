@@ -199,48 +199,8 @@ window.addEventListener("DOMContentLoaded", function(){
         rateStatus.innerHTML = "Today Gold Rate Not Updated";
         rateStatus.className = "status not-updated";
       }
-// =====================
-// PLAN STATUS
-// =====================
-
-const expiry = data.planExpiry ? new Date(data.planExpiry) : null;
-const today = new Date();
-
-const downloadBtn = document.getElementById("downloadBtn");
-const planStatus = document.getElementById("planStatus");
-const rechargeBtn = document.getElementById("rechargeBtn");
-
-if(!expiry || today > expiry){
-
-  // 🔴 Plan expired
-  downloadBtn.disabled = true;
-  downloadBtn.innerText = "Recharge Required";
-  downloadBtn.style.background = "red";
-
-  rechargeBtn.style.display = "block";
-
-  planStatus.innerText = "Plan Expired";
-  planStatus.className = "status plan-expired";
-
-}else{
-
-  // 🟢 Plan active
-  const diffTime = expiry - today;
-  const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
-
-  planStatus.innerText =
-  "Plan Active - " + remainingDays + " Days Remaining";
-
-  rechargeBtn.style.display = "none";
-
-  if(remainingDays <= 3){
-    planStatus.className = "status plan-warning";
-  }else{
-    planStatus.className = "status plan-active";
-  }
-
-
     });
+   
 
   });
 
