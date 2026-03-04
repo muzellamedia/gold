@@ -215,9 +215,9 @@ document.getElementById("logoBox").innerHTML =
 // GOLD RATE
 // =====================
 
-gold1Gram = rates.gold1gram || "";
+gold1Gram = data.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
-rateDate = rates.date || "";
+rateDate = data.date || "";
 
 const today = new Date().toISOString().slice(0,10);
 const rateStatus = document.getElementById("rateStatus");
