@@ -100,6 +100,9 @@ function login(){
 
   const phone = document.getElementById("phone").value.trim();
   const code = document.getElementById("code").value.trim();
+  .then(res=>res.json())
+.then(data=>{
+  console.log(data);   // 🔍 see response
 
   if(!phone || !code){
     document.getElementById("error").innerText = "Please fill all fields";
