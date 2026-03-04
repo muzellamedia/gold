@@ -155,9 +155,32 @@ window.addEventListener("DOMContentLoaded", function(){
   .then(res=>res.json())
   .then(data=>{
 
-    // user data code
+    // ✅ USER DATA DISPLAY
+    shopName = data.shop || "";
+    logoUrl = data.logo || "";
 
+    contacts = [
+      data.contact1,
+      data.contact2,
+      data.contact3
+    ].filter(n=>n);
+
+    document.getElementById("shopName").innerText = data.shop || "";
+    document.getElementById("place").innerText = data.place || "";
+    document.getElementById("district").innerText = data.district || "";
+    document.getElementById("email").innerText = data.email || "";
+
+    document.getElementById("contact").innerText =
+      contacts.join(" | ");
+
+    if(data.logo){
+      document.getElementById("logoBox").innerHTML =
+        "<img src='"+data.logo+"'>";
+    }
+
+    // =================
     // RATE STATUS
+    // =================
     fetch(API_URL + "?type=rates")
     .then(res=>res.json())
     .then(data=>{
@@ -181,6 +204,8 @@ window.addEventListener("DOMContentLoaded", function(){
     });
 
   });
+
+});
 
   // BACKGROUNDS
   fetch(API_URL + "?type=backgrounds")
