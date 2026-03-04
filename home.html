@@ -151,95 +151,45 @@ window.addEventListener("DOMContentLoaded", function(){
 
   const phone = userPhone;
 
-  // USER DATA
   fetch(API_URL + "?type=user&phone=" + phone)
   .then(res=>res.json())
   .then(data=>{
 
-    shopName = data.shop || "";
-    logoUrl = data.logo || "";
+    // user data code
 
-    contacts = [
-      data.contact1,
-      data.contact2,
-      data.contact3
-    ].filter(n=>n);
+    // RATE STATUS
+    fetch(API_URL + "?type=rates")
+    .then(res=>res.json())
+    .then(data=>{
 
-    document.getElementById("shopName").innerText = data.shop || "";
-    document.getElementById("place").innerText = data.place || "";
-    document.getElementById("district").innerText = data.district || "";
-    document.getElementById("email").innerText = data.email || "";
-    document.getElementById("contact").innerText = data.contact1 || "";
+      gold1Gram = data.gold1gram || "";
+      gold1Pavan = gold1Gram * 8;
+      rateDate = data.date || "";
 
-    if(data.logo){
-      document.getElementById("logoBox").innerHTML =
-        "<img src='"+data.logo+"'>";
-    }
-const expiry = data.planExpiry ? new Date(data.planExpiry) : null;
-const today = new Date();
+      const today = new Date().toISOString().slice(0,10);
 
-const downloadBtn = document.getElementById("downloadBtn");
-const planStatus = document.getElementById("planStatus");
-const rechargeBtn = document.getElementById("rechargeBtn");
+      const rateStatus = document.getElementById("rateStatus");
 
-if(!expiry || today > expiry){
+      if(rateDate === today){
+        rateStatus.innerHTML = "Today Gold Rate Updated";
+        rateStatus.className = "status updated";
+      }else{
+        rateStatus.innerHTML = "Today Gold Rate Not Updated";
+        rateStatus.className = "status not-updated";
+      }
 
-  downloadBtn.disabled = true;
-  downloadBtn.innerText = "Recharge Required";
-  downloadBtn.style.background = "red";
-
-  planStatus.innerText = "Plan Expired";
-  planStatus.className = "status plan-expired";
-
-}else{
-
-  // 🟢 Active
-  rechargeBtn.style.display = "none";
-
-  const diffTime = expiry - today;
-  const remainingDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  planStatus.innerText =
-    "Plan Active - " + remainingDays + " Days Remaining";
-
-  if(remainingDays <= 3){
-    planStatus.className = "status plan-warning";
-  }else{
-    planStatus.className = "status plan-active";
-  }
-
-}
-  // RATE STATUS
-  fetch(API_URL + "?type=rates")
-  .then(res=>res.json())
-  .then(data=>{
-
-    gold1Gram = data.gold1gram || "";
-    gold1Pavan = gold1Gram * 8;
-    rateDate = data.date || "";
-
-    const today = new Date().toISOString().slice(0,10);
-
-    if(rateDate === today){
-      rateStatus.innerHTML = "Today Gold Rate Updated";
-      rateStatus.className = "status updated";
-    }else{
-      rateStatus.innerHTML = "Today Gold Rate Not Updated";
-      rateStatus.className = "status not-updated";
-    }
+    });
 
   });
 
+  // BACKGROUNDS
+  fetch(API_URL + "?type=backgrounds")
+  .then(res => res.json())
+  .then(data => {
+    backgrounds = data || [];
+  });
+
 });
-
-    // BACKGROUNDS
-    fetch(API_URL + "?type=backgrounds")
-    .then(res => res.json())
-    .then(data => {
-      backgrounds = data || [];
-    });
-
-  };
 
     
 
