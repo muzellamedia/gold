@@ -488,9 +488,10 @@ function drawRatesLeft(ctx){
 
 
   // =====================
-  // SAVE
-  // =====================
-  function save(canvas){
+ // =====================
+// SAVE
+// =====================
+function save(canvas){
 
 const btn = document.getElementById("downloadBtn");
 
@@ -500,17 +501,15 @@ link.download = "A4_Gold_Rate_Poster.png";
 link.href = canvas.toDataURL("image/png");
 link.click();
 
-} catch(err){
+}catch(err){
 alert("Image export blocked due to CORS");
 console.error(err);
 }
 
 btn.classList.remove("loading-btn");
 btn.innerText = "Download Poster";
-  }
+
 }
-  </script>
-
-
-  </body>
-  </html>
+   </script>
+</body>
+</html>
