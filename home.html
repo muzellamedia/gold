@@ -145,74 +145,128 @@ if(!userPhone){
 }
 
 // =====================
+// =====================
 // PAGE LOAD
 // =====================
-window.addEventListener("DOMContentLoaded", function(){
+window.addEventListener("DOMContentLoaded", async function(){
 
-  const phone = userPhone;
+const phone = userPhone;
 
-  fetch(API_URL + "?type=user&phone=" + phone)
-  .then(res=>res.json())
-  .then(data=>{
-
-   // ✅ USER DATA DISPLAY
-    shopName = data.shop || "";
-    logoUrl = data.logo || "";
-
-    contacts = [
-      data.contact1,
-      data.contact2,
-      data.contact3
-    ].filter(n=>n);
-
-    document.getElementById("shopName").innerText = data.shop || "";
-    document.getElementById("place").innerText = data.place || "";
-    document.getElementById("district").innerText = data.district || "";
-    document.getElementById("email").innerText = data.email || "";
-
-    document.getElementById("contact").innerText =
-      contacts.join(" | ");
-
-    if(data.logo){
-      document.getElementById("logoBox").innerHTML =
-        "<img src='"+data.logo+"'>";
-    }
+// =====================
+// 1️⃣ LOAD BACKGROUNDS
+// =====================
+try{
+const bgRes = await fetch(API_URL + "?type=backgrounds");
+backgrounds = await bgRes.json();
+}catch(e){
+console.log("Background load error",e);
+}
 
 
-    // RATE STATUS
-    fetch(API_URL + "?type=rates")
-    .then(res=>res.json())
-    .then(data=>{
+// =====================
+// 2️⃣ LOAD GOLD RATE
+// =====================
+try{
 
-      gold1Gram = data.gold1gram || "";
-      gold1Pavan = gold1Gram * 8;
-      rateDate = data.date || "";
+const rateRes = await fetch(API_URL + "?type=rates");
+const rateData = await rateRes.json();
 
-      const today = new Date().toISOString().slice(0,10);
+gold1Gram = rateData.gold1gram || "";
+gold1Pavan = gold1Gram * 8;
+rateDate = rateData.date || "";
 
-      const rateStatus = document.getElementById("rateStatus");
+const today = new Date().toISOString().slice(0,10);
+const rateStatus = document.getElementById("rateStatus");
 
-      if(rateDate === today){
-        rateStatus.innerHTML = "Today Gold Rate Updated";
-        rateStatus.className = "status updated";
-      }else{
-        rateStatus.innerHTML = "Today Gold Rate Not Updated";
-        rateStatus.className = "status not-updated";
-      }
-    });
-   
+if(rateDate === today){
+rateStatus.innerHTML = "Today Gold Rate Updated";
+rateStatus.className = "status updated";
+}else{
+rateStatus.innerHTML = "Today Gold Rate Not Updated";
+rateStatus.className = "status not-updated";
+}
 
-  });
+}catch(e){
+console.log("Rate load error",e);
+}
 
-  // BACKGROUNDS
-  fetch(API_URL + "?type=backgrounds")
-  .then(res => res.json())
-  .then(data => {
-    backgrounds = data || [];
-  });
+
+// =====================
+// 3️⃣ LOAD USER DATA
+// =====================
+try{
+
+const userRes = await fetch(API_URL + "?type=user&phone=" + phone);
+const data = await userRes.json();
+
+shopName = data.shop || "";
+logoUrl = data.logo || "";
+
+contacts = [
+data.contact1,
+data.contact2,
+data.contact3
+].filter(n=>n);
+
+document.getElementById("shopName").innerText = data.shop || "";
+document.getElementById("place").innerText = data.place || "";
+document.getElementById("district").innerText = data.district || "";
+document.getElementById("email").innerText = data.email || "";
+
+document.getElementById("contact").innerText =
+contacts.join(" | ");
+
+if(data.logo){
+document.getElementById("logoBox").innerHTML =
+"<img src='"+data.logo+"'>";
+}
+
+
+// =====================
+// 4️⃣ PLAN STATUS
+// =====================
+
+const expiry = data.planExpiry ? new Date(data.planExpiry) : null;
+const today = new Date();
+
+const downloadBtn = document.getElementById("downloadBtn");
+const planStatus = document.getElementById("planStatus");
+const rechargeBtn = document.getElementById("rechargeBtn");
+
+if(!expiry || today > expiry){
+
+downloadBtn.disabled = true;
+downloadBtn.innerText = "Recharge Required";
+downloadBtn.style.background = "red";
+
+rechargeBtn.style.display = "block";
+
+planStatus.innerText = "Plan Expired";
+planStatus.className = "status plan-expired";
+
+}else{
+
+const diffTime = expiry - today;
+const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
+
+planStatus.innerText =
+"Plan Active - " + remainingDays + " Days Remaining";
+
+rechargeBtn.style.display = "none";
+
+if(remainingDays <= 3){
+planStatus.className = "status plan-warning";
+}else{
+planStatus.className = "status plan-active";
+}
+
+}
+
+}catch(e){
+console.log("User load error",e);
+}
 
 });
-    
 
   // =====================
   // RANDOM
