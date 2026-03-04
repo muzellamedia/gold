@@ -96,48 +96,46 @@ function generateDeviceId(){
   return id;
 }
 
-function login(){
-
+function login() {
   const phone = document.getElementById("phone").value.trim();
   const code = document.getElementById("code").value.trim();
 
-  if(!phone || !code){
-    document.getElementById("error").innerText="Please fill all fields";
+  if (!phone || !code) {
+    document.getElementById("error").innerText = "Please fill all fields";
     return;
   }
 
-  fetch(API_URL,{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
+  // ലോഗിൻ ബട്ടൺ താൽക്കാലികമായി ഡിസേബിൾ ചെയ്യുക
+  document.getElementById("error").innerText = "Logging in...";
+
+  const formData = new FormData();
+  formData.append("type", "login");
+  formData.append("phone", phone);
+  formData.append("code", code);
+  formData.append("deviceId", generateDeviceId());
+
+  fetch(API_URL, {
+    method: "POST",
     body: JSON.stringify({
-      type:"login",
-      phone:phone,
-      code:code,
-      deviceId:generateDeviceId()
+      type: "login",
+      phone: phone,
+      code: code,
+      deviceId: generateDeviceId()
     })
   })
-  .then(response => response.text())
-  .then(text => {
-
-    const data = JSON.parse(text);
-
-    if(data.status === "success"){
+  .then(response => response.json()) // text() ന് പകരം json() ഉപയോഗിക്കുക
+  .then(data => {
+    if (data.status === "success") {
       localStorage.setItem("userPhone", phone);
-      window.location.href="home.html";
+      window.location.href = "home.html";
+    } else {
+      document.getElementById("error").innerText = "Invalid phone or security code";
     }
-    else{
-      document.getElementById("error").innerText =
-      "Invalid phone or security code";
-    }
-
   })
-  .catch(err=>{
-    document.getElementById("error").innerText="Server error";
-    console.log(err);
+  .catch(err => {
+    document.getElementById("error").innerText = "Server error or CORS issue";
+    console.error("Error:", err);
   });
-
 }
 function goRegister(){
   // Optional: create separate register.html in GitHub
