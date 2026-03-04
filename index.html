@@ -107,17 +107,14 @@ function login(){
   }
 
   fetch(API_URL,{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body: JSON.stringify({
-      type:"login",
-      phone: phone,
-      code: code,
-      deviceId: generateDeviceId()
-    })
+  method:"POST",
+  body: JSON.stringify({
+    type:"login",
+    phone: phone,
+    code: code,
+    deviceId: generateDeviceId()
   })
+})
   .then(res=>res.json())
   .then(data=>{
 
