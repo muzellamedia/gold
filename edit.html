@@ -75,6 +75,9 @@ button{
 <input type="text" id="num3" placeholder="Phone 3">
 
 <button onclick="saveDetails()">Save Permanently</button>
+  <button id="homeBtn" onclick="location.href='home.html'" style="display:none;background:#444;">
+Back to Home
+</button>
 
 </div>
 
@@ -104,33 +107,38 @@ fetch(API_URL + "?type=user&phone=" + phone)
 // SAVE
 function saveDetails(){
 
-  const file = document.getElementById("logoFile").files[0];
+const file = document.getElementById("logoFile").files[0];
 
-  const saveToServer = (logoBase64="")=>{
-    fetch(API_URL,{
-      method:"POST",
-      body: JSON.stringify({
-        type:"updateUser",
-        phone: phone,
-        logo: logoBase64,
-        contact1: num1.value,
-        contact2: num2.value,
-        contact3: num3.value
-      })
-    })
-    .then(res=>res.json())
-    .then(()=>{
-      alert("Saved Permanently");
-    });
-  };
+const saveToServer = (logoBase64="")=>{
+fetch(API_URL,{
+method:"POST",
+body: JSON.stringify({
+type:"updateUser",
+phone: phone,
+logoBase64: logoBase64,
+contact1: num1.value,
+contact2: num2.value,
+contact3: num3.value
+})
+})
+.then(res=>res.json())
+.then(()=>{
 
-  if(file){
-    const reader = new FileReader();
-    reader.onload = ()=> saveToServer(reader.result);
-    reader.readAsDataURL(file);
-  } else {
-    saveToServer();
-  }
+alert("Saved Permanently");
+
+document.getElementById("homeBtn").style.display="block";
+
+});
+};
+
+if(file){
+const reader = new FileReader();
+reader.onload = ()=> saveToServer(reader.result);
+reader.readAsDataURL(file);
+}else{
+saveToServer();
+}
+
 }
 </script>
 
