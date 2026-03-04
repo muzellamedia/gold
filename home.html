@@ -178,28 +178,48 @@ window.addEventListener("DOMContentLoaded", async function(){
 
 const phone = userPhone;
 
+const res = await fetch(API_URL + "?type=init&phone=" + phone);
+const data = await res.json();
+
+const user = data.user;
+const rates = data.rates;
+backgrounds = data.backgrounds;
+
+
 // =====================
-// 1️⃣ LOAD BACKGROUNDS
+// USER DATA
 // =====================
-try{
-const bgRes = await fetch(API_URL + "?type=backgrounds");
-backgrounds = await bgRes.json();
-}catch(e){
-console.log("Background load error",e);
+
+shopName = user.shop || "";
+logoUrl = user.logo || "";
+
+contacts = [
+user.contact1,
+user.contact2,
+user.contact3
+].filter(n=>n);
+
+document.getElementById("shopName").innerText = user.shop || "";
+document.getElementById("place").innerText = user.place || "";
+document.getElementById("district").innerText = user.district || "";
+document.getElementById("email").innerText = user.email || "";
+
+document.getElementById("contact").innerText =
+contacts.join(" | ");
+
+if(user.logo){
+document.getElementById("logoBox").innerHTML =
+"<img src='"+user.logo+"'>";
 }
 
 
 // =====================
-// 2️⃣ LOAD GOLD RATE
+// GOLD RATE
 // =====================
-try{
 
-const rateRes = await fetch(API_URL + "?type=rates");
-const rateData = await rateRes.json();
-
-gold1Gram = rateData.gold1gram || "";
+gold1Gram = rates.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
-rateDate = rateData.date || "";
+rateDate = rates.date || "";
 
 const today = new Date().toISOString().slice(0,10);
 const rateStatus = document.getElementById("rateStatus");
@@ -212,54 +232,19 @@ rateStatus.innerHTML = "Today Gold Rate Not Updated";
 rateStatus.className = "status not-updated";
 }
 
-}catch(e){
-console.log("Rate load error",e);
-}
-
 
 // =====================
-// 3️⃣ LOAD USER DATA
-// =====================
-try{
-
-const userRes = await fetch(API_URL + "?type=user&phone=" + phone);
-const data = await userRes.json();
-
-shopName = data.shop || "";
-logoUrl = data.logo || "";
-
-contacts = [
-data.contact1,
-data.contact2,
-data.contact3
-].filter(n=>n);
-
-document.getElementById("shopName").innerText = data.shop || "";
-document.getElementById("place").innerText = data.place || "";
-document.getElementById("district").innerText = data.district || "";
-document.getElementById("email").innerText = data.email || "";
-
-document.getElementById("contact").innerText =
-contacts.join(" | ");
-
-if(data.logo){
-document.getElementById("logoBox").innerHTML =
-"<img src='"+data.logo+"'>";
-}
-
-
-// =====================
-// 4️⃣ PLAN STATUS
+// PLAN STATUS
 // =====================
 
-const expiry = data.planExpiry ? new Date(data.planExpiry) : null;
-const today = new Date();
+const expiry = user.planExpiry ? new Date(user.planExpiry) : null;
+const todayDate = new Date();
 
 const downloadBtn = document.getElementById("downloadBtn");
 const planStatus = document.getElementById("planStatus");
 const rechargeBtn = document.getElementById("rechargeBtn");
 
-if(!expiry || today > expiry){
+if(!expiry || todayDate > expiry){
 
 downloadBtn.disabled = true;
 downloadBtn.innerText = "Recharge Required";
@@ -272,7 +257,7 @@ planStatus.className = "status plan-expired";
 
 }else{
 
-const diffTime = expiry - today;
+const diffTime = expiry - todayDate;
 const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
 
 planStatus.innerText =
@@ -288,12 +273,7 @@ planStatus.className = "status plan-active";
 
 }
 
-}catch(e){
-console.log("User load error",e);
-}
-
 });
-
   // =====================
   // RANDOM
   // =====================
