@@ -155,7 +155,7 @@ window.addEventListener("DOMContentLoaded", function(){
   .then(res=>res.json())
   .then(data=>{
 
-    // ✅ USER DATA DISPLAY
+   // ✅ USER DATA DISPLAY
     shopName = data.shop || "";
     logoUrl = data.logo || "";
 
@@ -178,9 +178,8 @@ window.addEventListener("DOMContentLoaded", function(){
         "<img src='"+data.logo+"'>";
     }
 
-    // =================
+
     // RATE STATUS
-    // =================
     fetch(API_URL + "?type=rates")
     .then(res=>res.json())
     .then(data=>{
@@ -205,8 +204,6 @@ window.addEventListener("DOMContentLoaded", function(){
 
   });
 
-});
-
   // BACKGROUNDS
   fetch(API_URL + "?type=backgrounds")
   .then(res => res.json())
@@ -215,7 +212,6 @@ window.addEventListener("DOMContentLoaded", function(){
   });
 
 });
-
     
 
   // =====================
