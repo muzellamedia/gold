@@ -7,9 +7,9 @@
 
 body{
 font-family:Arial;
+background:#eee;
 margin:0;
 padding:20px;
-background:#eee;
 }
 
 .container{
@@ -20,7 +20,7 @@ flex-wrap:wrap;
 
 .box{
 flex:1;
-min-width:320px;
+min-width:350px;
 background:white;
 padding:15px;
 border-radius:10px;
@@ -48,14 +48,14 @@ margin-top:10px;
 }
 
 .previewBox{
-background:#0f7a2a;
-padding:20px;
+background:#1f8f3a;
+padding:15px;
 border-radius:10px;
 text-align:center;
 }
 
 canvas{
-background:#0f7a2a;
+background:#1f8f3a;
 max-width:100%;
 }
 
@@ -64,36 +64,40 @@ max-width:100%;
 
 <body>
 
-<h2>Canvas Template Preview Tool</h2>
+<h2>Canvas Template Function Preview</h2>
 
 <div class="container">
 
 <div class="box">
 
-<h3>Paste Template Code</h3>
+<h3>Paste Template Function</h3>
 
 <textarea id="codeBox">
+
+function template1(ctx, canvas){
 
 ctx.fillStyle="white";
 ctx.textAlign="center";
 
-ctx.font="bold 120px Arial";
+ctx.font="bold 160px Arial";
 ctx.fillText("SHOP NAME",1240,250);
 
-ctx.font="bold 150px Arial";
-ctx.fillText("₹ 9450",1240,1600);
-
-ctx.font="bold 120px Arial";
-ctx.fillText("1 GRAM",1240,1800);
+ctx.font="bold 180px Arial";
+ctx.fillText("₹ 9450",1240,1700);
 
 ctx.font="bold 150px Arial";
-ctx.fillText("₹ 75600",1240,2200);
+ctx.fillText("1 GRAM",1240,1900);
 
-ctx.font="bold 120px Arial";
-ctx.fillText("1 PAVAN",1240,2400);
+ctx.font="bold 180px Arial";
+ctx.fillText("₹ 75600",1240,2300);
+
+ctx.font="bold 150px Arial";
+ctx.fillText("1 PAVAN",1240,2500);
 
 ctx.font="bold 80px Arial";
-ctx.fillText("Contact: 9645565177",1240,3200);
+ctx.fillText("Contact: 9645565177",1240,3300);
+
+}
 
 </textarea>
 
@@ -127,17 +131,23 @@ const ctx = canvas.getContext("2d");
 // clear canvas
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
-// background
-ctx.fillStyle="#0f7a2a";
+// green background
+ctx.fillStyle="#1f8f3a";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
-// user code
 const code = document.getElementById("codeBox").value;
 
 try{
-new Function("ctx","canvas",code)(ctx,canvas);
+
+eval(code);
+
+// run template
+template1(ctx, canvas);
+
 }catch(err){
-alert(err);
+
+alert("Error in code:\n"+err);
+
 }
 
 }
