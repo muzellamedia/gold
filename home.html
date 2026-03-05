@@ -235,7 +235,7 @@ Download Poster
 let gold1Pavan = "";
   let rateDate = "";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbwa2BJ9eStgHeOJ5sZ3QT1ITyp3y8wyEY4hdgF_yplAv4rzWl5_yFKACz8nHo5bs4SjwA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwjSLCG5yRNkA2Ti4HjmZOoL3QsRUpUjp-RRjn__tl7cKbYmSPTUFtssSg4zrbbO72klA/exec";
 const userPhone = localStorage.getItem("userPhone");
   
 
@@ -302,36 +302,15 @@ document.getElementById("logoBox").innerHTML =
 
 }
 
-// =====================
-// GOLD RATE
-// =====================
 
-// =====================
-// GOLD RATE
-// =====================
-
-// =====================
-// GOLD RATE
-// =====================
-
-// =====================
-// GOLD RATE
-// =====================
 
 gold1Gram = rates.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
 rateDate = rates.date || "";
 
-const rateStatus = document.getElementById("rateStatus");
+const today = new Date().toISOString().slice(0,10);
 
-// today date
-const today = new Date();
-const todayFormatted =
-today.getDate().toString().padStart(2,'0') + "-" +
-(today.getMonth()+1).toString().padStart(2,'0') + "-" +
-today.getFullYear();
-
-if(rateDate === todayFormatted){
+if(rateDate === today){
 
 rateStatus.innerHTML = "Today Gold Rate Updated";
 rateStatus.className = "status updated";
