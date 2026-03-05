@@ -6,6 +6,7 @@
 <title>Register</title>
 
 <style>
+
 body{
   font-family: Arial;
   background: linear-gradient(135deg,#8b0000,#ffcccb);
@@ -14,31 +15,36 @@ body{
   align-items:center;
   min-height:100vh;
   margin:0;
+  padding:10px;
 }
 
 .register-box{
   background:white;
   padding:25px;
   border-radius:12px;
-  width:350px;
+  width:100%;
+  max-width:380px;
   box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
 h2{
   text-align:center;
+  margin-bottom:15px;
 }
 
 input{
   width:100%;
-  padding:10px;
+  padding:12px;
   margin:8px 0;
   border-radius:6px;
   border:1px solid #ccc;
+  font-size:16px;
+  box-sizing:border-box;
 }
 
 button{
   width:100%;
-  padding:12px;
+  padding:14px;
   margin-top:10px;
   border:none;
   border-radius:6px;
@@ -46,6 +52,7 @@ button{
   cursor:pointer;
   background:#8b0000;
   color:white;
+  font-size:16px;
 }
 
 button:hover{
@@ -57,6 +64,30 @@ button:hover{
   text-align:center;
   font-weight:bold;
 }
+
+/* Mobile extra optimization */
+
+@media(max-width:480px){
+
+.register-box{
+  padding:20px;
+  border-radius:10px;
+}
+
+h2{
+  font-size:20px;
+}
+
+input{
+  padding:14px;
+}
+
+button{
+  padding:15px;
+}
+
+}
+
 </style>
 </head>
 
@@ -65,12 +96,12 @@ button:hover{
 <div class="register-box">
 <h2>Register</h2>
 
-<input type="text" id="phone" placeholder="Your Phone Number" required>
+<input type="tel" id="phone" placeholder="Your Phone Number" required>
 <input type="text" id="shop" placeholder="Shop Name" required>
 <input type="text" id="place" placeholder="Place" required>
 <input type="text" id="district" placeholder="District" required>
 <input type="email" id="email" placeholder="Email" required>
-<input type="text" id="contact" placeholder="Contact Number" required>
+<input type="tel" id="contact" placeholder="Contact Number" required>
 
 <button onclick="register()">Register</button>
 
@@ -94,7 +125,7 @@ function register(){
     return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwjSLCG5yRNkA2Ti4HjmZOoL3QsRUpUjp-RRjn__tl7cKbYmSPTUFtssSg4zrbbO72klA/exec", {
     method: "POST",
     body: JSON.stringify({
       phone, shop, place, district, email, contact
