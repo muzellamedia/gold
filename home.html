@@ -471,79 +471,65 @@ function drawRatesLeft(ctx){
   // =====================
   // TEMPLATE 1
   // =====================
-  function template1(ctx, canvas){
+ function template1(ctx, canvas){
 
-    ctx.fillStyle="white";
-    ctx.textAlign="center";
+  // Background
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    ctx.font="bold 160px Arial";
-    ctx.fillText(shopName,1240,250);
+  // Shop Name
+  ctx.fillStyle="white";
+  ctx.textAlign="center";
+  ctx.font="bold 120px Arial";
+  ctx.fillText(shopName,canvas.width/2,150);
 
-    if(logoUrl){
-      const logo = new Image();
-      logo.crossOrigin="anonymous";
-      logo.src = logoUrl + "&t=" + new Date().getTime();
+  // Jewellery Image (left side)
+  if(logoUrl){
+    const img = new Image();
+    img.crossOrigin="anonymous";
+    img.src = logoUrl + "&t=" + new Date().getTime();
 
-      logo.onload = function(){
-  ctx.drawImage(logo,840,350,800,800);
-  drawRates(ctx);
-  drawContacts(ctx);
-  save(canvas);
-};
-    } else {
-  drawRates(ctx);
-  drawContacts(ctx);
-  save(canvas);
-}
+    img.onload = function(){
+
+      ctx.drawImage(img,100,300,900,1200);
+
+      drawRightPanel(ctx);
+
+      drawRates(ctx);
+      drawContacts(ctx);
+
+      save(canvas);
+    }
+
+  } else {
+
+    drawRightPanel(ctx);
+    drawRates(ctx);
+    drawContacts(ctx);
+
+    save(canvas);
   }
-
-
-  // =====================
-  // TEMPLATE 2
-  // =====================
-  function template2(ctx, canvas){
-
-    ctx.fillStyle="white";
-    ctx.textAlign="left";
-
-    if(logoUrl){
-      const logo = new Image();
-      logo.crossOrigin="anonymous";
-      logo.src = logoUrl;
-
-      logo.onload = function(){
-  ctx.drawImage(logo,200,300,700,700);
-  drawRatesLeft(ctx);
-  drawContacts(ctx);
-  save(canvas);
-};
-
-    } else {
-  drawRatesLeft(ctx);
-  drawContacts(ctx);
-  save(canvas);
 }
-  }
 
+function drawRightPanel(ctx){
 
-  // =====================
-  // TEMPLATE 3
-  // =====================
-  function template3(ctx, canvas){
+  // Right side panel
+  ctx.fillStyle="#111";
+  ctx.fillRect(1100,250,900,1300);
 
   ctx.fillStyle="white";
   ctx.textAlign="center";
 
-  ctx.font="bold 200px Arial";
-  ctx.fillText("1 GRAM ₹ " + gold1Gram,1240,1700);
+  ctx.font="bold 90px Arial";
+  ctx.fillText("TODAY'S",1550,400);
 
-  ctx.font="bold 200px Arial";
-  ctx.fillText("1 PAVAN ₹ " + gold1Pavan,1240,2000);
+  ctx.font="bold 130px Arial";
+  ctx.fillText("GOLD RATE",1550,520);
 
-  drawContacts(ctx);
-  save(canvas);
+  ctx.font="70px Arial";
+  ctx.fillText(rateDate,1550,650);
+
 }
-
 
   // RATES
   function drawRates(ctx){
