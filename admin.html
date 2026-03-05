@@ -76,6 +76,21 @@ button{
   <div id="preview" style="font-weight:bold;"></div>
 
   <button onclick="updateRate()">Update Today Rate</button>
+  <hr style="margin:20px 0">
+
+<h3>Manual Recharge</h3>
+
+<input type="text" id="userPhone" placeholder="Enter User Phone">
+
+<select id="planDays">
+<option value="">Select Plan</option>
+<option value="30">30 Days</option>
+<option value="90">90 Days</option>
+<option value="180">180 Days</option>
+<option value="365">365 Days</option>
+</select>
+
+<button onclick="activatePlan()">Activate Plan</button>
 
 </div>
 
@@ -83,7 +98,7 @@ button{
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwLPCYFEU_qWa_bacetYkLq9_MDzbeDFohvFTOMYSDDPST8Mz1AN5jjzhSWEFIUFjtK-g/exec";
 const ADMIN_PASSWORD = "admin@1994";
 
 // Check Password
@@ -108,7 +123,40 @@ document.getElementById("gramRate").addEventListener("input", function(){
   document.getElementById("preview").innerHTML =
     "1 Pavan = ₹ " + pavan.toFixed(2);
 });
+// =====================
+// MANUAL RECHARGE
+// =====================
 
+function activatePlan(){
+
+const phone = document.getElementById("userPhone").value.trim();
+const days = document.getElementById("planDays").value;
+
+if(!phone || !days){
+alert("Enter phone and select plan");
+return;
+}
+
+fetch(API_URL,{
+method:"POST",
+body: JSON.stringify({
+type:"activatePlan",
+phone: phone,
+days: parseInt(days)
+})
+})
+.then(res=>res.json())
+.then(data=>{
+
+if(data.status === "success"){
+alert("Plan Activated Successfully");
+}else{
+alert("Activation Failed");
+}
+
+});
+
+}
 // Update Rate
 function updateRate(){
 
