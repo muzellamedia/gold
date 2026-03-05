@@ -2,60 +2,140 @@
 <html>
 <head>
 <title>Recharge Plan</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<style>
+
+body{
+font-family: Arial;
+background: linear-gradient(135deg,#b8860b,#ffd700);
+margin:0;
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.card{
+background:white;
+width:100%;
+max-width:380px;
+padding:25px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+text-align:center;
+}
+
+h2{
+margin-bottom:15px;
+}
+
+select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:8px;
+background:#b8860b;
+color:white;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#a07600;
+}
+
+.note{
+font-size:13px;
+color:#555;
+margin-top:10px;
+}
+
+</style>
 </head>
 
-<body style="text-align:center;font-family:Arial">
+<body>
 
-<h2>Select Plan</h2>
+<div class="card">
 
-<button onclick="pay(2000,30)">1 Month - ₹2000</button><br><br>
-<button onclick="pay(6000,90)">3 Month - ₹6000</button><br><br>
-<button onclick="pay(12000,180)">6 Month - ₹12000</button><br><br>
-<button onclick="pay(24000,365)">1 Year - ₹24000</button>
+<h2>Recharge Plan</h2>
+
+<select id="plan">
+<option value="30">30 Days - ₹199</option>
+<option value="90">90 Days - ₹499</option>
+<option value="180">180 Days - ₹899</option>
+</select>
+
+<button onclick="payNow()">Recharge Now</button>
+
+<div class="note">
+Secure Payment via Razorpay
+</div>
+
+</div>
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxEnbnZSqh8sZlqF2GvMRuCf07IRcxKnwrfehjeBsRvJeNfdilEcJizIIggffo0jS074Q/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwjSLCG5yRNkA2Ti4HjmZOoL3QsRUpUjp-RRjn__tl7cKbYmSPTUFtssSg4zrbbO72klA/exec";
 const phone = localStorage.getItem("userPhone");
 
-if(!phone){
-  window.location.href="index.html";
+function payNow(){
+
+const days = document.getElementById("plan").value;
+
+let amount = 199;
+
+if(days == 90) amount = 499;
+if(days == 180) amount = 899;
+
+fetch(API_URL,{
+method:"POST",
+body: JSON.stringify({
+type:"createOrder",
+phone:phone,
+days:days,
+amount:amount
+})
+})
+.then(res=>res.json())
+.then(order=>{
+
+const options = {
+
+key: "rzp_test_SMkbaYdtUC8Vnp",
+amount: order.amount,
+currency: "INR",
+order_id: order.id,
+
+handler:function(){
+
+alert("Payment Successful");
+
+location.href="home.html";
+
 }
 
-function pay(amount, days){
+};
 
-  // 🔹 Create Order from server
-  fetch(API_URL,{
-    method:"POST",
-    body: JSON.stringify({
-      type:"createOrder",
-      amount: amount,
-      phone: phone,
-      days: days
-    })
-  })
-  .then(res=>res.json())
-  .then(order=>{
+const rzp = new Razorpay(options);
+rzp.open();
 
-    var options = {
-      key: "rzp_test_SMkbaYdtUC8Vnp",
-      amount: order.amount,
-      currency: "INR",
-      order_id: order.id,
-      name: "Gold Poster Subscription",
-      description: days + " Days Plan",
-
-      handler: function (response){
-        alert("Payment Successful. Activating plan...");
-        window.location.href="home.html";
-      }
-    };
-
-    var rzp = new Razorpay(options);
-    rzp.open();
-
-  });
+});
 
 }
 
