@@ -306,29 +306,44 @@ document.getElementById("logoBox").innerHTML =
 // GOLD RATE
 // =====================
 
+// =====================
+// GOLD RATE
+// =====================
+
 gold1Gram = data.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
 rateDate = data.date || "";
 
-const today = new Date().toISOString().slice(0,10);
 const rateStatus = document.getElementById("rateStatus");
+
+// today's date
+const today = new Date().toISOString().slice(0,10);
 
 let rateDateFormatted = "";
 
 if(rateDate){
+
+// Sheet format: 05-03-2026
 const parts = rateDate.split("-");
-rateDateFormatted = parts[2] + "-" + parts[1] + "-" + parts[0];
+
+rateDateFormatted =
+parts[2] + "-" + parts[1] + "-" + parts[0];
+
 }
 
-const today = new Date().toISOString().slice(0,10);
-
+// compare
 if(rateDateFormatted === today){
+
 rateStatus.innerHTML = "Today Gold Rate Updated";
+rateStatus.className = "status updated";
+
 }else{
+
 rateStatus.innerHTML = "Today Gold Rate Not Updated";
+rateStatus.className = "status not-updated";
+
 }
-
-
+// =====================
 // =====================
 // PLAN STATUS
 // =====================
@@ -342,6 +357,8 @@ const rechargeBtn = document.getElementById("rechargeBtn");
 
 if(!expiry || todayDate > expiry){
 
+// PLAN EXPIRED
+
 downloadBtn.disabled = true;
 downloadBtn.innerText = "Recharge Required";
 downloadBtn.style.background = "red";
@@ -352,15 +369,24 @@ planStatus.innerText = "Plan Expired";
 planStatus.className = "status plan-expired";
 
 }else{
+
+// PLAN ACTIVE
+
 downloadBtn.disabled = false;
+downloadBtn.innerText = "Download Poster";
+downloadBtn.style.background = "#b8860b";
+
 const diffTime = expiry - todayDate;
 const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
 
 planStatus.innerText =
 "Plan Active - " + remainingDays + " Days Remaining";
 
+planStatus.className = "status plan-active";
+
 rechargeBtn.style.display = "none";
 
+// SHOW WARNING IF LESS THAN 3 DAYS
 if(remainingDays <= 3){
 planStatus.className = "status plan-warning";
 rechargeBtn.style.display = "block";
@@ -368,9 +394,9 @@ rechargeBtn.style.display = "block";
 
 }
 
+// REMOVE LOADING SCREEN
 document.getElementById("loadingScreen").style.display = "none";
-
-});
+ });
   // =====================
   // RANDOM
   // =====================
