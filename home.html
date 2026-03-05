@@ -310,29 +310,19 @@ document.getElementById("logoBox").innerHTML =
 // GOLD RATE
 // =====================
 
-gold1Gram = data.gold1gram || "";
+// =====================
+// GOLD RATE
+// =====================
+
+gold1Gram = rates.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
-rateDate = data.date || "";
+rateDate = rates.date || "";
 
 const rateStatus = document.getElementById("rateStatus");
 
-// today's date
 const today = new Date().toISOString().slice(0,10);
 
-let rateDateFormatted = "";
-
-if(rateDate){
-
-// Sheet format: 05-03-2026
-const parts = rateDate.split("-");
-
-rateDateFormatted =
-parts[2] + "-" + parts[1] + "-" + parts[0];
-
-}
-
-// compare
-if(rateDateFormatted === today){
+if(rateDate === today){
 
 rateStatus.innerHTML = "Today Gold Rate Updated";
 rateStatus.className = "status updated";
