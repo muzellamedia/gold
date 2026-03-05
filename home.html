@@ -287,18 +287,21 @@ if(user.logo){
 
 let fileId = "";
 
-// Google Drive link format handle
 if(user.logo.includes("id=")){
 fileId = user.logo.split("id=")[1];
-}else if(user.logo.includes("/d/")){
+}
+else if(user.logo.includes("/d/")){
 fileId = user.logo.split("/d/")[1].split("/")[0];
 }
 
-// convert to lh3 image url
 let imgUrl = "https://lh3.googleusercontent.com/d/" + fileId;
 
+// UI display
 document.getElementById("logoBox").innerHTML =
 "<img src='"+imgUrl+"'>";
+
+// ⭐ poster-ന് same URL ഉപയോഗിക്കുക
+logoUrl = imgUrl;
 
 }
 
