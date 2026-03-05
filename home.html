@@ -255,7 +255,9 @@ const phone = userPhone;
 const res = await fetch(API_URL + "?type=init&phone=" + phone);
 const data = await res.json();
 
-const user = data;
+const user = data.user || {};
+const rates = data.rates || {};
+backgrounds = data.backgrounds || [];
 
 
 // =====================
