@@ -235,7 +235,7 @@ Download Poster
 let gold1Pavan = "";
   let rateDate = "";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbz_a9ykLIPSWDL7kGky5CGbhSnk92Eo9dbP0KeP1Jf3f33UFapkLwyXquBMdt7GSZk-SA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwa2BJ9eStgHeOJ5sZ3QT1ITyp3y8wyEY4hdgF_yplAv4rzWl5_yFKACz8nHo5bs4SjwA/exec";
 const userPhone = localStorage.getItem("userPhone");
   
 
@@ -313,12 +313,19 @@ rateDate = data.date || "";
 const today = new Date().toISOString().slice(0,10);
 const rateStatus = document.getElementById("rateStatus");
 
-if(rateDate === today){
+let rateDateFormatted = "";
+
+if(rateDate){
+const parts = rateDate.split("-");
+rateDateFormatted = parts[2] + "-" + parts[1] + "-" + parts[0];
+}
+
+const today = new Date().toISOString().slice(0,10);
+
+if(rateDateFormatted === today){
 rateStatus.innerHTML = "Today Gold Rate Updated";
-rateStatus.className = "status updated";
 }else{
 rateStatus.innerHTML = "Today Gold Rate Not Updated";
-rateStatus.className = "status not-updated";
 }
 
 
