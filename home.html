@@ -473,46 +473,29 @@ function drawRatesLeft(ctx){
   // =====================
  function template1(ctx, canvas){
 
-// =====================
-// LOGO
-// =====================
 if(logoUrl){
 const logo = new Image();
 logo.crossOrigin="anonymous";
 logo.src = logoUrl + "&t=" + new Date().getTime();
 
 logo.onload = function(){
-
 ctx.drawImage(logo,1040,150,400,400);
-
-drawPosterContent(ctx,canvas);
-
+drawPosterContent();
 };
+
 }else{
-drawPosterContent(ctx,canvas);
+drawPosterContent();
 }
 
+function drawPosterContent(){
 
-
-// =====================
-// MAIN DESIGN
-// =====================
-function drawPosterContent(ctx,canvas){
-
-// =====================
 // TITLE
-// =====================
-
 ctx.fillStyle="#f7d64a";
 ctx.textAlign="center";
 ctx.font="bold 140px Arial";
 ctx.fillText("TODAY GOLD RATE",1240,1900);
 
-
-// =====================
 // DATE BOX
-// =====================
-
 ctx.fillStyle="#dddddd";
 ctx.fillRect(740,2000,1000,150);
 
@@ -520,25 +503,17 @@ ctx.fillStyle="#000";
 ctx.font="bold 100px Arial";
 ctx.fillText(rateDate,1240,2100);
 
-
-// =====================
 // RATE PANEL
-// =====================
-
 ctx.fillStyle="#222";
 ctx.fillRect(300,2200,1880,450);
 
-
 // LEFT RATE
 ctx.fillStyle="white";
-ctx.textAlign="center";
-
 ctx.font="bold 100px Arial";
 ctx.fillText("1 GRAM",700,2350);
 
 ctx.font="bold 180px Arial";
 ctx.fillText("₹ "+gold1Gram,700,2550);
-
 
 // RIGHT RATE
 ctx.font="bold 100px Arial";
@@ -547,15 +522,10 @@ ctx.fillText("1 PAVAN",1780,2350);
 ctx.font="bold 180px Arial";
 ctx.fillText("₹ "+gold1Pavan,1780,2550);
 
-
 // CENTER LINE
 ctx.fillRect(1240,2200,10,450);
 
-
-// =====================
-// FOOTER BAR
-// =====================
-
+// FOOTER
 ctx.fillStyle="#e63c0c";
 ctx.fillRect(0,3100,2480,408);
 
@@ -570,6 +540,13 @@ ctx.fillText("Place",1240,3350);
 
 ctx.font="90px Arial";
 ctx.fillText("Ph: "+contacts.join(", "),1240,3470);
+
+// SAVE IMAGE
+save(canvas);
+
+}
+
+}
 
 
 
