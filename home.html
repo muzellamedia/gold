@@ -476,109 +476,142 @@ function drawRatesLeft(ctx){
  function template1(ctx, canvas){
 
 // =====================
-// LOGO (bigger)
+// LOGO (TOP RIGHT)
 // =====================
 if(logoUrl){
+
 const logo = new Image();
 logo.crossOrigin="anonymous";
 logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-// logo bigger
-ctx.drawImage(logo,940,120,600,600);
+ctx.drawImage(logo,1800,150,450,450);
 
-drawPosterContent(ctx,canvas);
+drawContent(ctx,canvas);
 
 };
+
 }else{
-drawPosterContent(ctx,canvas);
-}
+
+drawContent(ctx,canvas);
 
 }
 
+}
+
+
 
 // =====================
-// MAIN DESIGN
+// MAIN CONTENT
 // =====================
-function drawPosterContent(ctx,canvas){
+function drawContent(ctx,canvas){
+
+ctx.textAlign="center";
+
 
 // =====================
 // TITLE
 // =====================
-ctx.fillStyle="#f7d64a";
-ctx.textAlign="center";
+ctx.fillStyle="#f4d03f";
 ctx.font="bold 140px Arial";
-ctx.fillText("TODAY GOLD RATE",1240,1850);
+ctx.fillText("TODAY GOLD RATE",1240,2000);
 
 
 // =====================
 // DATE BOX
 // =====================
 ctx.fillStyle="#dddddd";
-ctx.fillRect(840,1920,800,150);
+ctx.fillRect(850,2100,780,140);
 
 ctx.fillStyle="#000";
-ctx.font="bold 100px Arial";
-ctx.fillText(rateDate,1240,2030);
+ctx.font="bold 90px Arial";
+ctx.fillText(rateDate,1240,2200);
 
 
 // =====================
-// RATE PANEL (50% transparent)
+// RATE BOX STYLE
 // =====================
-ctx.fillStyle="rgba(0,0,0,0.5)";
-ctx.fillRect(300,2100,1880,450);
+ctx.lineWidth = 10;
+ctx.strokeStyle = "#b6c94a";
+ctx.fillStyle = "rgba(0,0,0,0.55)";
 
 
-// LEFT RATE
+// LEFT BOX
+roundRect(ctx,300,2300,900,400,40,true,true);
+
+
+// RIGHT BOX
+roundRect(ctx,1280,2300,900,400,40,true,true);
+
+
+// =====================
+// LEFT TEXT
+// =====================
 ctx.fillStyle="white";
-ctx.textAlign="center";
 
-ctx.font="bold 100px Arial";
-ctx.fillText("1 GRAM",700,2250);
+ctx.font="bold 90px Arial";
+ctx.fillText("1 GRAM",750,2450);
 
 ctx.font="bold 180px Arial";
-ctx.fillText("₹ "+gold1Gram,700,2450);
-
-
-// RIGHT RATE
-ctx.font="bold 100px Arial";
-ctx.fillText("1 PAVAN",1780,2250);
-
-ctx.font="bold 180px Arial";
-ctx.fillText("₹ "+gold1Pavan,1780,2450);
-
-
-// CENTER LINE
-ctx.fillStyle="white";
-ctx.fillRect(1240,2100,6,450);
+ctx.fillText("₹ "+gold1Gram,750,2650);
 
 
 // =====================
-// FOOTER BAR
+// RIGHT TEXT
+// =====================
+ctx.font="bold 90px Arial";
+ctx.fillText("1 PAVAN",1730,2450);
+
+ctx.font="bold 180px Arial";
+ctx.fillText("₹ "+gold1Pavan,1730,2650);
+
+
+
+// =====================
+// FOOTER
 // =====================
 ctx.fillStyle="#e63c0c";
 ctx.fillRect(0,3050,2480,450);
 
 ctx.fillStyle="white";
-ctx.textAlign="center";
 
 ctx.font="bold 120px Arial";
 ctx.fillText(shopName,1240,3200);
 
-
-// PLACE
 ctx.font="90px Arial";
 ctx.fillText(place,1240,3320);
-// CONTACTS
+
 ctx.font="80px Arial";
 ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
-// =====================
 // SAVE
-// =====================
 save(canvas);
+
+}
+
+
+
+// =====================
+// ROUNDED RECT FUNCTION
+// =====================
+function roundRect(ctx,x,y,width,height,radius,fill,stroke){
+
+ctx.beginPath();
+ctx.moveTo(x+radius,y);
+ctx.lineTo(x+width-radius,y);
+ctx.quadraticCurveTo(x+width,y,x+width,y+radius);
+ctx.lineTo(x+width,y+height-radius);
+ctx.quadraticCurveTo(x+width,y+height,x+width-radius,y+height);
+ctx.lineTo(x+radius,y+height);
+ctx.quadraticCurveTo(x,y+height,x,y+height-radius);
+ctx.lineTo(x,y+radius);
+ctx.quadraticCurveTo(x,y,x+radius,y);
+ctx.closePath();
+
+if(fill) ctx.fill();
+if(stroke) ctx.stroke();
 
 }
    
