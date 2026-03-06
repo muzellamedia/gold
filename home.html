@@ -486,11 +486,9 @@ function drawRatesLeft(ctx){
   // =====================
   // TEMPLATE 1
   // =====================
- function template1(ctx, canvas){
+ function template4(ctx, canvas){
 
-// =====================
 // LOGO
-// =====================
 if(logoUrl){
 
 const logo = new Image();
@@ -520,18 +518,13 @@ function drawTemplate4(ctx,canvas){
 ctx.textAlign="center";
 
 
-// =====================
 // TITLE
-// =====================
-ctx.fillStyle="#f4d03f";
+ctx.fillStyle="white";
 ctx.font="bold 130px Arial";
 ctx.fillText("TODAY GOLD RATE",1240,1950);
 
 
-
-// =====================
 // 1 GRAM BOX
-// =====================
 ctx.fillStyle="#e6e6e6";
 roundRect(ctx,780,2050,920,300,50,true,false);
 
@@ -539,43 +532,39 @@ ctx.fillStyle="#222";
 ctx.font="bold 100px Arial";
 ctx.fillText("1 GRAM",1240,2200);
 
+// CENTER FIX
 ctx.font="bold 180px Arial";
-ctx.fillText(gold1Gram,1240,2350);
+ctx.fillText(gold1Gram,1240,2330);
 
 
 
-// =====================
-// 1 PAVAN BIG BOX
-// =====================
+// 1 PAVAN BOX
 ctx.fillStyle="#e6e6e6";
 roundRect(ctx,350,2400,1780,450,70,true,false);
 
 ctx.fillStyle="#222";
 
 ctx.font="bold 130px Arial";
-ctx.fillText("1 PAVAN",1240,2600);
+ctx.fillText("1 PAVAN",1240,2580);
 
+// CENTER FIX
 ctx.font="bold 320px Arial";
-ctx.fillText(gold1Pavan,1240,2850);
+ctx.fillText(gold1Pavan,1240,2820);
 
 
 
-// =====================
 // DATE BOX
-// =====================
 ctx.fillStyle="#e6e6e6";
 roundRect(ctx,900,2920,700,140,30,true,false);
 
 ctx.fillStyle="#222";
 ctx.font="bold 80px Arial";
-ctx.fillText(rateDate,1240,3020);
+ctx.fillText(rateDate,1240,3010);
 
 
 
-// =====================
 // FOOTER
-// =====================
-ctx.fillStyle="#e63c0c";
+ctx.fillStyle="#003333";
 ctx.fillRect(0,3050,2480,450);
 
 ctx.fillStyle="white";
@@ -592,30 +581,6 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 // SAVE
 save(canvas);
-
-}
-
-
-
-// =====================
-// ROUND RECT FUNCTION
-// =====================
-function roundRect(ctx,x,y,width,height,radius,fill,stroke){
-
-ctx.beginPath();
-ctx.moveTo(x+radius,y);
-ctx.lineTo(x+width-radius,y);
-ctx.quadraticCurveTo(x+width,y,x+width,y+radius);
-ctx.lineTo(x+width,y+height-radius);
-ctx.quadraticCurveTo(x+width,y+height,x+width-radius,y+height);
-ctx.lineTo(x+radius,y+height);
-ctx.quadraticCurveTo(x,y+height,x,y+height-radius);
-ctx.lineTo(x,y+radius);
-ctx.quadraticCurveTo(x,y,x+radius,y);
-ctx.closePath();
-
-if(fill) ctx.fill();
-if(stroke) ctx.stroke();
 
 }
 
