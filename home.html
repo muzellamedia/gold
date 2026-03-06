@@ -479,7 +479,7 @@ function drawRatesLeft(ctx){
 if(logoUrl){
 const logo = new Image();
 logo.crossOrigin="anonymous";
-logo.src = logoUrl + "&t=" + new Date().getTime();
+logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
