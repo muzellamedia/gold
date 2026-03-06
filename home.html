@@ -311,7 +311,18 @@ logoUrl = imgUrl;
 
 gold1Gram = rates.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
-rateDate = rates.date || "";
+let rawDate = rates.date || "";
+
+if(rawDate){
+const d = new Date(rawDate);
+
+rateDate = rateDate.toUpperCase();
+day:"numeric",
+month:"long",
+year:"numeric"
+});
+
+}
 
 const today = new Date().toISOString().slice(0,10);
 
