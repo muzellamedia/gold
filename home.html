@@ -499,15 +499,15 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-ctx.drawImage(logo,1800,150,450,450);
+ctx.drawImage(logo,1750,120,600,600);
 
-drawTemplate3(ctx,canvas);
+drawTemplate4(ctx,canvas);
 
 };
 
 }else{
 
-drawTemplate3(ctx,canvas);
+drawTemplate4(ctx,canvas);
 
 }
 
@@ -515,7 +515,7 @@ drawTemplate3(ctx,canvas);
 
 
 
-function drawTemplate3(ctx,canvas){
+function drawTemplate4(ctx,canvas){
 
 ctx.textAlign="center";
 
@@ -524,56 +524,58 @@ ctx.textAlign="center";
 // TITLE
 // =====================
 ctx.fillStyle="#f4d03f";
-ctx.font="bold 120px Arial";
-ctx.fillText("TODAY GOLD RATE",1240,2000);
-
-
-// =====================
-// RATE BOX
-// =====================
-ctx.lineWidth = 20;
-ctx.strokeStyle = "#6bdc22";
-ctx.fillStyle = "rgba(0,0,0,0.35)";
-
-roundRect(ctx,300,2100,1880,700,80,true,true);
-
-
-// =====================
-// DATE
-// =====================
-ctx.fillStyle="#ffffff";
-ctx.font="bold 120px Arial";
-ctx.fillText(rateDate,1240,2250);
-
-
-// =====================
-// PAVAN LABEL
-// =====================
-ctx.fillStyle="#f4d03f";
 ctx.font="bold 130px Arial";
-ctx.fillText("1 PAVAN",1240,2420);
+ctx.fillText("TODAY GOLD RATE",1240,1950);
+
 
 
 // =====================
-// PAVAN RATE BIG
+// 1 GRAM BOX
 // =====================
+ctx.fillStyle="#e6e6e6";
+roundRect(ctx,780,2050,920,300,50,true,false);
+
+ctx.fillStyle="#222";
+ctx.font="bold 100px Arial";
+ctx.fillText("1 GRAM",1240,2200);
+
+ctx.font="bold 180px Arial";
+ctx.fillText(gold1Gram,1240,2350);
+
+
+
+// =====================
+// 1 PAVAN BIG BOX
+// =====================
+ctx.fillStyle="#e6e6e6";
+roundRect(ctx,350,2400,1780,450,70,true,false);
+
+ctx.fillStyle="#222";
+
+ctx.font="bold 130px Arial";
+ctx.fillText("1 PAVAN",1240,2600);
+
 ctx.font="bold 320px Arial";
-ctx.fillText(gold1Pavan,1240,2720);
+ctx.fillText(gold1Pavan,1240,2850);
+
 
 
 // =====================
-// GRAM RATE
+// DATE BOX
 // =====================
-ctx.fillStyle="#ffffff";
-ctx.font="bold 120px Arial";
-ctx.fillText("1 GRAM "+gold1Gram,1240,2920);
+ctx.fillStyle="#e6e6e6";
+roundRect(ctx,900,2920,700,140,30,true,false);
+
+ctx.fillStyle="#222";
+ctx.font="bold 80px Arial";
+ctx.fillText(rateDate,1240,3020);
 
 
 
 // =====================
 // FOOTER
 // =====================
-ctx.fillStyle="#243434";
+ctx.fillStyle="#e63c0c";
 ctx.fillRect(0,3050,2480,450);
 
 ctx.fillStyle="white";
@@ -595,11 +597,8 @@ save(canvas);
 
 
 
-
-
-
 // =====================
-// ROUNDED RECT FUNCTION
+// ROUND RECT FUNCTION
 // =====================
 function roundRect(ctx,x,y,width,height,radius,fill,stroke){
 
@@ -617,28 +616,6 @@ ctx.closePath();
 
 if(fill) ctx.fill();
 if(stroke) ctx.stroke();
-
-}
-   
-
-
-function drawRightPanel(ctx){
-
-  // Right side panel
-  ctx.fillStyle="#111";
-  ctx.fillRect(1100,250,900,1300);
-
-  ctx.fillStyle="white";
-  ctx.textAlign="center";
-
-  ctx.font="bold 90px Arial";
-  ctx.fillText("TODAY'S",1550,400);
-
-  ctx.font="bold 130px Arial";
-  ctx.fillText("GOLD RATE",1550,520);
-
-  ctx.font="70px Arial";
-  ctx.fillText(rateDate,1550,650);
 
 }
 
