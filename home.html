@@ -483,21 +483,53 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-ctx.drawImage(logo,1750,120,600,600);
+const maxWidth = 700;
+const maxHeight = 400;
 
-drawTemplate4(ctx,canvas);
+let w = logo.width;
+let h = logo.height;
+
+// maintain aspect ratio
+if(w > maxWidth){
+h = h * (maxWidth / w);
+w = maxWidth;
+}
+
+if(h > maxHeight){
+w = w * (maxHeight / h);
+h = maxHeight;
+}
+
+// logo position
+const x = 1700;
+const y = 120;
+
+
+// 30% white transparent background
+ctx.fillStyle = "rgba(255,255,255,0.3)";
+roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
+
+
+// white outline
+ctx.strokeStyle = "white";
+ctx.lineWidth = 8;
+roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
+
+
+// draw logo
+ctx.drawImage(logo,x,y,w,h);
+
+drawTemplate(ctx,canvas);
 
 };
 
 }else{
 
-drawTemplate4(ctx,canvas);
+drawTemplate(ctx,canvas);
 
 }
 
 }
-
-
 
 function drawTemplate4(ctx,canvas){
 
