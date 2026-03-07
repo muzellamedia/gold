@@ -459,7 +459,7 @@ createPoster(backgrounds[bgIndex]);
 
     ctx.drawImage(bg,0,0,2480,3508);
 
-    const templateList = [template1,];
+    const templateList = [template4,];
     const seed = getSeed();
     const index = Math.floor(seededRandom(seed+10) * templateList.length);
 
@@ -472,10 +472,7 @@ createPoster(backgrounds[bgIndex]);
   };
 }
 
-  // =====================
-  // TEMPLATE 1
-  // =====================
- function template1(ctx, canvas){
+  function template4(ctx, canvas){
 
 // LOGO
 if(logoUrl){
@@ -488,13 +485,13 @@ logo.onload = function(){
 
 ctx.drawImage(logo,1750,120,600,600);
 
-drawTemplate1(ctx,canvas);
+drawTemplate4(ctx,canvas);
 
 };
 
 }else{
 
-drawTemplate1(ctx,canvas);
+drawTemplate4(ctx,canvas);
 
 }
 
@@ -502,7 +499,7 @@ drawTemplate1(ctx,canvas);
 
 
 
-function drawTemplate1(ctx,canvas){
+function drawTemplate4(ctx,canvas){
 
 ctx.textAlign="center";
 
@@ -572,7 +569,6 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 save(canvas);
 
 }
-
   // RATES
   function drawRates(ctx){
 
