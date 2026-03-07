@@ -587,40 +587,25 @@ ctx.fillText("1 Pavan",1730,2860);
 
 
 // FOOTER
-ctx.fillStyle="#1c2e2e";
+ctx.fillStyle="#003333";
 ctx.fillRect(0,3050,2480,450);
 
-
-// divider line
-ctx.strokeStyle="white";
-ctx.lineWidth=8;
-ctx.beginPath();
-ctx.moveTo(1500,3080);
-ctx.lineTo(1500,3480);
-ctx.stroke();
-
-
-// SHOP
 ctx.fillStyle="white";
+
 ctx.font="bold 120px Arial";
-ctx.fillText(shopName,700,3250);
+ctx.fillText(shopName,1240,3200);
 
 ctx.font="90px Arial";
-ctx.fillText(place,700,3380);
-
-
-// CONTACTS
-ctx.font="90px Arial";
-ctx.fillText("Contact:",1900,3230);
+ctx.fillText(place,1240,3320);
 
 ctx.font="80px Arial";
-ctx.fillText(contacts.join(", "),1900,3380);
+ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
-
-// SAVE
+ // SAVE
 save(canvas);
 
 }
+
 
    function roundRect(ctx,x,y,width,height,radius,fill,stroke){
 
