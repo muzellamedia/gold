@@ -511,15 +511,18 @@ ctx.fillText("TODAY GOLD RATE",1240,1950);
 
 
 // 1 GRAM BOX
-ctx.fillStyle="rgba(255,255,255,0.7)";   // 30% transparent
+ctx.fillStyle="rgba(255,255,255,0.7)";
 roundRect(ctx,780,2050,920,300,50,true,false);
 
 ctx.fillStyle="#222";
-ctx.font="bold 100px Arial";
-ctx.fillText("1 GRAM",1240,2160);   // little more up
 
-ctx.font="bold 180px Arial";
-ctx.fillText(gold1Gram,1240,2280);  // number adjust
+// label
+ctx.font="bold 90px Arial";
+ctx.fillText("1 GRAM",1240,2150);
+
+// number
+ctx.font="bold 200px Arial";
+ctx.fillText("₹ " + gold1Gram,1240,2320);
 
 
 
@@ -534,7 +537,7 @@ ctx.fillText("1 PAVAN",1240,2550);
 
 // CENTER FIX
 ctx.font="bold 320px Arial";
-ctx.fillText(gold1Pavan,1240,2790);
+ctx.fillText("₹ " + gold1Pavan,1240,2790);
 
 
 
