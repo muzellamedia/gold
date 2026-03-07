@@ -545,7 +545,7 @@ ctx.textAlign="center";
 ctx.fillStyle="#dcdcdc";
 ctx.textAlign="left";
 ctx.font="bold 120px Arial";
-ctx.fillText(rateDate,250,2350);
+ctx.fillText(rateDate,250,2450);
 
 
 // GOLD RATE TEXT
@@ -554,38 +554,38 @@ ctx.strokeStyle="#222";
 ctx.lineWidth=8;
 
 ctx.font="bold 220px Arial";
-ctx.strokeText("GOLD RATE",250,2550);
-ctx.fillText("GOLD RATE",250,2550);
+ctx.strokeText("GOLD RATE",250,2650);
+ctx.fillText("GOLD RATE",250,2650);
 
 
 
 // RIGHT RATE PANEL
 ctx.fillStyle="rgba(0,0,0,0.65)";
-roundRect(ctx,1100,2250,1100,520,60,true,false);
+roundRect(ctx,1150,2350,1000,480,60,true,false);
 
 // WHITE BORDER
 ctx.strokeStyle="white";
-ctx.lineWidth=12;
-roundRect(ctx,1100,2250,1100,520,60,false,true);
+ctx.lineWidth=10;
+roundRect(ctx,1150,2350,1000,480,60,false,true);
 
 
 // 1 PAVAN LABEL
 ctx.fillStyle="#f7e7a0";
 ctx.textAlign="left";
-ctx.font="bold 130px Arial";
-ctx.fillText("1 Pavan",1200,2400);
+ctx.font="bold 120px Arial";
+ctx.fillText("1 Pavan",1250,2500);
 
 
 // PAVAN RATE
 ctx.fillStyle="#f4d03f";
-ctx.font="bold 300px Arial";
-ctx.fillText("₹ "+gold1Pavan,1200,2680);
+ctx.font="bold 260px Arial";
+ctx.fillText("₹ "+gold1Pavan,1250,2750);
 
 
 // GRAM RATE
 ctx.fillStyle="#dcdcdc";
-ctx.font="bold 140px Arial";
-ctx.fillText("1 gram ₹ "+gold1Gram,1200,2850);
+ctx.font="bold 120px Arial";
+ctx.fillText("1 gram ₹ "+gold1Gram,1250,2920);
 
 
 
@@ -594,6 +594,7 @@ ctx.fillStyle="#003333";
 ctx.fillRect(0,3050,2480,450);
 
 ctx.fillStyle="white";
+ctx.textAlign="center";
 
 ctx.font="bold 120px Arial";
 ctx.fillText(shopName,1240,3200);
@@ -604,10 +605,10 @@ ctx.fillText(place,1240,3320);
 ctx.font="80px Arial";
 ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
- // SAVE
-save(canvas);
 
-}
+// SAVE
+save(canvas);
+ }
 
 
    function roundRect(ctx,x,y,width,height,radius,fill,stroke){
