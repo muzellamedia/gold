@@ -538,57 +538,63 @@ function drawTemplate4(ctx,canvas){
 
 
 
-ctx.textAlign="center";
+// LEFT TITLE
+ctx.textAlign="left";
 
-
-// DATE BOX
-ctx.fillStyle="rgba(0,0,0,0.5)";
-roundRect(ctx,990,1980,500,130,25,true,false);
-
-// WHITE BORDER
-ctx.strokeStyle="white";
-ctx.lineWidth=6;
-roundRect(ctx,990,1980,500,130,25,false,true);
-
-// DATE TEXT
-ctx.fillStyle="#ffffff";
-ctx.textAlign="center";
-ctx.font="bold 90px Arial";
-ctx.fillText(rateDate,1240,2070);
-
-
-// GOLD RATE
 ctx.fillStyle="#f4d03f";
 ctx.strokeStyle="#222";
 ctx.lineWidth=6;
 
-ctx.font="bold 150px Arial";
-ctx.strokeText("TODAY GOLD RATE",1240,2200);
-ctx.fillText("TODAY GOLD RATE",1240,2200);
+ctx.font="bold 160px Arial";
+ctx.strokeText("TODAY",200,2300);
+ctx.fillText("TODAY",200,2300);
+
+ctx.strokeText("GOLD RATE",200,2500);
+ctx.fillText("GOLD RATE",200,2500);
 
 
-// RATE BOX (CENTER)
-ctx.fillStyle="rgba(0,0,0,0.65)";
-roundRect(ctx,640,2300,1200,520,60,true,false);
-
-ctx.strokeStyle="white";
-ctx.lineWidth=10;
-roundRect(ctx,640,2300,1200,520,60,false,true);
-
-
-// BOX TEXT
-ctx.fillStyle="#f7e7a0";
-ctx.font="bold 110px Arial";
-ctx.textAlign="center";
-ctx.fillText("1 Pavan",1240,2480);
-
-ctx.fillStyle="#f4d03f";
-ctx.font="bold 230px Arial";
-ctx.fillText("₹ "+gold1Pavan,1240,2720);
-
+// DATE
 ctx.fillStyle="#dcdcdc";
-ctx.font="bold 100px Arial";
-ctx.fillText("1 gram ₹ "+gold1Gram,1240,2920);
+ctx.font="bold 110px Arial";
+ctx.fillText(rateDate,200,2700);
+
+
+// ---------- RIGHT SIDE RATES ----------
+
+// 1 GRAM LABEL
+ctx.textAlign="center";
+ctx.fillStyle="#dcdcdc";
+ctx.font="bold 120px Arial";
+ctx.strokeStyle="#222";
+ctx.lineWidth=6;
+ctx.strokeText("1 Gram",1700,2100);
+ctx.fillText("1 Gram",1700,2100);
+
+
+// 1 GRAM BOX
+ctx.fillStyle="#b02a4a";
+roundRect(ctx,1300,2150,800,260,40,true,false);
+
+ctx.fillStyle="white";
+ctx.font="bold 200px Arial";
+ctx.fillText("₹ "+gold1Gram,1700,2350);
+
+
+// 1 PAVAN LABEL
+ctx.fillStyle="#dcdcdc";
+ctx.font="bold 120px Arial";
+ctx.strokeStyle="#222";
+ctx.strokeText("1 Pavan",1700,2550);
+ctx.fillText("1 Pavan",1700,2550);
+
+
+// 1 PAVAN BOX
+ctx.fillStyle="#b02a4a";
+roundRect(ctx,1300,2600,800,260,40,true,false);
+
+ctx.fillStyle="white";
+ctx.font="bold 200px Arial";
+ctx.fillText("₹ "+gold1Pavan,1700,2800);
 
  // FOOTER
 ctx.fillStyle="#003333";
