@@ -88,6 +88,7 @@ button{
 <body>
 
 <div class="card">
+  
 
 <!-- Password Only Section -->
 <div id="loginSection">
@@ -108,6 +109,28 @@ button{
 
   <button onclick="updateRate()">Update Today Rate</button>
   <hr style="margin:20px 0">
+
+  <hr style="margin:20px 0">
+
+<h3>Edit User Details</h3>
+
+<input type="text" id="editPhone" placeholder="Enter User Phone">
+
+<button onclick="loadUser()">Load User</button>
+
+<div id="userEditBox" style="display:none">
+
+<input type="text" id="editShop" placeholder="Shop Name">
+<input type="text" id="editPlace" placeholder="Place">
+<input type="text" id="editDistrict" placeholder="District">
+<input type="email" id="editEmail" placeholder="Email">
+
+<input type="text" id="editContact1" placeholder="Contact 1">
+<input type="text" id="editContact2" placeholder="Contact 2">
+<input type="text" id="editContact3" placeholder="Contact 3">
+
+<button onclick="saveUser()">Save Changes</button>
+
 
 <h3>Manual Recharge</h3>
 
@@ -183,6 +206,74 @@ if(data.status === "success"){
 alert("Plan Activated Successfully");
 }else{
 alert("Activation Failed");
+}
+
+});
+
+}
+
+  function loadUser(){
+
+const phone = document.getElementById("editPhone").value.trim();
+
+if(!phone){
+alert("Enter phone number");
+return;
+}
+
+fetch(API_URL + "?type=user&phone=" + phone)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.error){
+alert("User not found");
+return;
+}
+
+document.getElementById("userEditBox").style.display="block";
+
+editShop.value = data.shop || "";
+editPlace.value = data.place || "";
+editDistrict.value = data.district || "";
+editEmail.value = data.email || "";
+
+editContact1.value = data.contact1 || "";
+editContact2.value = data.contact2 || "";
+editContact3.value = data.contact3 || "";
+
+});
+
+}
+
+  function saveUser(){
+
+const phone = document.getElementById("editPhone").value.trim();
+
+fetch(API_URL,{
+method:"POST",
+body: JSON.stringify({
+
+type:"updateUserAdmin",
+phone: phone,
+
+shop: editShop.value,
+place: editPlace.value,
+district: editDistrict.value,
+email: editEmail.value,
+
+contact1: editContact1.value,
+contact2: editContact2.value,
+contact3: editContact3.value
+
+})
+})
+.then(res=>res.json())
+.then(data=>{
+
+if(data.status==="success"){
+alert("User updated successfully");
+}else{
+alert("Update failed");
 }
 
 });
