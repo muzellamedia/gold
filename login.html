@@ -124,14 +124,7 @@ button{
 // 🔥 USE ONLY ONE WEB APP URL
 const API_URL = "https://script.google.com/macros/s/AKfycbzMIJTGqjlRuOCtLUcJIMvMTsJLRN4yktdPIk8AzEatv_IFqtQi3b1kwL9eqOKyCzCH9g/exec";
 
-function generateDeviceId(){
-  let id = localStorage.getItem("deviceId");
-  if(!id){
-    id = "DEV-" + Math.random().toString(36).substring(2,12);
-    localStorage.setItem("deviceId", id);
-  }
-  return id;
-}
+
 
 function login() {
   const phone = document.getElementById("phone").value.trim();
@@ -145,26 +138,20 @@ function login() {
   // ലോഗിൻ ബട്ടൺ താൽക്കാലികമായി ഡിസേബിൾ ചെയ്യുക
   document.getElementById("error").innerText = "Logging in...";
 
-  const formData = new FormData();
-  formData.append("type", "login");
-  formData.append("phone", phone);
-  formData.append("code", code);
-  formData.append("deviceId", generateDeviceId());
-
+  
   fetch(API_URL, {
     method: "POST",
     body: JSON.stringify({
-      type: "login",
-      phone: phone,
-      code: code,
-      deviceId: generateDeviceId()
-    })
+  type: "login",
+  phone: phone,
+  code: code
+})
   })
   .then(response => response.json()) // text() ന് പകരം json() ഉപയോഗിക്കുക
   .then(data => {
     if (data.status === "success") {
       localStorage.setItem("userPhone", phone);
-      window.location.href = "home.html";
+      window.location.href = "index.html";
     } else {
       document.getElementById("error").innerText = "Invalid phone or security code";
     }
