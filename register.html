@@ -103,6 +103,16 @@ button{
 <input type="email" id="email" placeholder="Email" required>
 <input type="tel" id="contact" placeholder="Contact Number" required>
 
+  <h3 style="margin-top:15px;text-align:center;">Poster Details</h3>
+
+<div style="text-align:center;margin-bottom:10px;">
+<input type="file" id="logo" accept="image/*" required>
+</div>
+
+<input type="tel" id="contact1" placeholder="Contact 1 (Optional)">
+<input type="tel" id="contact2" placeholder="Contact 2 (Optional)">
+<input type="tel" id="contact3" placeholder="Contact 3 (Optional)">
+
 <button onclick="register()">Register</button>
 
 <div class="message" id="message"></div>
@@ -119,47 +129,67 @@ function register(){
   const district = document.getElementById("district").value.trim();
   const email = document.getElementById("email").value.trim();
   const contact = document.getElementById("contact").value.trim();
+  const logoFile = document.getElementById("logo").files[0];
 
-  if(!phone || !shop || !place || !district || !email || !contact){
+  const contact1 = document.getElementById("contact1").value.trim();
+  const contact2 = document.getElementById("contact2").value.trim();
+  const contact3 = document.getElementById("contact3").value.trim();
+
+  if(!phone || !shop || !place || !district || !email || !contact || !logoFile){
     showMessage("All fields are required!", "red");
     return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycbwjSLCG5yRNkA2Ti4HjmZOoL3QsRUpUjp-RRjn__tl7cKbYmSPTUFtssSg4zrbbO72klA/exec", {
-    method: "POST",
-    body: JSON.stringify({
-      phone, shop, place, district, email, contact
+  const reader = new FileReader();
+
+  reader.onload = function(){
+
+    fetch("https://script.google.com/macros/s/AKfycbwjSLCG5yRNkA2Ti4HjmZOoL3QsRUpUjp-RRjn__tl7cKbYmSPTUFtssSg4zrbbO72klA/exec", {
+      method: "POST",
+      body: JSON.stringify({
+        phone,
+        shop,
+        place,
+        district,
+        email,
+        contact,
+        contact1,
+        contact2,
+        contact3,
+        logoBase64: reader.result
+      })
     })
-  })
-  .then(res => res.json())
-  .then(data => {
+    .then(res => res.json())
+    .then(data => {
 
-    if(data.status === "success"){
+      if(data.status === "success"){
 
-      // Save phone for login session
-      localStorage.setItem("userPhone", phone);
+        localStorage.setItem("userPhone", phone);
 
-      document.getElementById("message").innerHTML =
-      `
-      <div style="color:green;">
-        <p><b>Successfully Registered!</b></p>
-        <p>Your Security Code is: <b>${data.code}</b></p>
-        <button onclick="goHome()" style="margin-top:10px;background:#006400;">
-          GO TO HOME
-        </button>
-      </div>
-      `;
+        document.getElementById("message").innerHTML =
+        `
+        <div style="color:green;">
+          <p><b>Successfully Registered!</b></p>
+          <p>Your Security Code is: <b>${data.code}</b></p>
+          <button onclick="goHome()" style="margin-top:10px;background:#006400;">
+            GO TO HOME
+          </button>
+        </div>
+        `;
 
-    } else {
-      showMessage("Registration failed!", "red");
-    }
+      }else{
+        showMessage("Registration failed!", "red");
+      }
 
-  })
-  .catch(err => {
-    showMessage("Server error!", "red");
-  });
+    });
+
+  };
+
+  reader.readAsDataURL(logoFile);
+
 }
 
+// ✅ OUTSIDE FUNCTION
 
 function goHome(){
   window.location.href = "home.html";
