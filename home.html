@@ -218,7 +218,13 @@ Download Poster
   <button id="rechargeBtn" onclick="location.href='recharge.html'" style="display:none;background:#444;">
   Recharge Now
 </button>
+<button onclick="openWhatsApp()" style="background:#25D366;">
+💬 Chat on WhatsApp
+</button>
 
+<button onclick="logoutUser()" style="background:#cc0000;">
+Logout
+</button>
   </div>
 
   <script>
@@ -1696,6 +1702,23 @@ console.error(err);
 
 btn.classList.remove("loading-btn");
 btn.innerText = "Download Poster";
+
+}
+
+   function openWhatsApp(){
+
+window.open(
+"https://wa.me/919645565177",
+"_blank"
+);
+
+}
+
+function logoutUser(){
+
+localStorage.removeItem("userPhone");
+
+window.location.href = "login.html";
 
 }
    </script>
