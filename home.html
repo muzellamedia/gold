@@ -540,25 +540,27 @@ function drawTemplate4(ctx,canvas){
 
 // TITLE + DATE BOX (TOP LEFT)
 
-ctx.fillStyle="rgba(255,255,255,0.95)";
-roundRect(ctx,80,120,750,190,30,true,false);
+// YELLOW TRANSPARENT BACKGROUND
+ctx.fillStyle="rgba(255,215,0,0.25)";
+roundRect(ctx,80,120,650,200,30,true,false);
 
-// YELLOW BORDER
-ctx.strokeStyle="#ffd700";
-ctx.lineWidth=10;
-roundRect(ctx,80,120,750,190,30,false,true);
+// WHITE BORDER
+ctx.strokeStyle="white";
+ctx.lineWidth=8;
+roundRect(ctx,80,120,650,200,30,false,true);
 
 
 // TITLE
 ctx.textAlign="left";
 ctx.fillStyle="#111";
-ctx.font="bold 80px Arial";
-ctx.fillText("TODAY GOLD RATE",120,200);
+ctx.font="bold 60px Arial";
+ctx.fillText("TODAY GOLD RATE",120,210);
 
 
 // DATE
-ctx.font="bold 95px Arial";
-ctx.fillText(rateDate,120,290);
+ctx.fillStyle="#000";
+ctx.font="bold 100px Arial";
+ctx.fillText(rateDate,120,300);
 
 
 // DATE
