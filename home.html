@@ -542,31 +542,32 @@ function drawTemplate4(ctx,canvas){
 // TITLE (SMALLER)
 ctx.textAlign="left";
 
-// DATE BOX (TOP RIGHT)
-ctx.fillStyle="rgba(0,0,0,0.55)";
-roundRect(ctx,1450,150,700,140,25,true,false);
+// TITLE + DATE BOX (LEFT)
 
-ctx.strokeStyle="white";
-ctx.lineWidth=5;
-roundRect(ctx,1450,150,700,140,25,false,true);
+ctx.fillStyle="rgba(255,255,255,0.25)";
+roundRect(ctx,120,2000,950,320,40,true,false);
 
-ctx.fillStyle="white";
-ctx.textAlign="center";
-ctx.font="bold 90px Arial";
-ctx.fillText(rateDate,1800,240);
-
-
-// TODAY GOLD RATE BOX (UNDER DATE)
-ctx.fillStyle="rgba(0,0,0,0.55)";
-roundRect(ctx,1400,320,800,200,30,true,false);
-
+// WHITE BORDER
 ctx.strokeStyle="white";
 ctx.lineWidth=6;
-roundRect(ctx,1400,320,800,200,30,false,true);
+roundRect(ctx,120,2000,950,320,40,false,true);
 
+
+// TITLE
+ctx.textAlign="left";
 ctx.fillStyle="#f4d03f";
+ctx.strokeStyle="#222";
+ctx.lineWidth=5;
+
 ctx.font="bold 120px Arial";
-ctx.fillText("TODAY GOLD RATE",1800,455);
+ctx.strokeText("TODAY GOLD RATE",180,2150);
+ctx.fillText("TODAY GOLD RATE",180,2150);
+
+
+// DATE
+ctx.fillStyle="#ffffff";
+ctx.font="bold 90px Arial";
+ctx.fillText(rateDate,180,2270);
 
 // -------- 1 GRAM --------
 
