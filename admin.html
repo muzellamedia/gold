@@ -128,6 +128,13 @@ button{
 <input type="text" id="editContact1" placeholder="Contact 1">
 <input type="text" id="editContact2" placeholder="Contact 2">
 <input type="text" id="editContact3" placeholder="Contact 3">
+  
+
+  <input type="text" id="lastLogin" placeholder="Last Login Time" readonly>
+
+<input type="text" id="planExpiry" placeholder="Plan Expiry" readonly>
+
+<input type="datetime-local" id="lastEdit">
 
 <button onclick="saveUser()">Save Changes</button>
 
@@ -152,7 +159,7 @@ button{
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzMIJTGqjlRuOCtLUcJIMvMTsJLRN4yktdPIk8AzEatv_IFqtQi3b1kwL9eqOKyCzCH9g/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxN3JEBiIj8vjHodqDUv5bhuxfFaSPMtZPdgCB3Kl3t4DHwdpm132T1kJGfU4BTtBV5xA/exec";
 const ADMIN_PASSWORD = "admin@1994";
 
 // Check Password
@@ -231,6 +238,9 @@ return;
 }
 
 document.getElementById("userEditBox").style.display="block";
+  document.getElementById("lastLogin").value = data.lastLoginTime || "";
+document.getElementById("planExpiry").value = data.planExpiry || "";
+document.getElementById("lastEdit").value = data.lastEditTime || "";
 
 editShop.value = data.shop || "";
 editPlace.value = data.place || "";
