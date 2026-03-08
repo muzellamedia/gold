@@ -291,13 +291,13 @@ let gold1Pavan = "";
    let lastTemplate = -1;
 let lastBg = -1;
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzMIJTGqjlRuOCtLUcJIMvMTsJLRN4yktdPIk8AzEatv_IFqtQi3b1kwL9eqOKyCzCH9g/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxN3JEBiIj8vjHodqDUv5bhuxfFaSPMtZPdgCB3Kl3t4DHwdpm132T1kJGfU4BTtBV5xA/exec";
 const userPhone = localStorage.getItem("userPhone");
   
 
 // 🔐 Login Protection (Run Immediately)
 if(!userPhone){
-  window.location.replace("index.html");
+  window.location.replace("ലോlogin.html");
 }
 
 // =====================
@@ -1738,7 +1738,28 @@ const btn = document.getElementById("downloadBtn");
 try{
 const link = document.createElement("a");
 link.download = "A4_Gold_Rate_Poster.png";
-link.href = canvas.toDataURL("image/png");
+function save(canvas){
+
+const btn = document.getElementById("downloadBtn");
+
+canvas.toBlob(function(blob){
+
+const link = document.createElement("a");
+link.download = "A4_Gold_Rate_Poster.png";
+link.href = URL.createObjectURL(blob);
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+URL.revokeObjectURL(link.href);
+
+btn.classList.remove("loading-btn");
+btn.innerText = "Download Poster";
+
+},"image/png");
+
+}
 link.click();
 
 }catch(err){
