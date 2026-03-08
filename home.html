@@ -541,62 +541,45 @@ function drawTemplate4(ctx,canvas){
 ctx.textAlign="center";
 
 
-// DATE (LEFT)
+// DATE
 ctx.textAlign="center";
 ctx.fillStyle="#dcdcdc";
 ctx.font="bold 90px Arial";
-ctx.fillText(rateDate,1240,2250);
+ctx.fillText(rateDate,1240,2050);
 
 
-// GOLD RATE TEXT
+// GOLD RATE
 ctx.fillStyle="#f4d03f";
 ctx.strokeStyle="#222";
 ctx.lineWidth=6;
 
 ctx.font="bold 150px Arial";
-ctx.strokeText("GOLD RATE",1240,2450);
-ctx.fillText("GOLD RATE",1240,2450);
+ctx.strokeText("GOLD RATE",1240,2200);
+ctx.fillText("GOLD RATE",1240,2200);
 
 
-// RIGHT RATE PANEL (bigger box)
+// RATE BOX (CENTER)
 ctx.fillStyle="rgba(0,0,0,0.65)";
-roundRect(ctx,640,2550,1200,520,60,true,false);
+roundRect(ctx,640,2300,1200,520,60,true,false);
 
 ctx.strokeStyle="white";
 ctx.lineWidth=10;
-roundRect(ctx,640,2550,1200,520,60,false,true);
+roundRect(ctx,640,2300,1200,520,60,false,true);
 
 
-ctx.textAlign="center";
-
+// BOX TEXT
 ctx.fillStyle="#f7e7a0";
 ctx.font="bold 110px Arial";
-ctx.fillText("1 Pavan",1240,2720);
+ctx.textAlign="center";
+ctx.fillText("1 Pavan",1240,2480);
 
 ctx.fillStyle="#f4d03f";
 ctx.font="bold 230px Arial";
-ctx.fillText("₹ "+gold1Pavan,1240,2950);
+ctx.fillText("₹ "+gold1Pavan,1240,2720);
 
 ctx.fillStyle="#dcdcdc";
 ctx.font="bold 100px Arial";
-ctx.fillText("1 gram ₹ "+gold1Gram,1240,3120);
-
-// FOOTER
-ctx.fillStyle="#003333";
-ctx.fillRect(0,3050,2480,450);
-
-ctx.fillStyle="white";
-ctx.textAlign="center";
-
-ctx.font="bold 120px Arial";
-ctx.fillText(shopName,1240,3200);
-
-ctx.font="90px Arial";
-ctx.fillText(place,1240,3320);
-
-ctx.font="80px Arial";
-ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
-
+ctx.fillText("1 gram ₹ "+gold1Gram,1240,2920);
 
 // SAVE
 save(canvas);
