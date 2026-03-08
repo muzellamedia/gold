@@ -123,8 +123,12 @@ margin-bottom:10px;
 <input type="text" id="num2" placeholder="Phone 2">
 <input type="text" id="num3" placeholder="Phone 3">
 
+  <input type="text" id="shop" placeholder="Shop Name">
+<input type="text" id="place" placeholder="Address">
+<input type="email" id="email" placeholder="Email">
+
 <button onclick="saveDetails()">Save</button>
-  <button id="homeBtn" onclick="location.href='home.html'" style="display:none;background:#444;">
+  <button id="homeBtn" onclick="location.href='index.html'" style="display:none;background:#444;">
 Back to Home
 </button>
 
@@ -151,6 +155,9 @@ fetch(API_URL + "?type=user&phone=" + phone)
 document.getElementById("num1").value = data.contact1 || "";
 document.getElementById("num2").value = data.contact2 || "";
 document.getElementById("num3").value = data.contact3 || "";
+  document.getElementById("shop").value = data.shop || "";
+document.getElementById("place").value = data.place || "";
+document.getElementById("email").value = data.email || "";
 
 if(data.logo){
 
@@ -184,13 +191,25 @@ phone: phone,
 logoBase64: logoBase64,
 contact1: num1.value,
 contact2: num2.value,
-contact3: num3.value
+contact3: num3.value,
+  shop: shop.value,
+place: place.value,
+email: email.value
 })
 })
 .then(res=>res.json())
-.then(()=>{
+.then(data=>{
+
+if(data.status === "locked"){
+
+alert("You can edit again after " + data.hoursLeft + " hours");
+return;
+
+}
 
 document.getElementById("saveText").innerText="Saved ✔";
+
+});
 
 setTimeout(()=>{
 document.getElementById("savingScreen").style.display="none";
