@@ -297,7 +297,7 @@ const userPhone = localStorage.getItem("userPhone");
 
 // 🔐 Login Protection (Run Immediately)
 if(!userPhone){
-  window.location.replace("ലോlogin.html");
+  window.location.replace("login.html");
 }
 
 // =====================
@@ -1732,6 +1732,9 @@ if(stroke) ctx.stroke();
 // SAVE
 // =====================
 
+// =====================
+// SAVE
+// =====================
 function save(canvas){
 
 const btn = document.getElementById("downloadBtn");
@@ -1754,18 +1757,6 @@ btn.innerText = "Download Poster";
 },"image/png");
 
 }
-link.click();
-
-}catch(err){
-alert("Image export blocked due to CORS");
-console.error(err);
-}
-
-btn.classList.remove("loading-btn");
-btn.innerText = "Download Poster";
-
-}
-
    function openWhatsApp(){
 
 window.open(
