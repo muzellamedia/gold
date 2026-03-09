@@ -96,7 +96,14 @@ button{
   color:red;
   margin-top:10px;
 }
+.forgot-btn{
+  background:#25D366;
+  color:white;
+}
 
+.forgot-btn:hover{
+  background:#1da851;
+}
 </style>
 </head>
 
@@ -115,6 +122,9 @@ button{
 
   <button class="login-btn" onclick="login()">Login</button>
   <button class="register-btn" onclick="goRegister()">Register</button>
+  <button class="forgot-btn" onclick="openWhatsApp()">
+Forgot Security Code?
+</button>
 
   <div class="error" id="error"></div>
 </div>
@@ -165,7 +175,16 @@ function goRegister(){
   // Optional: create separate register.html in GitHub
   window.location.href = "register.html";
 }
+function openWhatsApp(){
 
+const msg = encodeURIComponent("I am forget my security code!");
+
+window.open(
+"https://wa.me/919645565177?text=" + msg,
+"_blank"
+);
+
+}
 </script>
 
 </body>
