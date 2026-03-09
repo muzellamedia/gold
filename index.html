@@ -200,6 +200,24 @@ font-size:16px;
 .site-footer{
 margin-top:20px;
 }
+ .action-row{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.action-row button{
+flex:1;
+margin-top:0;
+}
+
+.whatsapp-btn{
+background:#25D366;
+}
+
+.logout-btn{
+background:#cc0000;
+}
 </style>
 </head>
 
@@ -239,13 +257,17 @@ Download Poster
   <button id="rechargeBtn" onclick="location.href='recharge.html'" style="display:none;background:#444;">
   Recharge Now
 </button>
-<button onclick="openWhatsApp()" style="background:#25D366;">
-💬 Chat on WhatsApp
+<div class="action-row">
+
+<button class="whatsapp-btn" onclick="openWhatsApp()">
+💬 Chat
 </button>
 
-<button onclick="logoutUser()" style="background:#cc0000;">
+<button class="logout-btn" onclick="logoutUser()">
 Logout
 </button>
+
+</div>
   </div>
 <footer class="site-footer">
 
