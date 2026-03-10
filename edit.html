@@ -185,6 +185,7 @@ document.getElementById("savingScreen").style.display="flex";
 const file = document.getElementById("logoFile").files[0];
 
 const saveToServer = (logoBase64="")=>{
+
 fetch(API_URL,{
 method:"POST",
 body: JSON.stringify({
@@ -194,7 +195,7 @@ logoBase64: logoBase64,
 contact1: num1.value,
 contact2: num2.value,
 contact3: num3.value,
-  shop: shop.value,
+shop: shop.value,
 place: place.value,
 email: email.value
 })
@@ -218,6 +219,8 @@ document.getElementById("homeBtn").style.display="block";
 },1200);
 
 });
+
+};
 
 if(file){
 const reader = new FileReader();
