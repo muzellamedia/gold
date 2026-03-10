@@ -162,7 +162,9 @@ document.getElementById("email").value = data.email || "";
 if(data.logo){
 
 // Drive file id extract
-let fileId = data.logo.split("id=")[1];
+let fileId = data.logo.includes("id=")
+  ? data.logo.split("id=")[1]
+  : data.logo.split("/d/")[1].split("/")[0];
 
 // convert to lh3 image link
 let imgUrl = "https://lh3.googleusercontent.com/d/" + fileId;
@@ -203,13 +205,12 @@ email: email.value
 if(data.status === "locked"){
 
 alert("You can edit again after " + data.hoursLeft + " hours");
+document.getElementById("savingScreen").style.display="none";
 return;
 
 }
 
 document.getElementById("saveText").innerText="Saved ✔";
-
-});
 
 setTimeout(()=>{
 document.getElementById("savingScreen").style.display="none";
@@ -217,7 +218,6 @@ document.getElementById("homeBtn").style.display="block";
 },1200);
 
 });
-};
 
 if(file){
 const reader = new FileReader();
