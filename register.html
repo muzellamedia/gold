@@ -93,7 +93,9 @@ button{
 
 <body>
 
-<button id="registerBtn" onclick="register()">Register</button>
+<div class="register-box">
+
+<h2>Register</h2>
 
 <input type="tel" id="phone" placeholder="Your Phone Number" required>
 <input type="text" id="shop" placeholder="Shop Name" required>
@@ -112,7 +114,7 @@ button{
 <input type="tel" id="contact2" placeholder="Contact 2 (Optional)">
 <input type="tel" id="contact3" placeholder="Contact 3 (Optional)">
 
-<button onclick="register()">Register</button>
+<button id="registerBtn" onclick="register()">Register</button>
 
 <div class="message" id="message"></div>
 
@@ -168,7 +170,7 @@ showMessage("Registering...", "orange");
     .then(res => res.json())
     .then(data => {
 
-      if(data.status === "success"){
+     if(data.status === "success"){
 
         localStorage.setItem("userPhone", phone);
 
@@ -201,7 +203,7 @@ btn.disabled = false;
 // ✅ OUTSIDE FUNCTION
 
 function goHome(){
-  window.location.href = "home.html";
+  window.location.href = "index.html";
 }
 
 function showMessage(text, color){
