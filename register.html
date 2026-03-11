@@ -8,86 +8,71 @@
 <style>
 
 body{
-  font-family: Arial;
-  background: linear-gradient(135deg,#8b0000,#ffcccb);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  margin:0;
-  padding:10px;
+font-family: Arial;
+background: linear-gradient(135deg,#8b0000,#ffcccb);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+padding:10px;
 }
 
 .register-box{
-  background:white;
-  padding:25px;
-  border-radius:12px;
-  width:100%;
-  max-width:380px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+background:white;
+padding:25px;
+border-radius:12px;
+width:100%;
+max-width:380px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
 h2{
-  text-align:center;
-  margin-bottom:15px;
+text-align:center;
+margin-bottom:15px;
 }
 
 input{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:6px;
-  border:1px solid #ccc;
-  font-size:16px;
-  box-sizing:border-box;
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:16px;
+box-sizing:border-box;
 }
 
 button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border:none;
-  border-radius:6px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#8b0000;
-  color:white;
-  font-size:16px;
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+background:#8b0000;
+color:white;
+font-size:16px;
 }
 
 button:hover{
-  background:#600000;
+background:#600000;
 }
 
 .message{
-  margin-top:12px;
-  text-align:center;
-  font-weight:bold;
+margin-top:12px;
+text-align:center;
+font-weight:bold;
 }
-
-/* Mobile extra optimization */
-
-@media(max-width:480px){
-
-.register-box{
-  padding:20px;
-  border-radius:10px;
+select{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:16px;
+box-sizing:border-box;
 }
-
-h2{
-  font-size:20px;
-}
-
-input{
-  padding:14px;
-}
-
-button{
-  padding:15px;
-}
-
-}
-
 </style>
 </head>
 
@@ -100,10 +85,27 @@ button{
 <input type="tel" id="phone" placeholder="Your Phone Number" required>
 <input type="text" id="shop" placeholder="Shop Name" required>
 <input type="text" id="place" placeholder="Place" required>
-<input type="text" id="district" placeholder="District" required>
-<input type="email" id="email" placeholder="Email" required>
-<input type="tel" id="contact" placeholder="Contact Number" required>
+<select id="district">
+<option value="">Select District</option>
 
+<option>Thiruvananthapuram</option>
+<option>Kollam</option>
+<option>Pathanamthitta</option>
+<option>Alappuzha</option>
+<option>Kottayam</option>
+<option>Idukki</option>
+<option>Ernakulam</option>
+<option>Thrissur</option>
+<option>Palakkad</option>
+<option>Malappuram</option>
+<option>Kozhikode</option>
+<option>Wayanad</option>
+<option>Kannur</option>
+<option>Kasaragod</option>
+
+</select>
+<input type="email" id="email" placeholder="Email">
+<input type="tel" id="contact" placeholder="Contact Number">
   <h3 style="margin-top:15px;text-align:center;">Poster Details</h3>
 
 <div style="text-align:center;margin-bottom:10px;">
@@ -113,6 +115,7 @@ button{
 <input type="tel" id="contact1" placeholder="Contact 1 (Optional)">
 <input type="tel" id="contact2" placeholder="Contact 2 (Optional)">
 <input type="tel" id="contact3" placeholder="Contact 3 (Optional)">
+
 
 <button id="registerBtn" onclick="register()">Register</button>
 
@@ -124,92 +127,96 @@ button{
 
 function register(){
 
-  const btn = document.getElementById("registerBtn");
+const btn = document.getElementById("registerBtn");
 btn.innerText = "Registering...";
 btn.disabled = true;
 
 showMessage("Registering...", "orange");
 
-  const phone = document.getElementById("phone").value.trim();
-  const shop = document.getElementById("shop").value.trim();
-  const place = document.getElementById("place").value.trim();
-  const district = document.getElementById("district").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const contact = document.getElementById("contact").value.trim();
-  const logoFile = document.getElementById("logo").files[0];
+const phone = document.getElementById("phone").value.trim();
+const shop = document.getElementById("shop").value.trim();
+const place = document.getElementById("place").value.trim();
+const district = document.getElementById("district").value.trim();
+const email = document.getElementById("email").value.trim();
+const contact = document.getElementById("contact").value.trim();
+const logoFile = document.getElementById("logo").files[0];
 
-  const contact1 = document.getElementById("contact1").value.trim();
-  const contact2 = document.getElementById("contact2").value.trim();
-  const contact3 = document.getElementById("contact3").value.trim();
+const contact1 = document.getElementById("contact1").value.trim();
+const contact2 = document.getElementById("contact2").value.trim();
+const contact3 = document.getElementById("contact3").value.trim();
 
-  if(!phone || !shop || !place || !district || !email || !contact || !logoFile){
-    showMessage("All fields are required!", "red");
-    return;
-  }
+if(!phone || !shop || !place || !district || !logoFile){
 
-  const reader = new FileReader();
+showMessage("All fields are required!", "red");
 
-  reader.onload = function(){
+btn.innerText="Register";
+btn.disabled=false;
 
-    fetch("https://script.google.com/macros/s/AKfycbxseHP6OEck_UjQiTn1CragD3cmhpyW-7I4u6aN_BbnKV90lDvj4rD8trWRqgzdxIVDxw/exec", {
-      method: "POST",
-      body: JSON.stringify({
-  type:"register",
-  phone,
-  shop,
-  place,
-  district,
-  email,
-  contact,
-  contact1,
-  contact2,
-  contact3,
-  logoBase64: reader.result
+return;
+}
+
+const reader = new FileReader();
+
+reader.onload = function(){
+
+fetch("https://script.google.com/macros/s/AKfycbxseHP6OEck_UjQiTn1CragD3cmhpyW-7I4u6aN_BbnKV90lDvj4rD8trWRqgzdxIVDxw/exec",{
+method:"POST",
+body:JSON.stringify({
+type:"register",
+phone,
+shop,
+place,
+district,
+email,
+contact,
+contact1,
+contact2,
+contact3,
+logoBase64: reader.result
 })
-    })
-    .then(res => res.json())
-    .then(data => {
+})
+.then(res=>res.json())
+.then(data=>{
 
-     if(data.status === "success"){
+if(data.status==="success"){
 
-        localStorage.setItem("userPhone", phone);
+localStorage.setItem("userPhone",phone);
 
-        document.getElementById("message").innerHTML =
-        `
-        <div style="color:green;">
-          <p><b>Successfully Registered!</b></p>
-          <p>Your Security Code is: <b>${data.code}</b></p>
-          <button onclick="goHome()" style="margin-top:10px;background:#006400;">
-            GO TO HOME
-          </button>
-        </div>
-        `;
+document.getElementById("message").innerHTML=
+`
+<div style="color:green;">
+<p><b>Successfully Registered!</b></p>
+<p>Your Security Code is: <b>${data.code}</b></p>
+<button onclick="goHome()" style="margin-top:10px;background:#006400;">GO TO HOME</button>
+</div>
+`;
 
-      else{
-showMessage("Registration failed!", "red");
-
-btn.innerText = "Register";
-btn.disabled = false;
 }
+else{
 
-    });
+showMessage("Registration failed","red");
 
-  };
-
-  reader.readAsDataURL(logoFile);
+btn.innerText="Register";
+btn.disabled=false;
 
 }
 
-// ✅ OUTSIDE FUNCTION
+});
+
+};
+
+reader.readAsDataURL(logoFile);
+
+}
 
 function goHome(){
-  window.location.href = "index.html";
+window.location.href="index.html";
 }
 
-function showMessage(text, color){
-  const msg = document.getElementById("message");
-  msg.innerText = text;
-  msg.style.color = color;
+function showMessage(text,color){
+const msg=document.getElementById("message");
+msg.innerText=text;
+msg.style.color=color;
 }
 
 </script>
