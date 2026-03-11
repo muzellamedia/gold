@@ -100,7 +100,31 @@ button{
 
 <!-- Admin Options -->
 <div id="adminPanel">
+<div id="adminPanel">
 
+<h3>User Statistics</h3>
+
+<div style="font-size:18px;font-weight:bold;margin-bottom:8px;">
+Total Users: <span id="totalUsers">0</span>
+</div>
+
+<div style="font-size:18px;font-weight:bold;color:green;margin-bottom:8px;">
+Active Users: <span id="activeUsers">0</span>
+</div>
+
+<div style="font-size:18px;font-weight:bold;color:red;margin-bottom:20px;">
+Expired Users: <span id="expiredUsers">0</span>
+</div>
+<div id="expiredList" style="
+margin-top:10px;
+padding:10px;
+background:#f5f5f5;
+border-radius:8px;
+max-height:120px;
+overflow:auto;
+font-size:14px;">
+</div>
+<h3>Update Gold Rate</h3>
   <h3>Update Gold Rate</h3>
 
   <input type="number" id="gramRate" placeholder="Enter 1 Gram Rate">
@@ -124,6 +148,7 @@ button{
 <input type="text" id="editPlace" placeholder="Place">
 <input type="text" id="editDistrict" placeholder="District">
 <input type="email" id="editEmail" placeholder="Email">
+  <input type="text" id="securityCode" placeholder="Security Code" readonly>
 
 <input type="text" id="editContact1" placeholder="Contact 1">
 <input type="text" id="editContact2" placeholder="Contact 2">
@@ -168,11 +193,15 @@ function checkPassword(){
   const entered = document.getElementById("adminPass").value;
 
   if(entered === ADMIN_PASSWORD){
-    document.getElementById("loginSection").style.display = "none";
-    document.getElementById("adminPanel").style.display = "block";
-  }else{
-    document.getElementById("error").innerText = "Wrong Password";
-  }
+
+document.getElementById("loginSection").style.display = "none";
+document.getElementById("adminPanel").style.display = "block";
+
+loadStats();
+
+}else{
+document.getElementById("error").innerText = "Wrong Password";
+}
 }
 
 // Auto Calculate Pavan
@@ -184,6 +213,33 @@ document.getElementById("gramRate").addEventListener("input", function(){
   document.getElementById("preview").innerHTML =
     "1 Pavan = ₹ " + pavan.toFixed(2);
 });
+
+  function loadStats(){
+
+fetch(API_URL + "?type=userStats")
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("totalUsers").innerText = data.totalUsers;
+document.getElementById("activeUsers").innerText = data.activeUsers;
+document.getElementById("expiredUsers").innerText = data.expiredUsers;
+
+const list = document.getElementById("expiredList");
+
+list.innerHTML = "";
+
+data.expiredPhones.forEach(function(phone){
+
+const div = document.createElement("div");
+div.innerText = phone;
+
+list.appendChild(div);
+
+});
+
+});
+
+}
 // =====================
 // MANUAL RECHARGE
 // =====================
@@ -241,6 +297,7 @@ document.getElementById("userEditBox").style.display="block";
   document.getElementById("lastLogin").value = data.lastLoginTime || "";
 document.getElementById("planExpiry").value = data.planExpiry || "";
 document.getElementById("lastEdit").value = data.lastEditTime || "";
+  document.getElementById("securityCode").value = data.securityCode || "";
 
 editShop.value = data.shop || "";
 editPlace.value = data.place || "";
