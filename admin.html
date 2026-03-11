@@ -110,16 +110,19 @@ Total Users: <span id="totalUsers">0</span>
 Active Users: <span id="activeUsers">0</span>
 </div>
 
-<div style="font-size:18px;font-weight:bold;color:red;margin-bottom:20px;">
+<div style="font-size:18px;font-weight:bold;color:red;margin-bottom:10px;">
 Expired Users: <span id="expiredUsers">0</span>
 </div>
 
+<button onclick="toggleExpired()">Show Expired Users</button>
+
 <div id="expiredList" style="
+display:none;
 margin-top:10px;
 padding:10px;
 background:#f5f5f5;
 border-radius:8px;
-max-height:120px;
+max-height:150px;
 overflow:auto;
 font-size:14px;">
 </div>
@@ -230,7 +233,37 @@ list.innerHTML = "";
 data.expiredPhones.forEach(function(phone){
 
 const div = document.createElement("div");
-div.innerText = phone;
+
+div.style.display = "flex";
+div.style.justifyContent = "space-between";
+div.style.alignItems = "center";
+div.style.padding = "6px";
+div.style.borderBottom = "1px solid #ddd";
+
+const number = document.createElement("span");
+number.innerText = "📱 " + phone;
+
+const btn = document.createElement("button");
+btn.innerText = "WhatsApp";
+btn.style.padding = "4px 8px";
+btn.style.fontSize = "12px";
+btn.style.background = "#25D366";
+btn.style.color = "white";
+btn.style.border = "none";
+btn.style.borderRadius = "5px";
+
+btn.onclick = function(){
+
+const message = encodeURIComponent(
+"Your Daily Gold Poster plan has expired. Please recharge to continue service."
+);
+
+window.open("https://wa.me/91" + phone + "?text=" + message, "_blank");
+
+};
+
+div.appendChild(number);
+div.appendChild(btn);
 
 list.appendChild(div);
 
@@ -371,6 +404,17 @@ function updateRate(){
   .then(()=>{
     alert("Today's Rate Updated Successfully");
   });
+
+}
+  function toggleExpired(){
+
+const list = document.getElementById("expiredList");
+
+if(list.style.display === "none"){
+list.style.display = "block";
+}else{
+list.style.display = "none";
+}
 
 }
 </script>
