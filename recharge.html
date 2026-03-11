@@ -76,9 +76,10 @@ margin-top:10px;
 <h2>Recharge Plan</h2>
 
 <select id="plan">
-<option value="30">30 Days - ₹199</option>
-<option value="90">90 Days - ₹499</option>
-<option value="180">180 Days - ₹899</option>
+<option value="30">1 Month - ₹2000</option>
+<option value="90">3 Month - ₹6000</option>
+<option value="180">6 Month - ₹12000</option>
+<option value="365">1 Year - ₹24000</option>
 </select>
 
 <button onclick="payNow()">Recharge Now</button>
@@ -91,17 +92,18 @@ Secure Payment via Razorpay
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxseHP6OEck_UjQiTn1CragD3cmhpyW-7I4u6aN_BbnKV90lDvj4rD8trWRqgzdxIVDxw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyjaAe1174louBH_5TJS2diTChvbCBbWrX_NwS_XcpRwuTOPqSMQZEW5-hQZ11BhaZCyA/exec";
 const phone = localStorage.getItem("userPhone");
 
 function payNow(){
 
 const days = document.getElementById("plan").value;
 
-let amount = 199;
+let amount = 2000;
 
-if(days == 90) amount = 499;
-if(days == 180) amount = 899;
+if(days == 90) amount = 6000;
+if(days == 180) amount = 12000;
+if(days == 365) amount = 24000;
 
 fetch(API_URL,{
 method:"POST",
