@@ -83,8 +83,8 @@ box-sizing:border-box;
 <h2>Register</h2>
 
 <input type="tel" id="phone" placeholder="Your Phone Number" required>
-<input type="text" id="shop" placeholder="Shop Name" required>
-<input type="text" id="place" placeholder="Place" required>
+<input type="text" id="shop" placeholder="Shop Name (CAPITAL LETTER)" required>
+<input type="text" id="place" placeholder="Short Address" required>
 <select id="district">
 <option value="">Select District</option>
 
@@ -190,8 +190,16 @@ document.getElementById("message").innerHTML=
 <button onclick="goHome()" style="margin-top:10px;background:#006400;">GO TO HOME</button>
 </div>
 `;
+}
+else if(data.status==="exists"){
+
+showMessage("This phone number already registered", "red");
+
+btn.innerText="Register";
+btn.disabled=false;
 
 }
+
 else{
 
 showMessage("Registration failed","red");
