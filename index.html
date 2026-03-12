@@ -249,10 +249,10 @@ Checking rate status...
 Checking subscription...
 </div>
 
-  <button id="downloadBtn" disabled onclick="generatePoster()">
+  <button id="downloadBtn" disabled onclick="downloadPoster()">
 Download Poster
 </button>
-  
+ 
   <button onclick="location.href='edit.html'">Edit Details</button>
   <button id="rechargeBtn" onclick="location.href='recharge.html'" style="display:none;background:#444;">
   Recharge Now
@@ -478,13 +478,15 @@ document.getElementById("loadingScreen").style.display = "none";
  
 function downloadPoster(){
 
+const phone = userPhone;
+
 fetch(API_URL + "?type=checkDownload&phone=" + phone)
 .then(res=>res.json())
 .then(data=>{
 
 if(data.status === "limit"){
 
-alert("Daily download limit reached (3 posters)");
+alert("Daily download limit reached (2 posters)");
 
 return;
 
@@ -844,7 +846,7 @@ ctx.textAlign="center";
     ctx.font = "100px Arial";
     ctx.fillText("GOLD 8 GRAM (1 PAVAN)", 1240, 2220);
     ctx.font = "bold 180px Arial";
-    ctx.fillText("₹ " + (7500 * 8).toLocaleString('en-IN'), 1240, 2420);
+    ctx.fillText("₹ " + gold1Pavan, 1240, 2420);
 
  
 // FOOTER
@@ -986,13 +988,13 @@ ctx.fillStyle="rgba(0,0,0,0.6)";
 roundRect(ctx,1450,2450,500,120,25,true,false);
 
 ctx.fillStyle="white";
-ctx.font="bold 90px Arial";
+ctx.font="bold 100px Arial";
 ctx.fillText("1 Pavan",1700,2530);
 
 
 // BIGGER RATE BOX
 ctx.fillStyle="#b02a4a";
-roundRect(ctx,1250,2550,900,260,40,true,false);
+roundRect(ctx,1100,2550,1200,260,40,true,false);
 
 ctx.fillStyle="white";
 ctx.font="bold 210px Arial";
@@ -1089,10 +1091,11 @@ ctx.textAlign="center";
 
 // TITLE OUTLINE
 ctx.lineWidth = 10;
+ctx.fillStyle="#E2D609";
 ctx.strokeStyle = "#dcdcdc";
 ctx.font="bold 180px Arial";
-ctx.strokeText("TODAY’S",1240,2000);
-ctx.strokeText("GOLD RATE",1240,2200);
+ctx.fillText("TODAY’S",1240,2000);
+ctx.fillText("GOLD RATE",1240,2200);
 
 
 // DATE
@@ -1103,29 +1106,29 @@ ctx.fillText(rateDate,1240,2400);
 
 
 // LEFT RATE BOX
-ctx.fillStyle="#b8893d";
+ctx.fillStyle="#FEFEFE";
 roundRect(ctx,300,2550,900,350,30,true,false);
 
 ctx.fillStyle="#1e1e1e";
 ctx.font="bold 160px Arial";
 ctx.fillText("₹ "+gold1Gram,750,2720);
 
-ctx.fillStyle="#f7e7a0";
+ctx.fillStyle="#7E251E";
 ctx.font="bold 120px Arial";
-ctx.fillText("1 gram",750,2860);
+ctx.fillText("1 Gram",750,2860);
 
 
 
 
 // RIGHT RATE BOX
-ctx.fillStyle="#b8893d";
+ctx.fillStyle="#FEFEFE";
 roundRect(ctx,1280,2550,900,350,30,true,false);
 
 ctx.fillStyle="#1e1e1e";
 ctx.font="bold 160px Arial";
 ctx.fillText("₹ "+gold1Pavan,1730,2720);
 
-ctx.fillStyle="#f7e7a0";
+ctx.fillStyle="#7E251E";
 ctx.font="bold 120px Arial";
 ctx.fillText("1 Pavan",1730,2860);
 
