@@ -631,41 +631,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
+ctx.drawImage(logo, x, y, w, h);
 
 drawTemplate1(ctx,canvas);
 
@@ -788,41 +777,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
+ctx.drawImage(logo, x, y, w, h);
 
 drawTemplate2(ctx,canvas);
 
@@ -922,42 +900,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
-
+ctx.drawImage(logo, x, y, w, h);
 drawTemplate3(ctx,canvas);
 
 };
@@ -1073,41 +1039,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
+ctx.drawImage(logo, x, y, w, h);
 
 drawTemplate4(ctx,canvas);
 
@@ -1208,42 +1163,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
-
+ctx.drawImage(logo, x, y, w, h);
 drawTemplate5(ctx,canvas);
 
 };
@@ -1345,41 +1288,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
+ctx.drawImage(logo, x, y, w, h);
 
 drawTemplate6(ctx,canvas);
 
@@ -1484,42 +1416,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
-
+ctx.drawImage(logo, x, y, w, h);
 drawTemplate7(ctx,canvas);
 
 };
@@ -1631,41 +1551,30 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
-
-
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
-
-
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
+ctx.drawImage(logo, x, y, w, h);
 
 drawTemplate8(ctx,canvas);
 
