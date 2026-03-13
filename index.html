@@ -152,7 +152,14 @@ button:hover{
 
 /* Mobile improvements */
 
-@media (max-width:480px){
+@media(max-width:480px){
+
+.download-btn{
+font-size:22px;
+padding:22px;
+}
+
+
 
 .card{
 padding:20px;
@@ -231,7 +238,26 @@ margin-top:20px;
 flex:1;
 padding:14px;
 }
+.download-box{
+width:100%;
+padding:20px;
+margin-top:20px;
+border-radius:12px;
+background:#fff;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+text-align:center;
+}
 
+.download-btn{
+width:100%;
+padding:18px;
+font-size:20px;
+font-weight:bold;
+border-radius:10px;
+background:#b8860b;
+color:white;
+border:none;
+}
 </style>
 </head>
 
@@ -262,8 +288,8 @@ Checking rate status...
   <div class="status" id="planStatus">
 Checking subscription...
 </div>
-
-  <button id="downloadBtn" disabled onclick="downloadPoster()">
+ 
+<button id="downloadBtn" class="download-btn" disabled onclick="downloadPoster()">
 Download Poster
 </button>
  
@@ -423,7 +449,9 @@ year:"numeric"
 
 const today = new Date().toISOString().slice(0,10);
 
-if(rateDate === today){
+const rateDateISO = rawDate ? new Date(rawDate).toISOString().slice(0,10) : "";
+
+if(rateDateISO === today){
 
 rateStatus.innerHTML = "Today Gold Rate Updated";
 rateStatus.className = "status updated";
