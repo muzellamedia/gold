@@ -73,6 +73,40 @@ border:1px solid #ccc;
 font-size:16px;
 box-sizing:border-box;
 }
+  /* SUCCESS POPUP */
+
+.popup-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.popup-box{
+background:white;
+padding:25px;
+border-radius:12px;
+text-align:center;
+max-width:300px;
+width:90%;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.popup-box h2{
+color:#8b0000;
+margin:10px 0;
+}
+
+.popup-box button{
+background:#006400;
+margin-top:10px;
+}
 </style>
 </head>
 
@@ -120,8 +154,22 @@ box-sizing:border-box;
 <button id="registerBtn" onclick="register()">Register</button>
 
 <div class="message" id="message"></div>
+<div id="successPopup" class="popup-overlay">
+
+<div class="popup-box">
+
+<h3>Registration Successful</h3>
+
+<p>Your Security Code is:</p>
+
+<h2 id="securityCode"></h2>
+
+<button onclick="goHome()">Go To Home</button>
 
 </div>
+
+</div>
+
 
 <script>
 
@@ -159,7 +207,7 @@ const reader = new FileReader();
 
 reader.onload = function(){
 
-fetch("https://script.google.com/macros/s/AKfycbxH_8C_fUiSl3NGcfhGo-wi5OAWMWiaRNITPPd2w1FIf9dvFzKlmsfnPVP4St9xzRf5PQ/exec",{
+fetch("https://script.google.com/macros/s/AKfycbwRuapKAap3_OVDtrZeWGqkiux8DBaWtOJmsJCkdgIWBxGw0G_UHWCspR6Dxx3nbtY/exec",{
 method:"POST",
 body:JSON.stringify({
 type:"register",
@@ -182,15 +230,12 @@ if(data.status==="success"){
 
 localStorage.setItem("userPhone",phone);
 
-document.getElementById("message").innerHTML=
-`
-<div style="color:green;">
-<p><b>Successfully Registered!</b></p>
-<p>Your Security Code is: <b>${data.code}</b></p>
-<button onclick="goHome()" style="margin-top:10px;background:#006400;">GO TO HOME</button>
-</div>
-`;
+// security code popup show
+document.getElementById("securityCode").innerText = data.code;
+document.getElementById("successPopup").style.display="flex";
+
 }
+
 else if(data.status==="exists"){
 
 showMessage("This phone number already registered", "red");
