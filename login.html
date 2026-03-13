@@ -104,6 +104,78 @@ button{
 .forgot-btn:hover{
   background:#1da851;
 }
+  %;
+padding:12px;
+margin-top:8px;
+border:none;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+font-size:15px;
+}
+
+.login-btn{
+background:#b8860b;
+color:white;
+}
+
+.login-btn:hover{
+background:#a07600;
+}
+
+.register-btn{
+background:#444;
+color:white;
+}
+
+.register-btn:hover{
+background:#222;
+}
+
+.error{
+color:red;
+margin-top:10px;
+}
+
+.forgot-btn{
+background:#25D366;
+color:white;
+}
+
+.forgot-btn:hover{
+background:#1da851;
+}
+
+/* SAMPLE POSTERS */
+
+.samples{
+margin-top:30px;
+max-width:700px;
+width:100%;
+}
+
+.samples h3{
+text-align:center;
+color:white;
+margin-bottom:15px;
+}
+
+.sample-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:12px;
+}
+
+.sample-grid img{
+width:100%;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+transition:transform 0.3s;
+}
+
+.sample-grid img:hover{
+transform:scale(1.05);
+}
 </style>
 </head>
 
@@ -128,11 +200,26 @@ Forgot Security Code?
 
   <div class="error" id="error"></div>
 </div>
+<div class="samples">
 
+<h3>Sample Posters</h3>
+
+<div class="sample-grid">
+
+<img src="https://lh3.googleusercontent.com/d/1HFWZ_ffeaQpSEk7APilLSIpnZL_7wBEH">
+
+<img src="https://lh3.googleusercontent.com/d/1WqEo6H7rsAQWnRKdGv6AXCKZQ0id1hMJ">
+
+<img src="https://lh3.googleusercontent.com/d/11Cds-94V4LjcxWjwcrY3uBUKujRrpoS0">
+
+<img src="https://lh3.googleusercontent.com/d/1HFWZ_ffeaQpSEk7APilLSIpnZL_7wBEH">
+
+</div>
+  </div>
 <script>
 
 // 🔥 USE ONLY ONE WEB APP URL
-const API_URL = "https://script.google.com/macros/s/AKfycbxH_8C_fUiSl3NGcfhGo-wi5OAWMWiaRNITPPd2w1FIf9dvFzKlmsfnPVP4St9xzRf5PQ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwRuapKAap3_OVDtrZeWGqkiux8DBaWtOJmsJCkdgIWBxGw0G_UHWCspR6Dxx3nbtY/exec";
 
 
 
