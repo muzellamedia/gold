@@ -1,56 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Gold Rate Template 4 Preview</title>
+<title>Gold Rate Template 4 with Logo Preview</title>
 <style>
   body { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    background-color: #f4f4f4; 
-    padding: 20px;
-    font-family: sans-serif;
+    display: flex; flex-direction: column; align-items: center; 
+    background-color: #f4f4f4; padding: 20px; font-family: sans-serif;
   }
   canvas { 
-    border: 3px solid #333; 
-    background-color: #004d00; /* ഒരു പശ്ചാത്തലം കാണാൻ വേണ്ടി */
-    width: 400px; /* ബ്രൗസറിൽ ഒതുങ്ങി നിൽക്കാൻ */
-    height: auto; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 3px solid #333; background-color: #004d00; 
+    width: 400px; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   }
-  .controls { margin-bottom: 20px; text-align: center; }
   button {
-    padding: 12px 25px;
-    font-size: 18px;
-    cursor: pointer;
-    background: #b8860b;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    margin-top: 20px; padding: 12px 25px; font-size: 18px;
+    cursor: pointer; background: #b8860b; color: white;
+    border: none; border-radius: 5px;
   }
 </style>
 </head>
 <body>
 
-  <div class="controls">
-    <h2>Template 4 Preview (A4 Size)</h2>
-    <p>ക്യാൻവാസ് വലിപ്പം: 2480 x 3508 (A4)</p>
-  </div>
-  
+  <h2>Template 4 with Logo Preview</h2>
   <canvas id="posterCanvas" width="2480" height="3508"></canvas>
-
   <button onclick="downloadPoster()">Download Image</button>
 
 <script>
-  // ആവശ്യമായ വേരിയബിളുകൾ (Dummy Data)
+  // ഡാറ്റാ വേരിയബിളുകൾ
   const shopName = "ABC JEWELLERY";
   const place = "MUKKAM, KOZHIKODE";
   const gold1Gram = "7,500";
-  const gold1Pavan = "120,000";
+  const gold1Pavan = "60,000";
   const rateDate = "08-03-2026";
   const contacts = ["9645565177", "9876543210"];
+  // പ്രിവ്യൂവിന് വേണ്ടി ഒരു സാമ്പിൾ ലോഗോ URL
+  const logoUrl = "https://lh3.googleusercontent.com/d/1lskOr_9Q8QW_CumGZ5_fgq-cJTx-SStX";
 
-  // റൗണ്ട് റെക്റ്റാങ്കിൾ ഫങ്ക്ഷൻ
   function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
     if (typeof radius === 'undefined') radius = 5;
     ctx.beginPath();
@@ -68,23 +52,22 @@
     if (stroke) ctx.stroke();
   }
 
-  // സേവ് ഫങ്ക്ഷൻ (പ്രിവ്യൂവിൽ ഡൗൺലോഡ് ചെയ്യാൻ)
-  function save(canvas) {
-    console.log("Canvas generated successfully");
-  }
+  function save(canvas) { console.log("Canvas Ready"); }
 
   window.onload = function() {
     const canvas = document.getElementById("posterCanvas");
     const ctx = canvas.getContext("2d");
     
-    // നിങ്ങൾ നൽകിയ ഫങ്ക്ഷൻ ഇവിടെ പ്രവർത്തിക്കുന്നു
-    drawTemplate4(ctx, canvas);
+    // പശ്ചാത്തല നിറം നൽകുന്നു
+    ctx.fillStyle = "#004d00"; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // ലോഗോ ഫങ്ക്ഷൻ കോൾ ചെയ്യുന്നു
+    template4(ctx, canvas);
   };
 
-  function template4(ctx, canvas){
-
-// LOGO
-if(logoUrl){
+  function template4(ctx, canvas) {
+   if(logoUrl){
 
 const logo = new Image();
 logo.crossOrigin="anonymous";
@@ -92,142 +75,91 @@ logo.src = logoUrl + "?t=" + new Date().getTime();
 
 logo.onload = function(){
 
-const maxWidth = 700;
-const maxHeight = 400;
+const maxWidth = 1200;
+const maxHeight = 1200;
 
 let w = logo.width;
 let h = logo.height;
 
 // maintain aspect ratio
 if(w > maxWidth){
-h = h * (maxWidth / w);
-w = maxWidth;
+  h = h * (maxWidth / w);
+  w = maxWidth;
 }
 
 if(h > maxHeight){
-w = w * (maxHeight / h);
-h = maxHeight;
+  w = w * (maxHeight / h);
+  h = maxHeight;
 }
 
-// logo position
-const x = 1700;
-const y = 120;
+// equal gap from top and right
+const gap = 80;
 
+const x = canvas.width - w - gap;
+const y = gap;
 
-// 30% white transparent background
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-roundRect(ctx,x-40,y-40,w+80,h+80,30,true,false);
+ctx.drawImage(logo, x, y, w, h);
+        drawTemplate4(ctx, canvas);
+      };
+      
+      logo.onerror = function() { drawTemplate4(ctx, canvas); };
+    } else {
+      drawTemplate4(ctx, canvas);
+    }
+  }
 
+  function drawTemplate4(ctx, canvas) {
+    ctx.textAlign = "center";
 
-// white outline
-ctx.strokeStyle = "white";
-ctx.lineWidth = 8;
-roundRect(ctx,x-40,y-40,w+80,h+80,30,false,true);
+    // TITLE
+    ctx.fillStyle = "#f7d64a";
+    ctx.font = "bold 140px Arial";
+    ctx.fillText("TODAY GOLD RATE", 1240, 1850);
 
+    // DATE BOX
+    ctx.fillStyle = "#dddddd";
+    ctx.fillRect(840, 1920, 800, 150);
+    ctx.fillStyle = "#000";
+    ctx.font = "bold 100px Arial";
+    ctx.fillText(rateDate, 1240, 2030);
 
-// draw logo
-ctx.drawImage(logo,x,y,w,h);
+    // RATE PANEL
+    ctx.fillStyle = "rgba(0,0,0,0.5)";
+    ctx.fillRect(300, 2100, 1880, 450);
 
-drawTemplate4(ctx,canvas);
+    ctx.fillStyle = "white";
+    ctx.font = "bold 100px Arial";
+    ctx.fillText("1 GRAM", 700, 2250);
+    ctx.font = "bold 180px Arial";
+    ctx.fillText("₹ " + gold1Gram, 700, 2450);
 
-};
+    ctx.font = "bold 100px Arial";
+    ctx.fillText("1 PAVAN", 1700, 2250);
+    ctx.font = "bold 180px Arial";
+    ctx.fillText("₹ " + gold1Pavan, 1700, 2450);
 
-}else{
+    // CENTER LINE
+    ctx.fillStyle = "white";
+    ctx.fillRect(1240, 2100, 6, 450);
 
-drawTemplate4(ctx,canvas);
+    // FOOTER
+    ctx.fillStyle = "#003333";
+    ctx.fillRect(0, 3050, 2480, 450);
+    ctx.fillStyle = "white";
+    ctx.font = "bold 120px Arial";
+    ctx.fillText(shopName, 1240, 3200);
+    ctx.font = "90px Arial";
+    ctx.fillText(place, 1240, 3320);
+    ctx.font = "80px Arial";
+    ctx.fillText("Ph: " + contacts.join(", "), 1240, 3450);
 
-}
-
-}
-
-
-
-function drawTemplate4(ctx,canvas){
-
-
-
-
-ctx.textAlign="center";
-
-
-// =====================
-// TITLE
-// =====================
-// =====================
-// TITLE
-// =====================
-ctx.fillStyle="#f7d64a";
-ctx.textAlign="center";
-ctx.font="bold 140px Arial";
-ctx.fillText("TODAY GOLD RATE",1240,1850);
-
-
-// =====================
-// DATE BOX
-// =====================
-ctx.fillStyle="#dddddd";
-ctx.fillRect(840,1920,800,150);
-
-ctx.fillStyle="#000";
-ctx.font="bold 100px Arial";
-ctx.fillText(rateDate,1240,2030);
-
-
-// =====================
-// RATE PANEL (50% transparent)
-// =====================
-ctx.fillStyle="rgba(0,0,0,0.5)";
-ctx.fillRect(300,2100,1880,450);
-
-
-// LEFT RATE
-ctx.fillStyle="white";
-ctx.textAlign="center";
-
-ctx.font="bold 100px Arial";
-ctx.fillText("1 GRAM",700,2250);
-
-ctx.font="bold 180px Arial";
-ctx.fillText("₹ "+gold1Gram,700,2450);
-
-
-// RIGHT RATE
-ctx.font="bold 100px Arial";
-ctx.fillText("1 PAVAN",1700,2250);
-
-ctx.font="bold 180px Arial";
-ctx.fillText("₹ "+gold1Pavan,1700,2450);
-
-
-// CENTER LINE
-ctx.fillStyle="white";
-ctx.fillRect(1240,2100,6,450);
-
-// FOOTER
-ctx.fillStyle="#003333";
-ctx.fillRect(0,3050,2480,450);
-
-ctx.fillStyle="white";
-
-ctx.font="bold 120px Arial";
-ctx.fillText(shopName,1240,3200);
-
-ctx.font="90px Arial";
-ctx.fillText(place,1240,3320);
-
-ctx.font="80px Arial";
-ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
-
-
-// SAVE
-save(canvas);
-
-}
+    save(canvas);
+  }
 
   function downloadPoster() {
     const canvas = document.getElementById("posterCanvas");
     const link = document.createElement("a");
-    link.download = "Template4_Poster.png";
+    link.download = "Poster_A4.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
   }
