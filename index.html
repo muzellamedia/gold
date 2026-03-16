@@ -1761,6 +1761,7 @@ await navigator.share({
 files:[file],
 title:"Today's Gold Rate"
 });
+  fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
 btn.classList.remove("loading-btn");
 btn.innerText = "Download Poster";
 return;
@@ -1779,6 +1780,9 @@ link.click();
 document.body.removeChild(link);
 
 URL.revokeObjectURL(link.href);
+
+// ⭐ RECORD DOWNLOAD
+fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
 
 btn.classList.remove("loading-btn");
 btn.innerText = "Download Poster";
