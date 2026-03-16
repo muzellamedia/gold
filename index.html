@@ -627,7 +627,7 @@ index = Math.floor(Math.random() * templateList.length);
 
 lastTemplate = index;
 
-    templateList[index](ctx, canvas);
+    templateList[index](ctx, canvas, share);
 
   };
 
@@ -636,7 +636,7 @@ lastTemplate = index;
   };
 }
 
-  function template1(ctx, canvas){
+  function template1(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -672,13 +672,13 @@ const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
 
-drawTemplate1(ctx,canvas);
+drawTemplate1(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate1(ctx,canvas);
+drawTemplate1(ctx,canvas,share);
 
 }
 
@@ -782,7 +782,7 @@ save(canvas, share);
 }
 
 
-function template2(ctx, canvas){
+function template2(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -818,13 +818,13 @@ const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
 
-drawTemplate2(ctx,canvas);
+drawTemplate2(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate2(ctx,canvas);
+drawTemplate2(ctx,canvas,share);
 
 }
 
@@ -905,7 +905,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 save(canvas, share);
 }
 
-function template3(ctx, canvas){
+function template3(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -940,13 +940,13 @@ const x = canvas.width - w - gap;
 const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
-drawTemplate3(ctx,canvas);
+drawTemplate3(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate3(ctx,canvas);
+drawTemplate3(ctx,canvas,share);
 
 }
 
@@ -1044,7 +1044,7 @@ save(canvas, share);
 }
 
 
-function template4(ctx, canvas){
+function template4(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -1080,13 +1080,13 @@ const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
 
-drawTemplate4(ctx,canvas);
+drawTemplate4(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate4(ctx,canvas);
+drawTemplate4(ctx,canvas,share);
 
 }
 
@@ -1168,7 +1168,7 @@ save(canvas, share);
 
 }
 
-function template5(ctx, canvas){
+function template5(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -1203,13 +1203,13 @@ const x = canvas.width - w - gap;
 const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
-drawTemplate5(ctx,canvas);
+drawTemplate5(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate5(ctx,canvas);
+drawTemplate5(ctx,canvas,share);
 
 }
 
@@ -1293,7 +1293,7 @@ save(canvas, share);
 
 }
 
-function template6(ctx, canvas){
+function template6(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -1329,13 +1329,13 @@ const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
 
-drawTemplate6(ctx,canvas);
+drawTemplate6(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate6(ctx,canvas);
+drawTemplate6(ctx,canvas,share);
 
 }
 
@@ -1421,7 +1421,7 @@ save(canvas, share);
 
 }
 
-function template7(ctx, canvas){
+function template7(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -1456,13 +1456,13 @@ const x = canvas.width - w - gap;
 const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
-drawTemplate7(ctx,canvas);
+drawTemplate7(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate7(ctx,canvas);
+drawTemplate7(ctx,canvas,share);
 
 }
 
@@ -1556,7 +1556,7 @@ save(canvas, share);
 
 }
 
-function template8(ctx, canvas){
+function template8(ctx, canvas, share){
 
 // LOGO
 if(logoUrl){
@@ -1592,13 +1592,13 @@ const y = gap;
 
 ctx.drawImage(logo, x, y, w, h);
 
-drawTemplate8(ctx,canvas);
+drawTemplate8(ctx,canvas,share);
 
 };
 
 }else{
 
-drawTemplate8(ctx,canvas);
+drawTemplate8(ctx,canvas,share);
 
 }
 
