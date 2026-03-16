@@ -1718,22 +1718,19 @@ if(stroke) ctx.stroke();
 // =====================
 function save(canvas){
 
-const btn = document.getElementById("downloadBtn");
-
 canvas.toBlob(function(blob){
 
-const link = document.createElement("a");
-link.download = "A4_Gold_Rate_Poster.png";
-link.href = URL.createObjectURL(blob);
+const reader = new FileReader();
 
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
+reader.onloadend = function(){
 
-URL.revokeObjectURL(link.href);
+const base64data = reader.result.split(",")[1];
 
-btn.classList.remove("loading-btn");
-btn.innerText = "Download Poster";
+Android.downloadBase64(base64data,"A4_Gold_Rate_Poster.png");
+
+};
+
+reader.readAsDataURL(blob);
 
 },"image/png");
 
