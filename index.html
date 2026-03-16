@@ -335,6 +335,7 @@ Mukkam, Kozhikode, Kerala 673602
   let gold1Gram = "";
 let gold1Pavan = "";
   let rateDate = "";
+    let rateTime = "";
 
    let lastTemplate = -1;
 let lastBg = -1;
@@ -416,6 +417,19 @@ gold1Gram = rates.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
 
 let rawDate = rates.date || "";
+  let rawTime = rates.time || "";
+
+  if(rawTime){
+
+const t = new Date(rawTime);
+
+rateTime = t.toLocaleTimeString("en-IN",{
+hour:"numeric",
+minute:"2-digit",
+hour12:true
+});
+
+}
 
  // AUTO NUMBER FORMAT
 gold1Gram = Number(gold1Gram).toLocaleString("en-IN");
@@ -443,7 +457,7 @@ const rechargeBtn = document.getElementById("rechargeBtn");
 // RATE STATUS
 if(rateDateISO === today){
 
-rateStatus.innerHTML = "Today Gold Rate Updated";
+rateStatus.innerHTML = "Today Gold Rate Updated<br>Time : " + rateTime;
 rateStatus.className = "status updated";
 
 downloadBtn.disabled = false;
