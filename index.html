@@ -271,6 +271,9 @@ Checking subscription...
 <button id="downloadBtn" class="download-btn" disabled onclick="downloadPoster()">
 Download Poster
 </button>
+  <button id="shareBtn" class="download-btn" style="background:#25D366;margin-top:15px;">
+Share Poster
+</button>
 
 <button class="edit-btn" onclick="location.href='edit.html'">
 Edit Details
@@ -354,6 +357,9 @@ if(!userPhone){
 // PAGE LOAD
 // =====================
 window.addEventListener("DOMContentLoaded", async function(){
+  document.getElementById("shareBtn").onclick = function(){
+generatePoster(true);
+};
 
 const phone = userPhone;
 
@@ -554,7 +560,7 @@ generatePoster();
   // =====================
   // DOWNLOAD
   // =====================
-  function generatePoster(){
+  function generatePoster(share=false){
 
 const btn = document.getElementById("downloadBtn");
 
@@ -579,7 +585,7 @@ bgIndex = Math.floor(Math.random() * backgrounds.length);
 }while(bgIndex === lastBg);
 
 lastBg = bgIndex;
-createPoster(backgrounds[bgIndex]);
+createPoster(backgrounds[bgIndex], share);
 
 }
 
@@ -587,7 +593,7 @@ createPoster(backgrounds[bgIndex]);
   // =====================
   // CREATE POSTER
   // =====================
-  function createPoster(bgUrl){
+  function createPoster(bgUrl, share){
 
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -772,7 +778,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
 // SAVE
-save(canvas);
+save(canvas, share);
 }
 
 
@@ -896,7 +902,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
 // SAVE
-save(canvas);
+save(canvas, share);
 }
 
 function template3(ctx, canvas){
@@ -1034,7 +1040,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
 // SAVE
-save(canvas);
+save(canvas, share);
 }
 
 
@@ -1158,7 +1164,7 @@ ctx.font="80px Arial";
 ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
  // SAVE
-save(canvas);
+save(canvas, share);
 
 }
 
@@ -1283,7 +1289,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
 // SAVE
-save(canvas);
+save(canvas, share);
 
 }
 
@@ -1411,7 +1417,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
 // SAVE
-save(canvas);
+save(canvas, share);
 
 }
 
@@ -1546,7 +1552,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
 // SAVE
-save(canvas);
+save(canvas, share);
 
 }
 
@@ -1678,7 +1684,7 @@ ctx.fillText("Ph: "+contacts.join(", "),1240,3450);
 
 
 // SAVE
-save(canvas);
+save(canvas, share);
 
 }
 
@@ -1740,26 +1746,45 @@ if(stroke) ctx.stroke();
 // =====================
 // SAVE
 // =====================
-function save(canvas){
+function save(canvas, share=false){
 
-  const btn = document.getElementById("downloadBtn");
+const btn = document.getElementById("downloadBtn");
 
-  canvas.toBlob(function(blob){
+canvas.toBlob(async function(blob){
 
-    const link = document.createElement("a");
-    link.download = "A4_Gold_Rate_Poster.png";
-    link.href = URL.createObjectURL(blob);
+// SHARE
+if(share && navigator.canShare){
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+const file = new File([blob], "GoldRatePoster.png", {type:"image/png"});
 
-    URL.revokeObjectURL(link.href);
+if(navigator.canShare({files:[file]})){
 
-    btn.classList.remove("loading-btn");
-    btn.innerText = "Download Poster";
+await navigator.share({
+files:[file],
+title:"Today's Gold Rate"
+});
 
-  }, "image/png");
+return;
+
+}
+
+}
+
+// DOWNLOAD
+const link = document.createElement("a");
+link.download = "A4_Gold_Rate_Poster.png";
+link.href = URL.createObjectURL(blob);
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+URL.revokeObjectURL(link.href);
+
+btn.classList.remove("loading-btn");
+btn.innerText = "Download Poster";
+
+}, "image/png");
 
 }
    function openWhatsApp(){
