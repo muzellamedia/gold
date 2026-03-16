@@ -442,10 +442,20 @@ if(rateDateISO === today){
 rateStatus.innerHTML = "Today Gold Rate Updated";
 rateStatus.className = "status updated";
 
+// ENABLE DOWNLOAD
+downloadBtn.disabled = false;
+downloadBtn.innerText = "Download Poster";
+downloadBtn.style.background = "#b8860b";
+
 }else{
 
 rateStatus.innerHTML = "Today Gold Rate Not Updated";
 rateStatus.className = "status not-updated";
+
+// DISABLE DOWNLOAD
+downloadBtn.disabled = true;
+downloadBtn.innerText = "Rate Not Updated";
+downloadBtn.style.background = "gray";
 
 }
 // =====================
@@ -1718,21 +1728,24 @@ if(stroke) ctx.stroke();
 // =====================
 function save(canvas){
 
-canvas.toBlob(function(blob){
+  const btn = document.getElementById("downloadBtn");
 
-const reader = new FileReader();
+  canvas.toBlob(function(blob){
 
-reader.onloadend = function(){
+    const link = document.createElement("a");
+    link.download = "A4_Gold_Rate_Poster.png";
+    link.href = URL.createObjectURL(blob);
 
-const base64data = reader.result.split(",")[1];
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-Android.downloadBase64(base64data,"A4_Gold_Rate_Poster.png");
+    URL.revokeObjectURL(link.href);
 
-};
+    btn.classList.remove("loading-btn");
+    btn.innerText = "Download Poster";
 
-reader.readAsDataURL(blob);
-
-},"image/png");
+  }, "image/png");
 
 }
    function openWhatsApp(){
