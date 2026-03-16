@@ -358,7 +358,7 @@ if(!userPhone){
 // =====================
 window.addEventListener("DOMContentLoaded", async function(){
   document.getElementById("shareBtn").onclick = function(){
-generatePoster(true);
+downloadPoster(true);
 };
 
 const phone = userPhone;
@@ -532,7 +532,7 @@ document.getElementById("loadingScreen").style.display = "none";
  });
   // =====================
  
-function downloadPoster(){
+function downloadPoster(share=false){
 
 const phone = userPhone;
 
@@ -549,7 +549,7 @@ return;
 }
 
 // continue download
-generatePoster();
+generatePoster(share);
 
 });
 
@@ -1751,6 +1751,7 @@ canvas.toBlob(async function(blob){
 
 // SHARE
 if(share && navigator.canShare){
+  
 
 const file = new File([blob], "GoldRatePoster.png", {type:"image/png"});
 
@@ -1760,7 +1761,8 @@ await navigator.share({
 files:[file],
 title:"Today's Gold Rate"
 });
-
+btn.classList.remove("loading-btn");
+btn.innerText = "Download Poster";
 return;
 
 }
