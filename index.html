@@ -432,19 +432,20 @@ year:"numeric"
 }).toUpperCase();
 
 }
-
 const today = new Date().toISOString().slice(0,10);
-
 const rateDateISO = rawDate ? new Date(rawDate).toISOString().slice(0,10) : "";
 
 const rateStatus = document.getElementById("rateStatus");
+const downloadBtn = document.getElementById("downloadBtn");
+const planStatus = document.getElementById("planStatus");
+const rechargeBtn = document.getElementById("rechargeBtn");
 
+// RATE STATUS
 if(rateDateISO === today){
 
 rateStatus.innerHTML = "Today Gold Rate Updated";
 rateStatus.className = "status updated";
 
-// ENABLE DOWNLOAD
 downloadBtn.disabled = false;
 downloadBtn.innerText = "Download Poster";
 downloadBtn.style.background = "#b8860b";
@@ -454,7 +455,6 @@ downloadBtn.style.background = "#b8860b";
 rateStatus.innerHTML = "Today Gold Rate Not Updated";
 rateStatus.className = "status not-updated";
 
-// DISABLE DOWNLOAD
 downloadBtn.disabled = true;
 downloadBtn.innerText = "Rate Not Updated";
 downloadBtn.style.background = "gray";
@@ -468,9 +468,7 @@ downloadBtn.style.background = "gray";
 const expiry = user.planExpiry ? new Date(user.planExpiry) : null;
 const todayDate = new Date();
 
-const downloadBtn = document.getElementById("downloadBtn");
-const planStatus = document.getElementById("planStatus");
-const rechargeBtn = document.getElementById("rechargeBtn");
+
 
 if(!expiry || todayDate > expiry){
 
@@ -488,11 +486,6 @@ planStatus.className = "status plan-expired";
 }else{
 
 // PLAN ACTIVE
-
-downloadBtn.disabled = false;
-downloadBtn.innerText = "Download Poster";
-downloadBtn.style.background = "#b8860b";
-
 const diffTime = expiry - todayDate;
 const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
 
@@ -503,14 +496,19 @@ planStatus.className = "status plan-active";
 
 rechargeBtn.style.display = "none";
 
-// SHOW WARNING IF LESS THAN 3 DAYS
+// Enable only if rate updated
+if(rateDateISO === today){
+downloadBtn.disabled = false;
+downloadBtn.innerText = "Download Poster";
+downloadBtn.style.background = "#b8860b";
+}
+
+// WARNING IF LESS THAN 3 DAYS
 if(remainingDays <= 3){
 planStatus.className = "status plan-warning";
 rechargeBtn.style.display = "block";
 }
-
 }
-
 // REMOVE LOADING SCREEN
 document.getElementById("loadingScreen").style.display = "none";
  });
