@@ -437,6 +437,8 @@ const today = new Date().toISOString().slice(0,10);
 
 const rateDateISO = rawDate ? new Date(rawDate).toISOString().slice(0,10) : "";
 
+const rateStatus = document.getElementById("rateStatus");
+
 if(rateDateISO === today){
 
 rateStatus.innerHTML = "Today Gold Rate Updated";
