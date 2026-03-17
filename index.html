@@ -1800,8 +1800,6 @@ if(stroke) ctx.stroke();
 // =====================
 
 // =====================
-// SAVE
-// =====================
 function save(canvas, share=false){
 
 const btn = document.getElementById("shareBtn");
@@ -1811,30 +1809,53 @@ canvas.toBlob(async function(blob){
 try{
 
 // =====================
-// SHARE
+// SHARE (SAFE)
 // =====================
 if(share && navigator.canShare){
 
 const file = new File([blob], "GoldRatePoster.png", {type:"image/png"});
 
-if(navigator.canShare({files:[file]})){
+// ✅ extra check
+if(navigator.canShare && navigator.canShare({files:[file]})){
 
+try{
 await navigator.share({
 files:[file],
 title:"Today's Gold Rate"
 });
+}catch(e){
+// ❗ user cancel / fail → fallback
+downloadFile(blob);
+}
 
+}else{
+downloadFile(blob);
+}
+
+}else{
+downloadFile(blob);
+}
+
+// ✅ record download always
 await fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
 
-return resetBtn();
+resetBtn();
+
+}catch(err){
+
+// ❗ NO ALERT → silent fallback
+downloadFile(blob);
+resetBtn();
 
 }
 
-}
+}, "image/png");
+
 
 // =====================
-// DOWNLOAD (fallback)
+// DOWNLOAD FUNCTION
 // =====================
+function downloadFile(blob){
 const link = document.createElement("a");
 link.download = "A4_Gold_Rate_Poster.png";
 link.href = URL.createObjectURL(blob);
@@ -1844,20 +1865,16 @@ link.click();
 document.body.removeChild(link);
 
 URL.revokeObjectURL(link.href);
-
-await fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
-
-resetBtn();
-
-}catch(err){
-
-alert("Error while sharing");
-resetBtn();
-
 }
 
-}, "image/png");
+// =====================
+function resetBtn(){
+btn.classList.remove("share-loading");
+btn.innerText = "Share";
+btn.style.pointerEvents = "auto";
+}
 
+}
 
 // =====================
 // RESET FUNCTION
