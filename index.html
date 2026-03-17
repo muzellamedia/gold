@@ -411,17 +411,18 @@ if(!userPhone){
 
 // =====================
 // =====================
-// PAGE LOAD
-// =====================
 window.addEventListener("DOMContentLoaded", async function(){
+
 document.getElementById("shareBtn").onclick = async function(){
 
 const btn = document.getElementById("shareBtn");
 
+// START animation
 btn.classList.add("share-loading");
 btn.innerText = "";
 btn.style.pointerEvents = "none";
 
+try{
 
 const phone = userPhone;
 
@@ -429,18 +430,41 @@ const phone = userPhone;
 const res = await fetch(API_URL + "?type=checkDownload&phone=" + phone);
 const data = await res.json();
 
+// LIMIT
 if(data.status === "limit"){
 alert("Limit reached (2 posters)");
 resetBtn();
 return;
 }
 
+// PLAN EXPIRED
 if(data.status === "expired"){
 alert("Recharge required");
 resetBtn();
 return;
 }
 
+// SUCCESS → generate
+generatePoster(true);
+
+}catch(err){
+
+console.error("Share Error:", err);
+alert("Network error. Please try again.");
+resetBtn();
+
+}
+
+// RESET FUNCTION
+function resetBtn(){
+btn.classList.remove("share-loading");
+btn.innerText = "Share";
+btn.style.pointerEvents = "auto";
+}
+
+};
+
+});
 // 2️⃣ GENERATE + SHARE
 generatePoster(true);
 
