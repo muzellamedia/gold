@@ -1865,6 +1865,10 @@ function save(canvas, share=false){
 
 const btn = document.getElementById("shareBtn");
 
+btn.classList.remove("share-loading");
+btn.innerText = "Share";
+btn.style.pointerEvents = "auto";
+
 canvas.toBlob(async function(blob){
 
 // SHARE
