@@ -467,32 +467,10 @@ const user = data.user || {};
 const rates = data.rates || {};
 backgrounds = data.backgrounds || [];
 
-// ✅ ഇവിടെ തന്നെ use ചെയ്യണം
+// ✅ USER DATA
 shopName = user.shop || "";
 logoUrl = user.logo || "";
 place = user.place || "";
-
-// باقي code...
-
-} catch(err){
-alert("Init load failed");
-}
-  
-// =====================
-// ✅ CLOSE LOADING SCREEN
-// =====================
-document.getElementById("loadingScreen").style.display = "none";
-
-});
-
-// =====================
-// =====================
-// USER DATA
-// =====================
-
-shopName = user.shop || "";
-logoUrl = user.logo || "";
- place = user.place || "";
 
 contacts = [
 user.contact1,
@@ -500,15 +478,15 @@ user.contact2,
 user.contact3
 ].filter(n=>n);
 
-document.getElementById("shopName").innerText = user.shop || "";
+// ✅ UI UPDATE
+document.getElementById("shopName").innerText = shopName;
 document.getElementById("place").innerText = user.place || "";
 document.getElementById("district").innerText = user.district || "";
 document.getElementById("email").innerText = user.email || "";
 document.getElementById("contact").innerText = contacts.join(" | ");
 
-// LOGO LOAD (lh3 format)
+// ✅ LOGO
 if(user.logo){
-
 let fileId = "";
 
 if(user.logo.includes("id=")){
@@ -519,100 +497,78 @@ fileId = user.logo.split("/d/")[1].split("/")[0];
 }
 
 let imgUrl = "https://lh3.googleusercontent.com/d/" + fileId;
-
-// UI display
-document.getElementById("logoBox").innerHTML =
-"<img src='"+imgUrl+"'>";
-
-// ⭐ poster-ന് same URL ഉപയോഗിക്കുക
+document.getElementById("logoBox").innerHTML = "<img src='"+imgUrl+"'>";
 logoUrl = imgUrl;
-
 }
 
-
-
+// ✅ RATES
 gold1Gram = rates.gold1gram || "";
 gold1Pavan = gold1Gram * 8;
 
 let rawDate = rates.date || "";
-  let rawTime = rates.time || "";
+let rawTime = rates.time || "";
 
-  if(rawTime){
-
+if(rawTime){
 const t = new Date(rawTime);
-
-rateTime = t.toLocaleTimeString("en-IN",{
-hour:"numeric",
-minute:"2-digit",
-hour12:true
-});
-
+rateTime = t.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit",hour12:true});
 }
 
- // AUTO NUMBER FORMAT
 gold1Gram = Number(gold1Gram).toLocaleString("en-IN");
 gold1Pavan = Number(gold1Pavan).toLocaleString("en-IN");
 
 if(rawDate){
-
 const d = new Date(rawDate);
-
-rateDate = d.toLocaleDateString("en-IN",{
-day:"numeric",
-month:"long",
-year:"numeric"
-}).toUpperCase();
-
+rateDate = d.toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}).toUpperCase();
 }
+
 const today = new Date().toISOString().slice(0,10);
 const rateDateISO = rawDate ? new Date(rawDate).toISOString().slice(0,10) : "";
 
 const rateStatus = document.getElementById("rateStatus");
 
-const planStatus = document.getElementById("planStatus");
-const rechargeBtn = document.getElementById("rechargeBtn");
-
-// RATE STATUS
 if(rateDateISO === today){
-
 rateStatus.innerHTML = "Today Gold Rate Updated<br>Time : " + rateTime;
 rateStatus.className = "status updated";
-const shareBtn = document.getElementById("shareBtn");
-
-if(rateDateISO === today){
-
-shareBtn.style.pointerEvents = "auto";
-shareBtn.style.opacity = "1";
-
 }else{
-
-shareBtn.style.pointerEvents = "none";
-shareBtn.style.opacity = "0.5";
-
+rateStatus.innerText = "Gold rate not updated";
+rateStatus.className = "status not-updated";
 }
 
-}
-// =====================
-// =====================
-// PLAN STATUS
-// =====================
+// ✅ PLAN STATUS
+const planStatus = document.getElementById("planStatus");
+const rechargeBtn = document.getElementById("rechargeBtn");
 
 const expiry = user.planExpiry ? new Date(user.planExpiry) : null;
 const todayDate = new Date();
 
-
-
 if(!expiry || todayDate > expiry){
+
+planStatus.innerText = "Plan Expired";
+planStatus.className = "status plan-expired";
+
+rechargeBtn.style.display = "block";
 
 shareBtn.style.pointerEvents = "none";
 shareBtn.style.opacity = "0.5";
 
-}
-
-
-
 }else{
 
+const diffTime = expiry - todayDate;
+const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
+
+planStatus.innerText = "Plan Active - " + remainingDays + " Days Remaining";
+planStatus.className = "status plan-active";
+
+if(remainingDays <= 3){
+planStatus.className = "status plan-warning";
+rechargeBtn.style.display = "block";
+}
+
+}
+
+} catch(err){
+alert("Init load failed");
+}
 // PLAN ACTIVE
 const diffTime = expiry - todayDate;
 const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
