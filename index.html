@@ -381,39 +381,41 @@ Mukkam, Kozhikode, Kerala 673602
 
 </footer>
 
-  <script>
+ <script>
 
-  // =====================
-  // GLOBAL VARIABLES
-  // =====================
-  let shopName = "";
-  let logoUrl = "";
-  let contacts = [];
-  let backgrounds = [];
-   let place = "";   // ✅ ADD THIS
+// =====================
+// GLOBAL
+// =====================
+let shopName = "";
+let logoUrl = "";
+let contacts = [];
+let backgrounds = [];
+let place = "";
 
-  let gold1Gram = "";
+let gold1Gram = "";
 let gold1Pavan = "";
-  let rateDate = "";
-    let rateTime = "";
+let rateDate = "";
+let rateTime = "";
 
-   let lastTemplate = -1;
+let lastTemplate = -1;
 let lastBg = -1;
 
 const API_URL = "https://script.google.com/macros/s/AKfycbyUh2nP9ffsT3DnvUQ1Sn99fqOJeAuBfIUBDNbH3oAPpzsUBhvOClgHkLp_CxsVnA2zrg/exec";
 const userPhone = localStorage.getItem("userPhone");
-  
 
-// 🔐 Login Protection (Run Immediately)
+// LOGIN CHECK
 if(!userPhone){
   window.location.replace("login.html");
 }
 
 // =====================
+// MAIN LOAD
 // =====================
 window.addEventListener("DOMContentLoaded", async function(){
 
 const shareBtn = document.getElementById("shareBtn");
+const planStatus = document.getElementById("planStatus");
+const rechargeBtn = document.getElementById("rechargeBtn");
 
 // =====================
 // SHARE BUTTON
@@ -439,7 +441,6 @@ alert("Recharge required");
 return resetBtn();
 }
 
-// ✅ generate only after check
 generatePoster(true);
 
 }catch(err){
@@ -456,7 +457,7 @@ shareBtn.style.pointerEvents = "auto";
 };
 
 // =====================
-// INIT LOAD (IMPORTANT)
+// INIT LOAD
 // =====================
 try {
 
@@ -467,7 +468,9 @@ const user = data.user || {};
 const rates = data.rates || {};
 backgrounds = data.backgrounds || [];
 
-// ✅ USER DATA
+// =====================
+// USER DATA
+// =====================
 shopName = user.shop || "";
 logoUrl = user.logo || "";
 place = user.place || "";
@@ -478,14 +481,16 @@ user.contact2,
 user.contact3
 ].filter(n=>n);
 
-// ✅ UI UPDATE
+// UI
 document.getElementById("shopName").innerText = shopName;
 document.getElementById("place").innerText = user.place || "";
 document.getElementById("district").innerText = user.district || "";
 document.getElementById("email").innerText = user.email || "";
 document.getElementById("contact").innerText = contacts.join(" | ");
 
-// ✅ LOGO
+// =====================
+// LOGO
+// =====================
 if(user.logo){
 let fileId = "";
 
@@ -501,8 +506,10 @@ document.getElementById("logoBox").innerHTML = "<img src='"+imgUrl+"'>";
 logoUrl = imgUrl;
 }
 
-// ✅ RATES
-gold1Gram = rates.gold1gram || "";
+// =====================
+// RATES
+// =====================
+gold1Gram = rates.gold1gram || 0;
 gold1Pavan = gold1Gram * 8;
 
 let rawDate = rates.date || "";
@@ -521,6 +528,9 @@ const d = new Date(rawDate);
 rateDate = d.toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}).toUpperCase();
 }
 
+// =====================
+// RATE STATUS
+// =====================
 const today = new Date().toISOString().slice(0,10);
 const rateDateISO = rawDate ? new Date(rawDate).toISOString().slice(0,10) : "";
 
@@ -532,12 +542,13 @@ rateStatus.className = "status updated";
 }else{
 rateStatus.innerText = "Gold rate not updated";
 rateStatus.className = "status not-updated";
+shareBtn.style.pointerEvents = "none";
+shareBtn.style.opacity = "0.5";
 }
 
-// ✅ PLAN STATUS
-const planStatus = document.getElementById("planStatus");
-const rechargeBtn = document.getElementById("rechargeBtn");
-
+// =====================
+// PLAN STATUS
+// =====================
 const expiry = user.planExpiry ? new Date(user.planExpiry) : null;
 const todayDate = new Date();
 
@@ -552,17 +563,12 @@ shareBtn.style.opacity = "0.5";
 
 }else{
 
-// ✅ ഇവിടെ define ചെയ്യണം
 const diffTime = expiry - todayDate;
 const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
 
-planStatus.innerText =
-"Plan Active - " + remainingDays + " Days Remaining";
-
+planStatus.innerText = "Plan Active - " + remainingDays + " Days Remaining";
 planStatus.className = "status plan-active";
-rechargeBtn.style.display = "none";
 
-// ✅ ഇവിടെ തന്നെ check ചെയ്യണം
 if(remainingDays <= 3){
 planStatus.className = "status plan-warning";
 rechargeBtn.style.display = "block";
@@ -570,10 +576,16 @@ rechargeBtn.style.display = "block";
 
 }
 
+}catch(err){
+alert("Init load failed");
+}
 
-// REMOVE LOADING SCREEN
+// =====================
+// REMOVE LOADING
+// =====================
 document.getElementById("loadingScreen").style.display = "none";
- });
+
+});
   // =====================
  
 function downloadPoster(share=false){
