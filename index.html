@@ -458,7 +458,7 @@ shareBtn.style.pointerEvents = "auto";
 // =====================
 // INIT LOAD (IMPORTANT)
 // =====================
-try{
+try {
 
 const res = await fetch(API_URL + "?type=init&phone=" + userPhone);
 const data = await res.json();
@@ -467,12 +467,17 @@ const user = data.user || {};
 const rates = data.rates || {};
 backgrounds = data.backgrounds || [];
 
-// UI update code here...
+// ✅ ഇവിടെ തന്നെ use ചെയ്യണം
+shopName = user.shop || "";
+logoUrl = user.logo || "";
+place = user.place || "";
 
-}catch(err){
+// باقي code...
+
+} catch(err){
 alert("Init load failed");
 }
-
+  
 // =====================
 // ✅ CLOSE LOADING SCREEN
 // =====================
@@ -604,16 +609,7 @@ shareBtn.style.opacity = "0.5";
 
 }
 
-// PLAN EXPIRED
 
-downloadBtn.disabled = true;
-downloadBtn.innerText = "Recharge Required";
-downloadBtn.style.background = "red";
-
-rechargeBtn.style.display = "block";
-
-planStatus.innerText = "Plan Expired";
-planStatus.className = "status plan-expired";
 
 }else{
 
@@ -630,9 +626,7 @@ rechargeBtn.style.display = "none";
 
 // Enable only if rate updated
 if(rateDateISO === today){
-downloadBtn.disabled = false;
-downloadBtn.innerText = "Download Poster";
-downloadBtn.style.background = "#b8860b";
+
 }
 
 // WARNING IF LESS THAN 3 DAYS
