@@ -563,7 +563,7 @@ const today = new Date().toISOString().slice(0,10);
 const rateDateISO = rawDate ? new Date(rawDate).toISOString().slice(0,10) : "";
 
 const rateStatus = document.getElementById("rateStatus");
-const downloadBtn = document.getElementById("downloadBtn");
+
 const planStatus = document.getElementById("planStatus");
 const rechargeBtn = document.getElementById("rechargeBtn");
 
@@ -572,19 +572,19 @@ if(rateDateISO === today){
 
 rateStatus.innerHTML = "Today Gold Rate Updated<br>Time : " + rateTime;
 rateStatus.className = "status updated";
+const shareBtn = document.getElementById("shareBtn");
 
-downloadBtn.disabled = false;
-downloadBtn.innerText = "Download Poster";
-downloadBtn.style.background = "#b8860b";
+if(rateDateISO === today){
+
+shareBtn.style.pointerEvents = "auto";
+shareBtn.style.opacity = "1";
 
 }else{
 
-rateStatus.innerHTML = "Today Gold Rate Not Updated";
-rateStatus.className = "status not-updated";
+shareBtn.style.pointerEvents = "none";
+shareBtn.style.opacity = "0.5";
 
-downloadBtn.disabled = true;
-downloadBtn.innerText = "Rate Not Updated";
-downloadBtn.style.background = "gray";
+}
 
 }
 // =====================
@@ -598,6 +598,11 @@ const todayDate = new Date();
 
 
 if(!expiry || todayDate > expiry){
+
+shareBtn.style.pointerEvents = "none";
+shareBtn.style.opacity = "0.5";
+
+}
 
 // PLAN EXPIRED
 
