@@ -413,78 +413,72 @@ if(!userPhone){
 // =====================
 window.addEventListener("DOMContentLoaded", async function(){
 
-document.getElementById("shareBtn").onclick = async function(){
+const shareBtn = document.getElementById("shareBtn");
 
-const btn = document.getElementById("shareBtn");
+// =====================
+// SHARE BUTTON
+// =====================
+shareBtn.onclick = async function(){
 
-// START animation
-btn.classList.add("share-loading");
-btn.innerText = "";
-btn.style.pointerEvents = "none";
+shareBtn.classList.add("share-loading");
+shareBtn.innerText = "";
+shareBtn.style.pointerEvents = "none";
 
 try{
 
-const phone = userPhone;
-
-// 1️⃣ CHECK PLAN + LIMIT
-const res = await fetch(API_URL + "?type=checkDownload&phone=" + phone);
+const res = await fetch(API_URL + "?type=checkDownload&phone=" + userPhone);
 const data = await res.json();
 
-// LIMIT
 if(data.status === "limit"){
 alert("Limit reached (2 posters)");
-resetBtn();
-return;
+return resetBtn();
 }
 
-// PLAN EXPIRED
 if(data.status === "expired"){
 alert("Recharge required");
-resetBtn();
-return;
+return resetBtn();
 }
 
-// SUCCESS → generate
+// ✅ generate only after check
 generatePoster(true);
 
 }catch(err){
-
-console.error("Share Error:", err);
-alert("Network error. Please try again.");
+alert("Network error");
 resetBtn();
-
 }
 
-// RESET FUNCTION
 function resetBtn(){
-btn.classList.remove("share-loading");
-btn.innerText = "Share";
-btn.style.pointerEvents = "auto";
+shareBtn.classList.remove("share-loading");
+shareBtn.innerText = "Share";
+shareBtn.style.pointerEvents = "auto";
 }
 
 };
 
-});
-// 2️⃣ GENERATE + SHARE
-generatePoster(true);
+// =====================
+// INIT LOAD (IMPORTANT)
+// =====================
+try{
 
-function resetBtn(){
-btn.classList.remove("share-loading");
-btn.innerText = "Share";
-btn.style.pointerEvents = "auto";
-}
-
-};
-
-const phone = userPhone;
-
-const res = await fetch(API_URL + "?type=init&phone=" + phone);
+const res = await fetch(API_URL + "?type=init&phone=" + userPhone);
 const data = await res.json();
 
 const user = data.user || {};
 const rates = data.rates || {};
 backgrounds = data.backgrounds || [];
 
+// UI update code here...
+
+}catch(err){
+alert("Init load failed");
+}
+
+// =====================
+// ✅ CLOSE LOADING SCREEN
+// =====================
+document.getElementById("loadingScreen").style.display = "none";
+
+});
 
 // =====================
 // =====================
@@ -1865,15 +1859,14 @@ function save(canvas, share=false){
 
 const btn = document.getElementById("shareBtn");
 
-btn.classList.remove("share-loading");
-btn.innerText = "Share";
-btn.style.pointerEvents = "auto";
-
 canvas.toBlob(async function(blob){
 
+try{
+
+// =====================
 // SHARE
+// =====================
 if(share && navigator.canShare){
-  
 
 const file = new File([blob], "GoldRatePoster.png", {type:"image/png"});
 
@@ -1883,16 +1876,18 @@ await navigator.share({
 files:[file],
 title:"Today's Gold Rate"
 });
-  fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
-btn.classList.remove("loading-btn");
-btn.innerText = "Download Poster";
-return;
+
+await fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
+
+return resetBtn();
 
 }
 
 }
 
-// DOWNLOAD
+// =====================
+// DOWNLOAD (fallback)
+// =====================
 const link = document.createElement("a");
 link.download = "A4_Gold_Rate_Poster.png";
 link.href = URL.createObjectURL(blob);
@@ -1903,13 +1898,28 @@ document.body.removeChild(link);
 
 URL.revokeObjectURL(link.href);
 
-// ⭐ RECORD DOWNLOAD
-fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
+await fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
 
-btn.classList.remove("loading-btn");
-btn.innerText = "Download Poster";
+resetBtn();
+
+}catch(err){
+
+alert("Error while sharing");
+resetBtn();
+
+}
 
 }, "image/png");
+
+
+// =====================
+// RESET FUNCTION
+// =====================
+function resetBtn(){
+btn.classList.remove("share-loading");
+btn.innerText = "Share";
+btn.style.pointerEvents = "auto";
+}
 
 }
    function openWhatsApp(){
