@@ -543,27 +543,26 @@ const todayDate = new Date();
 
 if(!expiry || todayDate > expiry){
 
-planStatus.innerText = "Plan Expired";
-planStatus.className = "status plan-expired";
-
-rechargeBtn.style.display = "block";
-
 shareBtn.style.pointerEvents = "none";
 shareBtn.style.opacity = "0.5";
 
 }else{
 
+// PLAN ACTIVE
 const diffTime = expiry - todayDate;
 const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
 
-planStatus.innerText = "Plan Active - " + remainingDays + " Days Remaining";
+planStatus.innerText =
+"Plan Active - " + remainingDays + " Days Remaining";
+
 planStatus.className = "status plan-active";
+
+rechargeBtn.style.display = "none";
 
 if(remainingDays <= 3){
 planStatus.className = "status plan-warning";
 rechargeBtn.style.display = "block";
 }
-
 }
 
 } catch(err){
