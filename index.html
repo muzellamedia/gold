@@ -217,7 +217,64 @@ margin-top:10px;
 color:#ffd700;
 font-size:16px;
 }
+.share-wrapper{
+margin-top:30px;
+display:flex;
+justify-content:center;
+}
 
+.share-circle{
+width:220px;
+height:220px;
+border-radius:50%;
+background:linear-gradient(135deg,#2ecc71,#27ae60);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+font-weight:bold;
+color:#000;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+position:relative;
+overflow:hidden;
+}
+
+/* CLICK EFFECT */
+.share-circle:active{
+transform:scale(0.95);
+}
+
+/* LOADING ANIMATION */
+.share-loading{
+animation:pulse 1.2s infinite;
+}
+
+.share-loading::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+background:rgba(255,255,255,0.3);
+animation:ripple 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.08);}
+100%{transform:scale(1);}
+}
+
+@keyframes ripple{
+0%{transform:scale(1);opacity:0.5;}
+100%{transform:scale(1.8);opacity:0;}
+}
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
 /* Mobile optimization */
 
 @media(max-width:480px){
@@ -268,12 +325,12 @@ Checking rate status...
 Checking subscription...
 </div>
 
-<button id="downloadBtn" class="download-btn" disabled onclick="downloadPoster()">
-Download Poster
-</button>
-  <button id="shareBtn" class="download-btn" style="background:#25D366;margin-top:15px;">
-Share Poster
-</button>
+
+  <div class="share-wrapper">
+  <div id="shareBtn" class="share-circle">
+    Share
+  </div>
+</div>
 
 <button class="edit-btn" onclick="location.href='edit.html'">
 Edit Details
@@ -357,8 +414,42 @@ if(!userPhone){
 // PAGE LOAD
 // =====================
 window.addEventListener("DOMContentLoaded", async function(){
-  document.getElementById("shareBtn").onclick = function(){
-downloadPoster(true);
+document.getElementById("shareBtn").onclick = async function(){
+
+const btn = document.getElementById("shareBtn");
+
+btn.classList.add("share-loading");
+btn.innerText = "";
+btn.style.pointerEvents = "none";
+
+
+const phone = userPhone;
+
+// 1️⃣ CHECK PLAN + LIMIT
+const res = await fetch(API_URL + "?type=checkDownload&phone=" + phone);
+const data = await res.json();
+
+if(data.status === "limit"){
+alert("Limit reached (2 posters)");
+resetBtn();
+return;
+}
+
+if(data.status === "expired"){
+alert("Recharge required");
+resetBtn();
+return;
+}
+
+// 2️⃣ GENERATE + SHARE
+generatePoster(true);
+
+function resetBtn(){
+btn.classList.remove("share-loading");
+btn.innerText = "Share";
+btn.style.pointerEvents = "auto";
+}
+
 };
 
 const phone = userPhone;
@@ -560,16 +651,18 @@ generatePoster(share);
   // =====================
   function generatePoster(share=false){
 
-const btn = document.getElementById("downloadBtn");
+const btn = document.getElementById("shareBtn");
 
-btn.classList.add("loading-btn");
-btn.innerText = "Generating...";
+// ✅ START animation
+btn.classList.add("share-loading");
+btn.innerText = "";
+btn.style.pointerEvents = "none";
 
-// background load ആയിട്ടില്ലെങ്കിൽ wait ചെയ്യുക
+// background load wait
 if(backgrounds.length === 0){
 
 setTimeout(function(){
-generatePoster();
+generatePoster(share);
 },500);
 
 return;
@@ -583,6 +676,7 @@ bgIndex = Math.floor(Math.random() * backgrounds.length);
 }while(bgIndex === lastBg);
 
 lastBg = bgIndex;
+
 createPoster(backgrounds[bgIndex], share);
 
 }
@@ -1745,7 +1839,7 @@ if(stroke) ctx.stroke();
 // =====================
 function save(canvas, share=false){
 
-const btn = document.getElementById("downloadBtn");
+const btn = document.getElementById("shareBtn");
 
 canvas.toBlob(async function(blob){
 
