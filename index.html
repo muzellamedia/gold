@@ -457,15 +457,6 @@ resetBtn();
 
 
 }
-function resetBtn(){
-
-const btn = document.getElementById("shareBtn");
-
-btn.classList.remove("share-loading","share-disabled");
-btn.innerText = "Share";
-btn.style.pointerEvents = "auto";
-
-}
 
 
 
@@ -1873,7 +1864,17 @@ btn.classList.add("share-disabled");
 btn.style.pointerEvents = "none";
 
 }
+// RESET BUTTON (GLOBAL)
+// =====================
+function resetBtn(){
 
+const btn = document.getElementById("shareBtn");
+
+btn.classList.remove("share-loading","share-disabled");
+btn.innerText = "Share";
+btn.style.pointerEvents = "auto";
+
+}
 
    function openWhatsApp(){
 
