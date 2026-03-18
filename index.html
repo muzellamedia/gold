@@ -285,9 +285,10 @@ padding:22px;
 }
 .share-disabled{
 background: #cc0000 !important;
+background-image: none !important; /* 🔥 THIS IS IMPORTANT */
 color: white;
 pointer-events: none;
-opacity: 0.9;
+opacity: 1;
 }
 .card{
 padding:20px;
@@ -437,13 +438,13 @@ const res = await fetch(API_URL + "?type=checkDownload&phone=" + userPhone);
 const data = await res.json();
 
 if(data.status === "limit"){
-alert("Limit reached (2 posters)");
-return resetBtn();
+disableShareBtn("2 Poster Limit"); // 🔥 NO resetBtn
+return;
 }
 
 if(data.status === "expired"){
-alert("Recharge required");
-return resetBtn();
+disableShareBtn("Plan Expired");
+return;
 }
 
 generatePoster(true);
@@ -452,6 +453,8 @@ generatePoster(true);
 alert("Network error");
 resetBtn();
 }
+
+};
 
 function resetBtn(){
 shareBtn.classList.remove("share-loading");
