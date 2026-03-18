@@ -283,7 +283,12 @@ animation:ripple 1.5s infinite;
 font-size:22px;
 padding:22px;
 }
-
+.share-disabled{
+background: #cc0000 !important;
+color: white;
+pointer-events: none;
+opacity: 0.9;
+}
 .card{
 padding:20px;
 }
@@ -542,8 +547,7 @@ rateStatus.className = "status updated";
 }else{
 rateStatus.innerText = "Gold rate not updated";
 rateStatus.className = "status not-updated";
-shareBtn.style.pointerEvents = "none";
-shareBtn.style.opacity = "0.5";
+disableShareBtn("Rate Not Updated");
 }
 
 // =====================
@@ -558,9 +562,8 @@ planStatus.innerText = "Plan Expired";
 planStatus.className = "status plan-expired";
 rechargeBtn.style.display = "block";
 
-shareBtn.style.pointerEvents = "none";
-shareBtn.style.opacity = "0.5";
-
+disableShareBtn("Plan Expired");
+  
 }else{
 
 const diffTime = expiry - todayDate;
@@ -597,11 +600,8 @@ fetch(API_URL + "?type=checkDownload&phone=" + phone)
 .then(data=>{
 
 if(data.status === "limit"){
-
-alert("Daily download limit reached (2 posters)");
-
+disableShareBtn("2 Poster Limit");
 return;
-
 }
 
 // continue download
@@ -1869,23 +1869,28 @@ URL.revokeObjectURL(link.href);
 
 // =====================
 function resetBtn(){
-btn.classList.remove("share-loading");
+
+const btn = document.getElementById("shareBtn");
+
+btn.classList.remove("share-loading","share-disabled");
 btn.innerText = "Share";
 btn.style.pointerEvents = "auto";
-}
 
 }
 
-// =====================
-// RESET FUNCTION
-// =====================
-function resetBtn(){
+
+
+function disableShareBtn(text){
+
+const btn = document.getElementById("shareBtn");
+
+btn.innerText = text;
 btn.classList.remove("share-loading");
-btn.innerText = "Share";
-btn.style.pointerEvents = "auto";
+btn.classList.add("share-disabled");
+
+btn.style.pointerEvents = "none";
+
 }
-
-
    function openWhatsApp(){
 
 window.open(
