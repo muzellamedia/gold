@@ -260,7 +260,14 @@ border-radius:50%;
 background:rgba(255,255,255,0.3);
 animation:ripple 1.5s infinite;
 }
-
+.share-disabled{
+background: #cc0000 !important;
+background-image: none !important;
+color: white;
+pointer-events: none;
+opacity: 1;
+}
+  
 @keyframes pulse{
 0%{transform:scale(1);}
 50%{transform:scale(1.08);}
@@ -283,13 +290,7 @@ animation:ripple 1.5s infinite;
 font-size:22px;
 padding:22px;
 }
-.share-disabled{
-background: #cc0000 !important;
-background-image: none !important; /* 🔥 THIS IS IMPORTANT */
-color: white;
-pointer-events: none;
-opacity: 1;
-}
+
 .card{
 padding:20px;
 }
@@ -1803,10 +1804,6 @@ if(stroke) ctx.stroke();
 
   // =====================
  // =====================
-// SAVE
-// =====================
-
-// =====================
 function save(canvas, share=false){
 
 const btn = document.getElementById("shareBtn");
@@ -1815,14 +1812,10 @@ canvas.toBlob(async function(blob){
 
 try{
 
-// =====================
-// SHARE (SAFE)
-// =====================
 if(share && navigator.canShare){
 
 const file = new File([blob], "GoldRatePoster.png", {type:"image/png"});
 
-// ✅ extra check
 if(navigator.canShare && navigator.canShare({files:[file]})){
 
 try{
@@ -1831,7 +1824,6 @@ files:[file],
 title:"Today's Gold Rate"
 });
 }catch(e){
-// ❗ user cancel / fail → fallback
 downloadFile(blob);
 }
 
@@ -1842,15 +1834,11 @@ downloadFile(blob);
 }else{
 downloadFile(blob);
 }
-
-// ✅ record download always
-await fetch(API_URL + "?type=recordDownload&phone=" + userPhone);
 
 resetBtn();
 
 }catch(err){
 
-// ❗ NO ALERT → silent fallback
 downloadFile(blob);
 resetBtn();
 
@@ -1858,10 +1846,7 @@ resetBtn();
 
 }, "image/png");
 
-
-// =====================
 // DOWNLOAD FUNCTION
-// =====================
 function downloadFile(blob){
 const link = document.createElement("a");
 link.download = "A4_Gold_Rate_Poster.png";
@@ -1874,9 +1859,9 @@ document.body.removeChild(link);
 URL.revokeObjectURL(link.href);
 }
 
+}
 // =====================
-
-
+// ✅ GLOBAL FUNCTION
 function disableShareBtn(text){
 
 const btn = document.getElementById("shareBtn");
@@ -1888,6 +1873,8 @@ btn.classList.add("share-disabled");
 btn.style.pointerEvents = "none";
 
 }
+
+
    function openWhatsApp(){
 
 window.open(
