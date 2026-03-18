@@ -337,43 +337,53 @@ gap:10px;
 <body>
 
 <div id="loadingScreen">
-<div class="loader"></div>
-<p>Loading...</p>
+  <div class="loader"></div>
+  <p>Loading...</p>
 </div>
 
 <div class="card">
 
-</div>
-<div class="logo" id="logoBox">
-No Logo
-</div>
-
-<h2 id="shopName">Shop Name</h2>
-
-<div class="info" id="place"></div>
-<div class="info" id="district"></div>
-<div class="info" id="email"></div>
-<div class="info" id="contact"></div>
-
-<div id="statusBox" class="status-box">
-
-  
-
-  <div class="status-row">
-    <span>📅 <span id="statusDate">--</span></span>
-    <span>🕒 <span id="statusTime">--</span></span>
+  <!-- LOGO -->
+  <div class="logo" id="logoBox">
+    No Logo
   </div>
 
-  <div id="statusPlan" class="status-plan">
-    Checking plan...
+  <!-- SHOP DETAILS -->
+  <h2 id="shopName">Shop Name</h2>
+
+  <div class="info" id="place"></div>
+  <div class="info" id="district"></div>
+  <div class="info" id="email"></div>
+  <div class="info" id="contact"></div>
+
+  <!-- STATUS BOX -->
+  <div id="statusBox" class="status-box">
+
+    <div id="statusHeader" class="status-header">
+      Checking...
+    </div>
+
+    <div class="status-row">
+      <span>📅 <span id="statusDate">--</span></span>
+      <span>🕒 <span id="statusTime">--</span></span>
+    </div>
+
+    <div id="statusPlan" class="status-plan">
+      Checking plan...
+    </div>
+
   </div>
 
-
+  <!-- SHARE BUTTON -->
   <div class="share-wrapper">
-  <div id="shareBtn" class="share-circle">
-    Share
+    <div id="shareBtn" class="share-circle">
+      Share
+    </div>
   </div>
+
 </div>
+
+</body>
 
 <button class="edit-btn" onclick="location.href='edit.html'">
 Edit Details
