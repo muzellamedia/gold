@@ -457,9 +457,13 @@ resetBtn();
 
 
 function resetBtn(){
-shareBtn.classList.remove("share-loading");
-shareBtn.innerText = "Share";
-shareBtn.style.pointerEvents = "auto";
+
+const btn = document.getElementById("shareBtn");
+
+btn.classList.remove("share-loading","share-disabled");
+btn.innerText = "Share";
+btn.style.pointerEvents = "auto";
+
 }
 
 };
@@ -1871,17 +1875,7 @@ URL.revokeObjectURL(link.href);
 }
 
 // =====================
-function resetBtn(){
 
-const btn = document.getElementById("shareBtn");
-
-btn.classList.remove("share-loading","share-disabled");
-btn.innerText = "Share";
-btn.style.pointerEvents = "auto";
-
-}
-
-}
 
 function disableShareBtn(text){
 
