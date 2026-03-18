@@ -1857,11 +1857,10 @@ canvas.toBlob(async function(blob){
 
 try{
 
-if(share && navigator.canShare){
+// 🔥 BEST CHECK
+if(share && navigator.share){
 
 const file = new File([blob], "GoldRatePoster.png", {type:"image/png"});
-
-if(navigator.canShare && navigator.canShare({files:[file]})){
 
 try{
 await navigator.share({
@@ -1869,10 +1868,7 @@ files:[file],
 title:"Today's Gold Rate"
 });
 }catch(e){
-downloadFile(blob);
-}
-
-}else{
+// user cancel ചെയ്താൽ download fallback
 downloadFile(blob);
 }
 
@@ -1891,7 +1887,6 @@ resetBtn();
 
 }, "image/png");
 
-// DOWNLOAD FUNCTION
 function downloadFile(blob){
 const link = document.createElement("a");
 link.download = "A4_Gold_Rate_Poster.png";
@@ -1903,6 +1898,7 @@ document.body.removeChild(link);
 
 URL.revokeObjectURL(link.href);
 }
+
 
 }
 // =====================
