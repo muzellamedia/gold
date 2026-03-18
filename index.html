@@ -56,7 +56,37 @@ color:#444;
 margin:3px 0;
 word-break:break-word;
 }
+.status-box{
+width:100%;
+max-width:400px;
+border:5px solid #6b1d1d;
+margin-bottom:25px;
+font-weight:bold;
+text-align:center;
+overflow:hidden;
+}
 
+.status-header{
+padding:15px;
+font-size:22px;
+color:white;
+}
+
+.status-row{
+display:flex;
+justify-content:space-between;
+background:#0a6b3c;
+color:white;
+padding:12px 20px;
+font-size:20px;
+border-top:5px solid #6b1d1d;
+border-bottom:5px solid #6b1d1d;
+}
+
+.status-plan{
+padding:15px;
+font-size:22px;
+}
 .status{
 margin-top:15px;
 font-weight:bold;
@@ -312,7 +342,22 @@ gap:10px;
 </div>
 
 <div class="card">
+<div id="statusBox" class="status-box">
 
+  <div id="statusHeader" class="status-header">
+    Checking...
+  </div>
+
+  <div class="status-row">
+    <span>📅 <span id="statusDate">--</span></span>
+    <span>🕒 <span id="statusTime">--</span></span>
+  </div>
+
+  <div id="statusPlan" class="status-plan">
+    Checking plan...
+  </div>
+
+</div>
 <div class="logo" id="logoBox">
 No Logo
 </div>
@@ -534,15 +579,29 @@ rateDate = d.toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeri
 const today = new Date().toISOString().slice(0,10);
 const rateDateISO = rawDate ? new Date(rawDate).toISOString().slice(0,10) : "";
 
-const rateStatus = document.getElementById("rateStatus");
+const statusHeader = document.getElementById("statusHeader");
+const statusDate = document.getElementById("statusDate");
+const statusTime = document.getElementById("statusTime");
+const statusPlan = document.getElementById("statusPlan");
 
 if(rateDateISO === today){
-rateStatus.innerHTML = "Today Gold Rate Updated<br>Time : " + rateTime;
-rateStatus.className = "status updated";
+
+statusHeader.innerText = "Today's Gold Rate Updated";
+statusHeader.style.background = "#0a6b3c";
+
+statusDate.innerText = rawDate;
+statusTime.innerText = rateTime;
+
 }else{
-rateStatus.innerText = "Gold rate not updated";
-rateStatus.className = "status not-updated";
+
+statusHeader.innerText = "Today's Gold Not Rate Updated";
+statusHeader.style.background = "#e60000";
+
+statusDate.innerText = rawDate || "--";
+statusTime.innerText = rateTime || "--";
+
 disableShareBtn("Rate Not Updated");
+
 }
 
 // =====================
@@ -553,23 +612,21 @@ const todayDate = new Date();
 
 if(!expiry || todayDate > expiry){
 
-planStatus.innerText = "Plan Expired";
-planStatus.className = "status plan-expired";
-rechargeBtn.style.display = "block";
+statusPlan.innerText = "Plan Expired";
+statusPlan.style.background = "#e60000";
+statusPlan.style.color = "yellow";
 
 disableShareBtn("Plan Expired");
-  
+
 }else{
 
 const diffTime = expiry - todayDate;
 const remainingDays = Math.ceil(diffTime / (1000*60*60*24));
 
-planStatus.innerText = "Plan Active - " + remainingDays + " Days Remaining";
-planStatus.className = "status plan-active";
+statusPlan.innerText = "Plan Active - " + remainingDays + " Days Remaining";
+statusPlan.style.background = "#0a6b3c";
+statusPlan.style.color = "yellow";
 
-if(remainingDays <= 3){
-planStatus.className = "status plan-warning";
-rechargeBtn.style.display = "block";
 }
 
 }
