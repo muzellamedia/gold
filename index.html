@@ -518,11 +518,7 @@ gold1Pavan = gold1Gram * 8;
 
 let rawDate = rates.date || "";
 let rawTime = rates.time || "";
-
-if(rawTime){
-const t = new Date(rawTime);
-rateTime = t.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit",hour12:true});
-}
+rateTime = rawTime || "";
 
 gold1Gram = Number(gold1Gram).toLocaleString("en-IN");
 gold1Pavan = Number(gold1Pavan).toLocaleString("en-IN");
