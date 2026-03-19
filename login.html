@@ -224,6 +224,8 @@ const API_URL = "https://script.google.com/macros/s/AKfycbzegsFw2YTRsqwU3tV5yAzb
 
 
 function login() {
+  const btn = document.querySelector(".login-btn");
+
   const phone = document.getElementById("phone").value.trim();
   const code = document.getElementById("code").value.trim();
 
@@ -232,31 +234,40 @@ function login() {
     return;
   }
 
-  // ലോഗിൻ ബട്ടൺ താൽക്കാലികമായി ഡിസേബിൾ ചെയ്യുക
-  document.getElementById("error").innerText = "Logging in...";
-
+  if(!/^[0-9]{10}$/.test(phone)){
+  document.getElementById("error").innerText = "Enter valid phone number";
+  return;
+}
   
+  btn.disabled = true;
+  btn.innerText = "Logging...";
+
   fetch(API_URL, {
-  method: "POST",
-  body: JSON.stringify({
-    type: "login",
-    phone: phone,
-    code: code,
-    key: "Gold@Security"
+    method: "POST",
+    body: JSON.stringify({
+      type: "login",
+      phone: phone,
+      code: code,
+      key: "Gold@Security"
+    })
   })
-})
-  .then(response => response.json()) // text() ന് പകരം json() ഉപയോഗിക്കുക
+  .then(res => res.json())
   .then(data => {
+
     if (data.status === "success") {
       localStorage.setItem("userPhone", phone);
       window.location.href = "index.html";
     } else {
       document.getElementById("error").innerText = "Invalid phone or security code";
+      btn.disabled = false;
+      btn.innerText = "Login";
     }
+
   })
   .catch(err => {
-    document.getElementById("error").innerText = "Server error or CORS issue";
-    console.error("Error:", err);
+    document.getElementById("error").innerText = "Server error";
+    btn.disabled = false;
+    btn.innerText = "Login";
   });
 }
 function goRegister(){
@@ -268,7 +279,7 @@ function openWhatsApp(){
 const msg = encodeURIComponent("I am forget my security code!");
 
 window.open(
-"https://wa.me/919645565177?text=" + msg,
+"https://wa.me/919656100346?text=" + msg,
 "_blank"
 );
 
