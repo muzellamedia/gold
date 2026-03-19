@@ -112,7 +112,7 @@ Secure Payment via Razorpay
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxctXWS2AVbFuYIOs_fyikNoTB346gCO2zwwu1Eh4eDaH_7LxRZZT5cDkivYmDxS-y7KQ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbx-0rhIhZ6MzeydrpXyujlwUL3AHw_L7WGFk07lzR8CLyMDEpGJGxRWF_mKj0ezgA_UYg/exec";
 const phone = localStorage.getItem("userPhone");
 
 function payNow(){
@@ -129,13 +129,15 @@ if(days == 90) amount = 6000;
 if(days == 180) amount = 12000;
 if(days == 365) amount = 24000;
 
+const SECRET = "Gold@Security";
+
 fetch(API_URL,{
 method:"POST",
 body: JSON.stringify({
 type:"createOrder",
 phone:phone,
 days:days,
-amount:amount
+key: SECRET
 })
 })
 .then(res=>res.json())
@@ -143,6 +145,7 @@ amount:amount
 
 const options = {
 
+const options = {
 key: "rzp_live_SPsWDkDKR0uHcI",
 amount: order.amount,
 currency: "INR",
@@ -153,18 +156,19 @@ contact: phone
 },
 
 handler:function(){
-
 alert("Payment Successful");
-
 location.href="index.html";
-
 }
-
 };
 
 const rzp = new Razorpay(options);
 rzp.open();
 
+})
+.catch(err=>{
+alert("Payment failed");
+btn.classList.remove("loading");
+btn.innerHTML = "Recharge Now";
 });
 
 }
