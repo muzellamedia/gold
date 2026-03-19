@@ -481,7 +481,12 @@ shareBtn.style.pointerEvents = "none";
 
 try{
 
-const res = await fetch(API_URL + "?type=checkDownload&phone=" + userPhone);
+const SECRET = "Gold@Security";
+
+const res = await fetch(
+  API_URL + "?type=checkDownload&phone=" + userPhone + "&key=" + SECRET
+);
+
 const data = await res.json();
 
 if(data.status === "limit"){
@@ -511,7 +516,10 @@ resetBtn();
 // =====================
 try {
 
-const res = await fetch(API_URL + "?type=init&phone=" + userPhone);
+const SECRET = "Gold@Security";
+
+const res = await fetch(API_URL + "?type=init&phone=" + userPhone + "&key=" + SECRET);
+
 const data = await res.json();
 
 const user = data.user || {};
@@ -648,9 +656,11 @@ function downloadPoster(share=false){
 
 const phone = userPhone;
 
-fetch(API_URL + "?type=checkDownload&phone=" + phone)
-.then(res=>res.json())
-.then(data=>{
+const SECRET = "Gold@Security";
+
+fetch(API_URL + "?type=checkDownload&phone=" + phone + "&key=" + SECRET)
+.then(res => res.json())
+.then(data => {
 
 if(data.status === "limit"){
 disableShareBtn("2 Poster Limit");
