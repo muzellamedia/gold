@@ -193,21 +193,37 @@ const contact1 = document.getElementById("contact1").value.trim();
 const contact2 = document.getElementById("contact2").value.trim();
 const contact3 = document.getElementById("contact3").value.trim();
 
+// REQUIRED CHECK
 if(!phone || !shop || !place || !district || !logoFile){
+  showMessage("All fields are required!", "red");
+  btn.innerText="Register";
+  btn.disabled=false;
+  return;
+}
 
-showMessage("All fields are required!", "red");
+// PHONE VALIDATION
+if(phone.length !== 10){
+  showMessage("Enter valid phone number","red");
+  btn.innerText="Register";
+  btn.disabled=false;
+  return;
+}
 
-btn.innerText="Register";
-btn.disabled=false;
-
-return;
+// FILE SIZE CHECK
+if(logoFile.size > 2 * 1024 * 1024){
+  showMessage("Image must be under 2MB","red");
+  btn.innerText="Register";
+  btn.disabled=false;
+  return;
 }
 
 const reader = new FileReader();
 
 reader.onload = function(){
 
-fetch("https://script.google.com/macros/s/AKfycbxctXWS2AVbFuYIOs_fyikNoTB346gCO2zwwu1Eh4eDaH_7LxRZZT5cDkivYmDxS-y7KQ/exec",{
+const SECRET = "Gold@Security";
+
+fetch("https://script.google.com/macros/s/AKfycbzegsFw2YTRsqwU3tV5yAzbtHQTPdfVR2VPfu4GK1CPyQTf247OCC1zS3CoVeBHY8NB6w/exec",{
 method:"POST",
 body:JSON.stringify({
 type:"register",
@@ -220,7 +236,8 @@ contact,
 contact1,
 contact2,
 contact3,
-logoBase64: reader.result
+logoBase64: reader.result,
+key: SECRET   // 🔐 ADD THIS
 })
 })
 .then(res=>res.json())
