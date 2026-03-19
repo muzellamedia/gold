@@ -237,13 +237,14 @@ function login() {
 
   
   fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({
-  type: "login",
-  phone: phone,
-  code: code
-})
+  method: "POST",
+  body: JSON.stringify({
+    type: "login",
+    phone: phone,
+    code: code,
+    key: "Gold@Security"
   })
+})
   .then(response => response.json()) // text() ന് പകരം json() ഉപയോഗിക്കുക
   .then(data => {
     if (data.status === "success") {
