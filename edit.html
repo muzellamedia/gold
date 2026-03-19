@@ -146,9 +146,13 @@ if(!phone){
   alert("Login required");
   location.href="index.html";
 }
-
+if(file && file.size > 2 * 1024 * 1024){
+  alert("Image must be under 2MB");
+  return;
+}
 // LOAD OLD DATA
-fetch(API_URL + "?type=user&phone=" + phone)
+  const SECRET = "Gold@Security";
+fetch(API_URL + "?type=user&phone=" + phone + "&key=" + SECRET)
 .then(res=>res.json())
 .then(data=>{
 
@@ -183,7 +187,13 @@ function saveDetails(){
 document.getElementById("savingScreen").style.display="flex";
 
 const file = document.getElementById("logoFile").files[0];
+const num1 = document.getElementById("num1");
+const num2 = document.getElementById("num2");
+const num3 = document.getElementById("num3");
 
+const shop = document.getElementById("shop");
+const place = document.getElementById("place");
+const email = document.getElementById("email");
 const saveToServer = (logoBase64="")=>{
 
 fetch(API_URL,{
@@ -197,7 +207,8 @@ contact2: num2.value,
 contact3: num3.value,
 shop: shop.value,
 place: place.value,
-email: email.value
+email: email.value,
+key: SECRET   // 🔐 ADD THIS
 })
 })
 .then(res=>res.json())
