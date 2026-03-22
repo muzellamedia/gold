@@ -146,10 +146,7 @@ if(!phone){
   alert("Login required");
   location.href="index.html";
 }
-if(file && file.size > 2 * 1024 * 1024){
-  alert("Image must be under 2MB");
-  return;
-}
+
 // LOAD OLD DATA
   const SECRET = "Gold@Security";
 fetch(API_URL + "?type=user&phone=" + phone + "&key=" + SECRET)
@@ -187,6 +184,13 @@ function saveDetails(){
 document.getElementById("savingScreen").style.display="flex";
 
 const file = document.getElementById("logoFile").files[0];
+
+  if(file && file.size > 2 * 1024 * 1024){
+  alert("Image must be under 2MB");
+  document.getElementById("savingScreen").style.display="none";
+  return;
+}
+  
 const num1 = document.getElementById("num1");
 const num2 = document.getElementById("num2");
 const num3 = document.getElementById("num3");
