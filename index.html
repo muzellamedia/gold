@@ -275,7 +275,9 @@ overflow:hidden;
 .share-circle:active{
 transform:scale(0.95);
 }
-
+.status-row span{
+margin-right:10px;
+}
 /* LOADING ANIMATION */
 .share-loading{
 animation:pulse 1.2s infinite;
@@ -363,11 +365,11 @@ gap:10px;
       Checking...
     </div>
 
-    <div class="status-row">
-      <span>Last Updated: <span id="statusDate">--</span></span>
-      <span>🕒 <span id="statusTime">--</span></span>
-    </div>
-
+   <div class="status-row">
+  <span>Last Updated:</span>
+  <span id="statusDate">--</span>
+  <span id="statusTime">--</span>
+</div>
     <div id="statusPlan" class="status-plan">
       Checking plan...
     </div>
