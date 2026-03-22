@@ -579,7 +579,12 @@ gold1Pavan = Number(gold1Pavan).toLocaleString("en-IN");
 
 if(rawDate){
 const d = new Date(rawDate);
-rateDate = d.toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}).toUpperCase();
+
+const day = String(d.getDate()).padStart(2,'0');
+const month = String(d.getMonth()+1).padStart(2,'0');
+const year = d.getFullYear();
+
+rateDate = `${day}-${month}-${year}`;
 }
 
 // =====================
