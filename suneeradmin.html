@@ -172,10 +172,8 @@ font-size:14px;">
 
 <select id="planDays">
 <option value="">Select Plan</option>
-<option value="30">30 Days</option>
-<option value="90">90 Days</option>
-<option value="180">180 Days</option>
-<option value="365">365 Days</option>
+<option value="2">2 Days</option>
+<option value="365">1 Year</option>
 </select>
 
 <button onclick="activatePlan()">Activate Plan</button>
@@ -186,24 +184,35 @@ font-size:14px;">
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbwUbnkaG9X1EDhOHwV0v1QZLqxqkpkUbzjF6696mS4HWrMsEBjW9BUcvzwwNYN-miqRQg/exec";
-const ADMIN_PASSWORD = "admin@1994";
+const API_URL = "https://script.google.com/macros/s/AKfycbwUfWLyV4LwLZLm-tFaoSkVlse0Dchoiv4Zrc7zenNwK4WvINjVYqJfh82QNclWvcyOIA/exec";
 
-// Check Password
 function checkPassword(){
 
-  const entered = document.getElementById("adminPass").value;
+  const password = document.getElementById("adminPass").value;
 
-  if(entered === ADMIN_PASSWORD){
+  fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify({
+      type:"adminLogin",
+      password: password
+    })
+  })
+  .then(res=>res.json())
+  .then(data=>{
 
-document.getElementById("loginSection").style.display = "none";
-document.getElementById("adminPanel").style.display = "block";
+    if(data.status === "success"){
 
-loadStats();
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
 
-}else{
-document.getElementById("error").innerText = "Wrong Password";
-}
+      loadStats();
+
+    }else{
+      document.getElementById("error").innerText = "Wrong Password";
+    }
+
+  });
+
 }
 
 // Auto Calculate Pavan
