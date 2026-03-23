@@ -127,13 +127,30 @@ if(days == 180) amount = 12000;
 if(days == 365) amount = 24000;
 
 
+const SECRET = "Gold@Security";
+
+function payNow(){
+
+const btn = document.getElementById("rechargeBtn");
+
+btn.classList.add("loading");
+btn.innerHTML = '<span class="loader"></span> Processing...';
+
+const days = document.getElementById("plan").value;
+
+// ❗ login check
+if(!phone){
+  alert("Please login first");
+  return;
+}
+
 fetch(API_URL,{
 method:"POST",
 body: JSON.stringify({
 type:"createOrder",
 phone:phone,
 days:days,
-key: SECRET
+key: SECRET   // 🔥 ADD THIS
 })
 })
 .then(res=>res.json())
@@ -164,6 +181,7 @@ alert("Payment failed");
 btn.classList.remove("loading");
 btn.innerHTML = "Recharge Now";
 });
+
 
 }
 
