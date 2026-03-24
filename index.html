@@ -1917,9 +1917,10 @@ resetBtn();
 
 }, "image/png");
 
-function downloadFile(blob){
+function downloadFile(blob, fileName){
+
 const link = document.createElement("a");
-link.download = "A4_Gold_Rate_Poster.png";
+link.download = fileName; // ✅ FIXED
 link.href = URL.createObjectURL(blob);
 
 document.body.appendChild(link);
@@ -1927,6 +1928,7 @@ link.click();
 document.body.removeChild(link);
 
 URL.revokeObjectURL(link.href);
+
 }
 
 
