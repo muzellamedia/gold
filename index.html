@@ -1922,11 +1922,11 @@ resetBtn();
 }, "image/png");
 
 }
-
+   
 function downloadFile(blob, fileName){
 
 const link = document.createElement("a");
-link.download = fileName; // ✅ FIXED
+link.download = fileName;
 link.href = URL.createObjectURL(blob);
 
 document.body.appendChild(link);
