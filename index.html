@@ -1880,10 +1880,17 @@ canvas.toBlob(async function(blob){
 
 try{
 
-// 🔥 BEST CHECK
+// 📅 dynamic filename
+const today = new Date();
+const fileName =
+  today.getDate() + "." +
+  (today.getMonth()+1) + "." +
+  today.getFullYear() + ".png";
+
+// 🔥 SHARE
 if(share && navigator.share){
 
-const file = new File([blob], "GoldRatePoster.png", {type:"image/png"});
+const file = new File([blob], fileName, {type:"image/png"});
 
 try{
 await navigator.share({
@@ -1891,19 +1898,19 @@ files:[file],
 title:"Today's Gold Rate"
 });
 }catch(e){
-// user cancel ചെയ്താൽ download fallback
-downloadFile(blob);
+// cancel → download
+downloadFile(blob, fileName);
 }
 
 }else{
-downloadFile(blob);
+downloadFile(blob, fileName);
 }
 
 resetBtn();
 
 }catch(err){
 
-downloadFile(blob);
+downloadFile(blob, fileName);
 resetBtn();
 
 }
