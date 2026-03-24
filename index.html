@@ -1880,46 +1880,48 @@ canvas.toBlob(async function(blob){
 
 try{
 
-// 📅 filename
 const today = new Date();
 const fileName =
   today.getDate() + "." +
   (today.getMonth()+1) + "." +
   today.getFullYear() + ".png";
 
-// ✅ MOBILE SHARE (MAIN)
-if(share && navigator.canShare){
+// ✅ TRY SHARE FIRST (no canShare check)
+if(share && navigator.share){
 
 const file = new File([blob], fileName, {type:"image/png"});
 
-if(navigator.canShare({files:[file]})){
+try{
 
 await navigator.share({
 files:[file],
 title:"Today's Gold Rate"
 });
 
-}else{
-alert("Sharing not supported on this device");
+return; // ✅ success → stop here
+
+}catch(e){
+// ❗ user cancel / not supported
+console.log("Share failed → fallback");
 }
 
-}else{
+}
 
-// ❗ fallback only if share=false
+// ✅ FALLBACK DOWNLOAD
 downloadFile(blob, fileName);
-
-}
 
 resetBtn();
 
 }catch(err){
 
-alert("Sharing failed");
+downloadFile(blob, fileName);
 resetBtn();
 
 }
 
 }, "image/png");
+
+}
 
 function downloadFile(blob, fileName){
 
