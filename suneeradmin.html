@@ -227,7 +227,9 @@ document.getElementById("gramRate").addEventListener("input", function(){
 
   function loadStats(){
 
-fetch(API_URL + "?type=userStats")
+const SECRET = "Gold@Security";
+
+fetch(API_URL + "?type=userStats&key=" + SECRET)
 .then(res=>res.json())
 .then(data=>{
 
@@ -298,9 +300,10 @@ return;
 fetch(API_URL,{
 method:"POST",
 body: JSON.stringify({
-type:"activatePlan",
-phone: phone,
-days: parseInt(days)
+  type:"activatePlan",
+  phone: phone,
+  days: parseInt(days),
+  key: SECRET
 })
 })
 .then(res=>res.json())
@@ -325,7 +328,7 @@ alert("Enter phone number");
 return;
 }
 
-fetch(API_URL + "?type=user&phone=" + phone)
+fetch(API_URL + "?type=user&phone=" + phone + "&key=" + SECRET)
 .then(res=>res.json())
 .then(data=>{
 
@@ -403,11 +406,12 @@ function updateRate(){
   fetch(API_URL,{
     method:"POST",
     body: JSON.stringify({
-      type:"updateRate",
-      gold1gram: gram,
-      gold1pavan: pavan,
-      date: today
-    })
+  type:"updateRate",
+  gold1gram: gram,
+  gold1pavan: pavan,
+  date: today,
+  key: SECRET
+})
   })
   .then(res=>res.json())
   .then(()=>{
